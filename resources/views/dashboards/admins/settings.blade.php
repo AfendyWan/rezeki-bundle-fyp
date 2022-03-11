@@ -1,6 +1,10 @@
-@extends('layouts.app')
+@extends('dashboards.admins.layouts.admin-dash-layout')
+@section('title', 'Settings')
 
 @section('content')
+check content location
+@endsection
+<!-- @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -8,7 +12,7 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
                 <h4>Hi Admin: {{Auth::user()->name}}</h4>
                 <hr>
-                SETTINGS
+                DASHBOARD
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -22,4 +26,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection -->

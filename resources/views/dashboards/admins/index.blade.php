@@ -1,6 +1,10 @@
-@extends('layouts.app')
+@extends('dashboards.admins.layouts.admin-dash-layout')
+@section('title', 'Dashboard')
 
 @section('content')
+check content location
+@endsection
+<!-- @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -22,4 +26,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection -->
