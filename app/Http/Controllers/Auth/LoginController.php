@@ -69,4 +69,16 @@ class LoginController extends Controller
             return redirect()->route('login')->with('error','Email and password are wrong');
         }
      }
+
+    //  public function logout(Request $request)
+    // {
+    //     auth()->logout();
+    //     Session()->flush();
+
+    //    $this->guard()->logout();
+
+    //    $request->session()->invalidate();
+
+    //    return $this->loggedOut($request) ?: redirect('/login');
+    // }
 }
