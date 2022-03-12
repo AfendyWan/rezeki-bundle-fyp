@@ -66,7 +66,7 @@ class LoginController extends Controller
          }
  
         }else{
-            return redirect()->route('login')->with('error','Email and password are wrong');
+            return redirect()->route('login')->with('error','These credentials do not match our records');
         }
      }
 

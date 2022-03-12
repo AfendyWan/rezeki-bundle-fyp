@@ -61,30 +61,7 @@
         <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
         <span class="badge badge-pill badge-danger notify">0</span>
       </div>
-      <div class="widget-header icontext">
-        <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
-        <div class="text">
-          <div> 
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                  {{Auth::user()->name}}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-          </div>
-         
-          <div> 
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-          </div>
-        </div>
-      </div>
+
     </div> <!-- widgets-wrap.// -->
   </div> <!-- col.// -->
 </div> <!-- row.// -->
