@@ -77,6 +77,8 @@
               <input type="submit" value="Log In" class="btn btn-block btn-primary">
 
             </form>
+            <br>
+            <p style="color:black">Don't have an account?  &nbsp<a href="{{ route('register') }}" style="color:blue">Sign up</a> here</p>
           </div>
         </div>
       </div>
