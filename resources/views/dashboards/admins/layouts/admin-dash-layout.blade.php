@@ -119,7 +119,7 @@
             <a href="{{route('admin.settings')}}#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
-               Settings
+              Manage Catalogue
               </p>
             </a>
           </li>
