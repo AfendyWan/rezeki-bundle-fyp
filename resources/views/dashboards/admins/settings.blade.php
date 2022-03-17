@@ -2,7 +2,7 @@
 @section('title', 'Settings')
 
 @section('content')
-check content location
+
 @endsection
 <!-- @section('content')
 <div class="container">

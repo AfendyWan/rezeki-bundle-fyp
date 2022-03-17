@@ -116,14 +116,22 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.settings')}}#" class="nav-link">
+            <a href="{{route('manageCategories.index')}}#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
-              Manage Catalogue
+              Manage Category 
               </p>
             </a>
           </li>
-        </ul>
+          <li class="nav-item">
+            <a href="{{route('admin.settings')}}#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+              Manage Catalogue 
+              </p>
+            </a>
+          </li>
+       </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
@@ -132,7 +140,11 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  <div class="content-header">
+<div class="container-fluid">
   @yield('content')
+  </div>
+  </div>
   </div>
   <!-- /.content-wrapper -->
 
