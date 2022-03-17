@@ -62,7 +62,7 @@ class SaleItemCategoryController extends Controller
      */
     public function show(SaleItemCategory $saleItemCategory)
     {
-        return view('dashboards.admins.manageCategories.show',compact('saleItemCategory'));
+        return redirect('admin/manageCategories');
     }
 
     /**
