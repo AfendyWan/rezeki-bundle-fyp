@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SaleItemCategoryController;
+use App\Http\Controllers\SaleItemController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -37,6 +38,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
       Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
      
       Route::resource('manageCategories', SaleItemCategoryController::class);
+      Route::resource('manageSaleItems', SaleItemController::class);
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');

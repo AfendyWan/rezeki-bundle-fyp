@@ -124,7 +124,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.settings')}}#" class="nav-link">
+            <a href="{{route('manageSaleItems.index')}}#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
               Manage Catalogue 
