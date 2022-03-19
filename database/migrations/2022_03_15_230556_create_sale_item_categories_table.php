@@ -15,7 +15,8 @@ class CreateSaleItemCategoriesTable extends Migration
     {
         Schema::create('sale_item_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name')->nullable();
+            $table->string('description');
             $table->integer('quantity');
             $table->timestamps();
         });

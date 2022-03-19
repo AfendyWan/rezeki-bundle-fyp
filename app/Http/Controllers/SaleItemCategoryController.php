@@ -40,7 +40,7 @@ class SaleItemCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255|unique:sale_item_categories,name',
             'description' => 'required',
         
         ]);
@@ -89,7 +89,7 @@ class SaleItemCategoryController extends Controller
     public function update(Request $request, SaleItemCategory $saleItemCategory)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255|unique:sale_item_categories,name',
             'description' => 'required',  
         ]);
         SaleItemCategory::where('id', $request->id)

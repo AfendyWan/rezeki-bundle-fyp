@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SaleItem;
+use App\Models\SaleItemCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,9 @@ class SaleItemController extends Controller
      */
     public function create()
     {
-        //
+        $categoryName = SaleItemCategory::select('name')->get();
+        return view('dashboards.admins.manageSaleItems.create', compact('categoryName'));
+        
     }
 
     /**
@@ -39,7 +42,35 @@ class SaleItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:sale_items,itemName',
+            'description' => ['required', 'string', 'max:255'],
+            'price' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
+            'stock' => ['required', 'numeric'],
+            'category' => 'required',
+        ]);
+        
+        $category = SaleItemCategory::where('name', $request->category)->first();
+       
+         SaleItem::create([
+            'itemName' => $request->name,
+            'itemDescription' => $request->description,
+            'itemPrice' => $request->price,
+            'itemStock' => $request->stock,
+            'itemCategory' => $category->id,
+            'itemPromotionStatus' => 0,
+            'itemPromotionPrice' => 0.00,
+            'itemActivationStatus' => 1,
+        ]);
+
+        $updateCategoryQuantity = $category->quantity + 1;
+        SaleItemCategory::where('name', $request->category)
+        ->update([
+            'quantity' => $updateCategoryQuantity,  
+         ]);
+       //SaleItemCategory::create($request->all());
+        return redirect()->route('manageSaleItems.index')
+        ->with('success','New sale item created successfully.');
     }
 
     /**

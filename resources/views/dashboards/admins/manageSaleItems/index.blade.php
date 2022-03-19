@@ -10,7 +10,7 @@
             </div>
             <br>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('manageSaleItems.create') }}"> Create New Category</a>
+                <a class="btn btn-success" href="{{ route('manageSaleItems.create') }}"> Create New Sale Item</a>
             </div>
         </div>
     </div>
@@ -32,9 +32,9 @@
         @foreach ($saleItem as $saleItem)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $saleItem->name }}</td>
-            <td>{{ $saleItem->description }}</td>
-            <td>{{ $saleItem->quantity }}</td>
+            <td>{{ $saleItem->itemName }}</td>
+            <td>{{ $saleItem->itemDescription }}</td>
+            <td>{{ $saleItem->itemCategory }}</td>
             <td>
                 <form action="{{ route('manageSaleItems.destroy',$saleItem->id) }}" method="POST">
    
