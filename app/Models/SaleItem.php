@@ -11,4 +11,9 @@ class SaleItem extends Model
     protected $fillable = ['itemName', 'itemCategory','itemStock',
                         'itemPrice', 'itemPromotionStatus','itemPromotionPrice',
                         'itemActivationStatus', 'itemDescription'];
+                        
+    public function saleItemImage()
+    {
+        return $this->hasMany('App\SaleItemImage', 'sale_item_id');
+    }
 }

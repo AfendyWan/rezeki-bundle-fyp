@@ -26,7 +26,7 @@ class CreateSaleItemsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('itemCategory')->references('name')->on('sale_item_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('itemCategory')->references('id')->on('sale_item_categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

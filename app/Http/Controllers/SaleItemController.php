@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SaleItem;
 use App\Models\SaleItemCategory;
+use App\Models\SaleItemImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -51,24 +52,56 @@ class SaleItemController extends Controller
         ]);
         
         $category = SaleItemCategory::where('name', $request->category)->first();
-       
-         SaleItem::create([
-            'itemName' => $request->name,
-            'itemDescription' => $request->description,
-            'itemPrice' => $request->price,
-            'itemStock' => $request->stock,
-            'itemCategory' => $category->id,
-            'itemPromotionStatus' => 0,
-            'itemPromotionPrice' => 0.00,
-            'itemActivationStatus' => 1,
-        ]);
 
+        $saleItem = new SaleItem;
+        $saleItem->itemName = $request->name;
+        $saleItem->itemDescription = $request->description;
+        $saleItem->itemPrice = $request->price;
+        $saleItem->itemStock = $request->price;
+        $saleItem->itemCategory = $category->id;
+        $saleItem->itemPromotionPrice =  0.00;
+        $saleItem->itemActivationStatus = 1;
+        $saleItem->save();
+
+        //Save file within laravel
+       if ($request->hasfile('images')) {
+            $images = $request->file('images');
+            foreach($images as $image) {
+                $name = $image->getClientOriginalName();
+
+                //save to upload folder within the public
+                $path = $image->storeAs('uploads', $name, 'public');
+                
+                //Save to public folder
+                //$path = $image->storeAs('public/', $name);
+                SaleItemImage::create([
+                    'sale_item_id' => $saleItem->id,
+                    'url' => '/storage/'.$path
+                ]);
+            }
+       }
+  
+        //  SaleItem::create([
+        //     'itemName' => $request->name,
+        //     'itemDescription' => $request->description,
+        //     'itemPrice' => $request->price,
+        //     'itemStock' => $request->stock,
+        //     'itemCategory' => $category->id,
+        //     'itemPromotionStatus' => 0,
+        //     'itemPromotionPrice' => 0.00,
+        //     'itemActivationStatus' => 1,
+        // ]);
+
+        ///////////////////////Update quantity in category
         $updateCategoryQuantity = $category->quantity + 1;
         SaleItemCategory::where('name', $request->category)
         ->update([
             'quantity' => $updateCategoryQuantity,  
          ]);
-       //SaleItemCategory::create($request->all());
+        /////////////////////////////////////////////////
+
+
+        //SaleItemCategory::create($request->all());
         return redirect()->route('manageSaleItems.index')
         ->with('success','New sale item created successfully.');
     }
