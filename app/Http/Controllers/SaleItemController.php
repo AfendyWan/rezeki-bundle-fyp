@@ -116,9 +116,13 @@ class SaleItemController extends Controller
      * @param  \App\Models\SaleItem  $saleItem
      * @return \Illuminate\Http\Response
      */
-    public function show(SaleItem $saleItem)
+    public function show($id)
     {
-  
+        $saleItem  = SaleItem::find($id);
+        $category = SaleItemCategory::where('id', $saleItem->itemCategory )->first();
+        $firstSaleItemImage = SaleItemImage::where('sale_item_id', $id)->first();
+        $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
+        return view('dashboards.admins.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages'))->withSaleitem($saleItem);
     }
 
     /**
