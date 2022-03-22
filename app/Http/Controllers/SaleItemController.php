@@ -49,10 +49,13 @@ class SaleItemController extends Controller
             'price' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
             'stock' => ['required', 'numeric'],
             'category' => 'required',
+            'images' => 'required|max:6',
+          //  'images' => 'required|mimes:png,jpg,jpeg|max:5'
         ]);
         
         $category = SaleItemCategory::where('name', $request->category)->first();
-
+        // date('Y-m-d-H:i:s')."-".$image->getClientOriginalName();
+        
         $saleItem = new SaleItem;
         $saleItem->itemName = $request->name;
         $saleItem->itemDescription = $request->description;
@@ -61,16 +64,16 @@ class SaleItemController extends Controller
         $saleItem->itemCategory = $category->id;
         $saleItem->itemPromotionPrice =  0.00;
         $saleItem->itemActivationStatus = 1;
+       
         $saleItem->save();
-
         //Save file within laravel
        if ($request->hasfile('images')) {
             $images = $request->file('images');
             foreach($images as $image) {
-                $name = $image->getClientOriginalName();
+                $name = time() .'-'.$image->getClientOriginalName();
 
                 //save to upload folder within the public
-                $path = $image->storeAs('uploads', $name, 'public');
+                $path = $image->storeAs('sale_item', $name, 'public');
                 
                 //Save to public folder
                 //$path = $image->storeAs('public/', $name);
@@ -80,6 +83,7 @@ class SaleItemController extends Controller
                 ]);
             }
        }
+       
   
         //  SaleItem::create([
         //     'itemName' => $request->name,
@@ -114,7 +118,7 @@ class SaleItemController extends Controller
      */
     public function show(SaleItem $saleItem)
     {
-        //
+  
     }
 
     /**
@@ -123,9 +127,11 @@ class SaleItemController extends Controller
      * @param  \App\Models\SaleItem  $saleItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(SaleItem $saleItem)
+    public function edit($id)
     {
-        //
+        $saleItemCategory = SaleItemCategory::all();
+        $saleItem  = SaleItem::find($id);
+        return view('dashboards.admins.manageSaleItems.edit', compact('saleItemCategory'))->withSaleitem($saleItem);
     }
 
     /**
@@ -137,7 +143,59 @@ class SaleItemController extends Controller
      */
     public function update(Request $request, SaleItem $saleItem)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => ['required', 'string', 'max:255'],
+            'price' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
+            'stock' => ['required', 'numeric'],
+            'category' => 'required',
+            'images' => 'required|max:6',
+        ]);
+
+        $category = SaleItemCategory::where('name', $request->category)->first();
+        
+        SaleItem::where('id', $request->id)
+        ->update([
+               'itemName' => $request->name,
+               'itemDescription' => $request->description,
+               'itemPrice' => $request->price,
+               'itemStock' => $request->stock,
+               'itemCategory' => $category->id,
+               'itemPromotionStatus' => 0,
+               'itemPromotionPrice' => 0.00,
+               'itemActivationStatus' => 1,
+        ]);
+
+        $allSaleItemImages = SaleItemImage::where('sale_item_id', $request->id)->get();
+        
+        //delete file within laravel and database
+        foreach($allSaleItemImages as $i){
+            $image = $i->url;
+            unlink(public_path($image));
+            $i->delete();
+        }
+
+        //Save file within laravel
+       if ($request->hasfile('images')) {
+            $images = $request->file('images');
+            foreach($images as $image) {
+                $name = time() .'-'.$image->getClientOriginalName();
+
+                //save to upload folder within the public
+                $path = $image->storeAs('sale_item', $name, 'public');
+                
+                //Save to public folder
+                //$path = $image->storeAs('public/', $name);
+                SaleItemImage::create([
+                    'sale_item_id' => $request->id,
+                    'url' => '/storage/'.$path
+                ]);
+            }
+       }
+
+       return redirect()->route('manageSaleItems.index')
+       ->with('success','Sale item edited successfully.');
+
     }
 
     /**
