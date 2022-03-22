@@ -204,8 +204,21 @@ class SaleItemController extends Controller
      * @param  \App\Models\SaleItem  $saleItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SaleItem $saleItem)
+    public function  destroy($id)
     {
-        //
+        $findSaleItem = SaleItem::find($id);
+        $findSaleItem->delete();
+        
+        $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
+        
+        //delete file within laravel and database
+        foreach($allSaleItemImages as $i){
+            $image = $i->url;
+            unlink(public_path($image));
+            $i->delete();
+        }
+
+        return redirect()->route('manageSaleItems.index')
+                        ->with('success','Sale item deleted successfully');
     }
 }
