@@ -10,7 +10,11 @@
 </section>
 
 <section class="content">
-
+@if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
 <div class="card card-solid">
 <div class="card-body">
 <div class="row">
@@ -71,6 +75,16 @@
     </tbody>
 </table>
 </div>
+<br>
+<div class="col-12 col-sm-12">
+    <a href="#" class="btn btn-sm btn-primary">Edit promotion</a>
+    @if ($saleitem->itemActivationStatus==1)
+        <a href="{{ route('manageSaleItems.toggleActivationStatus', $saleitem->id) }}" class="btn btn-sm btn-danger">Deactivate Sale Item</a>
+    @else
+        <a href="{{ route('manageSaleItems.toggleActivationStatus', $saleitem->id) }}" class="btn btn-sm btn-success">Activate Sale Item</a>                        
+    @endif 
+    
+</div>
 <div class="bg-gray py-2 px-3 mt-4">
 <h2 class="mb-0">
 Sale Price: RM {{ $saleitem->itemPrice }}
@@ -81,6 +95,7 @@ Sale Price: RM {{ $saleitem->itemPrice }}
 </div>
 </div>
 </div>
+
 <script src="../../plugins/jquery/jquery.min.js"></script>
 
 

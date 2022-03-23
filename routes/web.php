@@ -38,6 +38,8 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
       Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
      
       Route::resource('manageCategories', SaleItemCategoryController::class);
+
+      Route::get('toggleActivationStatus/{id}',[SaleItemController::class,'toggleActivationStatus'])->name('manageSaleItems.toggleActivationStatus');
       Route::resource('manageSaleItems', SaleItemController::class);
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');

@@ -225,4 +225,31 @@ class SaleItemController extends Controller
         return redirect()->route('manageSaleItems.index')
                         ->with('success','Sale item deleted successfully');
     }
+
+    //Edit promotion settings
+    public function editPromotion($id)
+    {
+        $saleItem  = SaleItem::find($id);
+        return view('dashboards.admins.manageSaleItems.editPromotion')->withSaleitem($saleItem);
+    }
+
+    //Toggle activation status
+    public function toggleActivationStatus($id)
+    {
+        $saleItem = SaleItem::where('id', $id)->first();
+ 
+        if ($saleItem->itemActivationStatus == 1) {
+            SaleItem::where('id', $id)
+            ->update([
+               'itemActivationStatus' => 0,
+            ]);
+            return redirect()->back()->with('success','Item deactivated successfully');  
+        } else {
+            SaleItem::where('id', $id)
+            ->update([
+               'itemActivationStatus' => 1,
+            ]);
+            return redirect()->back()->with('success','Item activated successfully');  
+        }
+    }
 }
