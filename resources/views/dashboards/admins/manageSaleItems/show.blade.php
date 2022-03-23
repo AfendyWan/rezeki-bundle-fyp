@@ -77,7 +77,7 @@
 </div>
 <br>
 <div class="col-12 col-sm-12">
-    <a href="#" class="btn btn-sm btn-primary">Edit promotion</a>
+    <a href="{{ route('manageSaleItems.editPromotion', $saleitem->id) }}" class="btn btn-sm btn-primary">Edit promotion</a>
     @if ($saleitem->itemActivationStatus==1)
         <a href="{{ route('manageSaleItems.toggleActivationStatus', $saleitem->id) }}" class="btn btn-sm btn-danger">Deactivate Sale Item</a>
     @else

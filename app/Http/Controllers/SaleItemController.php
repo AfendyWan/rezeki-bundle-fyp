@@ -233,6 +233,28 @@ class SaleItemController extends Controller
         return view('dashboards.admins.manageSaleItems.editPromotion')->withSaleitem($saleItem);
     }
 
+    public function updatePromotion(Request $request, $id)
+    {
+        $request->validate([
+           
+            'promotionPrice' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
+         
+        ]);
+        
+        //split the promotion duration into start and end
+        $splitPromotionDuration = explode(" ",$request->promotionDuration);
+        
+        SaleItem::where('id', $id)
+        ->update([
+               'itemPromotionStatus' => $request->promotionStatus,
+               'itemPromotionPrice' => $request->promotionPrice,
+               'itemPromotionStartDate' => $splitPromotionDuration[0],
+               'itemPromotionEndDate' => $splitPromotionDuration[2],
+        ]);
+       
+        return redirect()->route('manageSaleItems.show', $id)->with('success','Sale item promotion updated successfully.');
+    }
+
     //Toggle activation status
     public function toggleActivationStatus($id)
     {
@@ -243,13 +265,13 @@ class SaleItemController extends Controller
             ->update([
                'itemActivationStatus' => 0,
             ]);
-            return redirect()->back()->with('success','Item deactivated successfully');  
+            return redirect()->back()->with('success','Sale item deactivated successfully');  
         } else {
             SaleItem::where('id', $id)
             ->update([
                'itemActivationStatus' => 1,
             ]);
-            return redirect()->back()->with('success','Item activated successfully');  
+            return redirect()->back()->with('success','Sale item activated successfully');  
         }
     }
 }

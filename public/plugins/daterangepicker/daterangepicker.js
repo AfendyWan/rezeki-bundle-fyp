@@ -36,7 +36,7 @@
         this.element = $(element);
         this.startDate = moment().startOf('day');
         this.endDate = moment().endOf('day');
-        this.minDate = false;
+        this.minDate = moment().startOf('day');
         this.maxDate = false;
         this.maxSpan = false;
         this.autoApply = false;
@@ -70,7 +70,7 @@
 
         this.locale = {
             direction: 'ltr',
-            format: moment.localeData().longDateFormat('L'),
+            format: 'YYYY/MM/DD',
             separator: ' - ',
             applyLabel: 'Apply',
             cancelLabel: 'Cancel',

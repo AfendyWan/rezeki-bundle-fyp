@@ -1,15 +1,13 @@
 @extends('dashboards.admins.layouts.admin-dash-layout')
-@section('title', 'EditPromotionSaleItems')
-
+@section('title', 'CreateSaleItems')
 @section('content')
+
 <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edit Sale Items</h2>
+                <h2>{{ $saleitem->itemName  }}</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('manageSaleItems.index') }}"> Back</a>
-            </div>
+          
         </div>
     </div>
     <br>
@@ -25,61 +23,58 @@
         </div>
     @endif
   
-    <form action="{{ route('manageSaleItems.update',$saleitem->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <input type="hidden"  name="id" value="{{ $saleitem->id }}">
-     <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <strong>Name:</strong>
-                <input type="text" name="name" class="form-control" value="{{ $saleitem->itemName }}" placeholder="Name">
-            </div>
-        </div>
-        <div class="col-md-6">
-        <div class="form-group">
-        <strong>Category:</strong>
-        <select class="form-control select2" style="width: 100%;" name="category">
-        @foreach($saleItemCategory as $categoryName)
-            @if($categoryName->id==$saleitem->itemCategory)
-                <option selected>{{ $categoryName->name }}</option>
-            @else   
-            <option>{{ $categoryName->name }}</option>
-            @endif
+    <form action="{{ route('manageSaleItems.updatePromotion',$saleitem->id) }}" method="POST">
+        @csrf
+        @method('POST')
        
-        @endforeach
-        <!-- <option disabled="disabled">California (disabled)</option> -->
-        </select>
-        </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <strong>Price(RM):</strong>
-                <input type="text" name="price" class="form-control" value="{{ $saleitem->itemPrice	 }}" placeholder="Price">
+            <input type="hidden"  name="id" value="{{ $saleitem->id }}">
+            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                <div class="form-group">
+                    <label>Sale Item Price (RM):</label>
+                    <input type="text" name="price" class="form-control" placeholder="Price" value="{{ $saleitem->itemPrice }}" disabled>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <strong>Stock:</strong>
-                <input type="text" name="stock" class="form-control" value="{{ $saleitem->itemStock }}" placeholder="Stock">
+            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                <div class="form-group">
+                    <label>Promotion Price (RM):</label>
+                    <input type="text" name="promotionPrice" class="form-control" placeholder="Price" value = "{{ $saleitem->itemPromotionPrice }}">
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Description:</strong>
-                <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $saleitem->itemDescription }}</textarea>
+    
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label>Promotion Status</label>
+                        <div class="p-t-10">
+                            <label class="radio-container m-r-45">On
+                                <input type="radio" checked="checked" name="promotionStatus" value = "1">
+                                <span class="checkmark"></span>
+                            </label> 
+                            &nbsp                            
+                            <label class="radio-container">Off
+                                <input type="radio" name="promotionStatus" value = "0">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Choose Images:</strong>
-                <input type="file" name="images[]" multiple class="form-control" accept="image/*">
+            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                <div class="form-group">
+                <label>Promotion Duration:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                            <input readonly type="text" class="form-control float-right" name="promotionDuration" id="reservation">
+                        </div>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-   
-</form>
+            <br>
+            <div class="col-12 col-sm-12 text-center">
+            <button type="submit" class="btn btn-primary">Save</button>&nbsp&nbsp
+            <a class="btn btn-danger" href="{{ route('manageSaleItems.show',$saleitem->id) }}">Back</a>
+            </div>
+      
+    </form>
 @endsection

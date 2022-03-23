@@ -39,6 +39,8 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
      
       Route::resource('manageCategories', SaleItemCategoryController::class);
 
+      Route::get('editPromotion/{id}',[SaleItemController::class,'editPromotion'])->name('manageSaleItems.editPromotion');
+      Route::post('updatePromotion/{id}',[SaleItemController::class,'updatePromotion'])->name('manageSaleItems.updatePromotion');
       Route::get('toggleActivationStatus/{id}',[SaleItemController::class,'toggleActivationStatus'])->name('manageSaleItems.toggleActivationStatus');
       Route::resource('manageSaleItems', SaleItemController::class);
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
