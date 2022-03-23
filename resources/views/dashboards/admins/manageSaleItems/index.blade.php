@@ -34,7 +34,13 @@
             <td>{{ ++$i }}</td>
             <td>{{ $saleItem->itemName }}</td>
             <td>{{ $saleItem->itemDescription }}</td>
-            <td>{{ $saleItem->itemCategory }}</td>
+                
+            @foreach($saleItemCategory as $category)
+                @if($saleItem->itemCategory == $category->id)
+                    <td>{{ $category->name }}</td>
+                @endif
+            @endforeach
+                       
             <td>
                 <form action="{{ route('manageSaleItems.destroy',$saleItem->id) }}" method="POST">
    

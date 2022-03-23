@@ -17,9 +17,10 @@ class SaleItemController extends Controller
      */
     public function index()
     {
-        $saleItem = SaleItem::latest()->paginate(5);
-    
-        return view('dashboards.admins.manageSaleItems.index',compact('saleItem'))
+        $saleItem = SaleItem::all();
+        //$saleItem = SaleItem::latest()->paginate(5);
+        $saleItemCategory = SaleItemCategory::all();
+        return view('dashboards.admins.manageSaleItems.index',compact('saleItem', 'saleItemCategory'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
