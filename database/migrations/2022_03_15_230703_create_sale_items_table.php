@@ -21,6 +21,8 @@ class CreateSaleItemsTable extends Migration
             $table->decimal('itemPrice',12,2)->nullable();
             $table->boolean('itemPromotionStatus')->nullable();
             $table->decimal('itemPromotionPrice',7,2)->nullable();
+            $table->date('itemPromotionStartDate')->nullable();
+            $table->date('itemPromotionEndDate')->nullable();
             $table->boolean('itemActivationStatus')->nullable();
             $table->text('itemDescription')->nullable();
 
