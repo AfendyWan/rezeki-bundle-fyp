@@ -7,7 +7,7 @@ use App\Models\SaleItemCategory;
 use App\Models\SaleItemImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use DB;
 class SaleItemController extends Controller
 {
     /**
@@ -278,4 +278,19 @@ class SaleItemController extends Controller
             return redirect()->back()->with('success','Sale item activated successfully');  
         }
     }
+
+    public function userIndex($id)
+    {
+         $allSaleItem = DB::table('sale_items')
+        ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
+        ->where('sale_items.itemCategory', $id)
+        ->select('sale_items.*', 'sale_item_images.*')
+        ->groupby('sale_item_images.sale_item_id')
+        ->get();
+      
+        $saleItemCategory = SaleItemCategory::where('id', $id)->first();
+        return view('dashboards.users.manageSaleItems.index',compact('allSaleItem', 'saleItemCategory'));
+            
+    }
+
 }

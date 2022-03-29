@@ -6,17 +6,17 @@
 <div class="container">
 
 <header class="section-heading">
-  <h3 class="section-title">Catalogue</h3>
+  <h3 class="section-title">{{ $saleItemCategory->name }}</h3>
 </header><!-- sect-heading -->
 
   
 <div class="row">
-  @foreach ($saleItemCatalogue as $c)
+  @foreach ($allSaleItem as $c)
   <div class="col-md-3">
-    <div href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="card card-product-grid">
-      <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
+    <div href="saleItems.index" class="card card-product-grid">
+      <a href="saleItems.index" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
       <figcaption class="info-wrap">
-        <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="title">{{ $c->name }}</a>
+        <a href="" class="title">{{ $c->itemName }}</a>
                  
         <!-- <div class="rating-wrap">
           <ul class="rating-stars">
@@ -29,8 +29,8 @@
           </ul>
           <span class="label-rating text-muted"> 34 reviws</span>
         </div> -->
-        <!-- <span class="label-rating text-muted">{{ $c->quantity }} items in this catalogue</span> -->
-        <div class="text-muted mt-1">{{ $c->quantity }} items in this catalogue</div> <!-- price-wrap.// -->
+        <!-- <span class="label-rating text-muted">{{ $c->itemStock }} items in this catalogue</span> -->
+        <div class="">Price: RM{{ $c->itemPrice }} </div> <!-- price-wrap.// -->
       </figcaption>
     </div>
   </div> 

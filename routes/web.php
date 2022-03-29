@@ -52,6 +52,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
     Route::get('profile',[UserController::class,'profile'])->name('user.profile');
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');
+    Route::get('viewSaleItemList/{id}',[SaleItemController::class,'userIndex'])->name('saleItems.index');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
