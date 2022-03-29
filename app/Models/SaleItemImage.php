@@ -10,7 +10,7 @@ class SaleItemImage extends Model
     use HasFactory;
 
     protected $fillable = [
-     'url', 'sale_item_id'
+     'url', 'sale_item_id', 'sale_item_category_id'
     ];
     
     public function saleItem()

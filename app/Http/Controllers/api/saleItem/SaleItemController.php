@@ -40,6 +40,7 @@ class SaleItemController extends Controller{
                 //$path = $image->storeAs('public/', $name);
                 SaleItemImage::create([
                     'sale_item_id' => $saleItem->id,
+                    'sale_item_category_id' => $category->id,
                     'url' => '/storage/'.$path
                 ]);
             }
@@ -86,6 +87,7 @@ class SaleItemController extends Controller{
                     //$path = $image->storeAs('public/', $name);
                     SaleItemImage::create([
                         'sale_item_id' => $request->id,
+                        'sale_item_category_id' => $category->id,
                         'url' => '/storage/'.$path
                     ]);
                 }
