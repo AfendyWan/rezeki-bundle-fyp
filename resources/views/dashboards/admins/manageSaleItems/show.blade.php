@@ -15,7 +15,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-<div class="card card-solid">
+
 <div class="card-body">
 <div class="row">
 <div class="col-12 col-sm-6">
@@ -83,16 +83,16 @@
     @else
         <a href="{{ route('manageSaleItems.toggleActivationStatus', $saleitem->id) }}" class="btn btn-sm btn-success">Activate Sale Item</a>                        
     @endif 
-    
 </div>
 <div class="bg-gray py-2 px-3 mt-4">
-<h2 class="mb-0">
-Sale Price: RM {{ $saleitem->itemPrice }}
-</h2>
-<h4 class="mt-0">
-<small>Bale Price: RM 80.00 </small>
-</h4>
+    <h2 class="mb-0">
+        Sale Price: RM {{ $saleitem->itemPrice }}
+    </h2>
+    <h4 class="mt-0">
+        <small>Bale Price: RM 80.00 </small>
+    </h4>
 </div>
+
 </div>
 </div>
 

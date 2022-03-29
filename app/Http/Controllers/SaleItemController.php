@@ -122,6 +122,7 @@ class SaleItemController extends Controller
         $saleItem  = SaleItem::find($id);
         $category = SaleItemCategory::where('id', $saleItem->itemCategory )->first();
         $firstSaleItemImage = SaleItemImage::where('sale_item_id', $id)->first();
+        
         $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
         return view('dashboards.admins.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages'))->withSaleitem($saleItem);
     }
