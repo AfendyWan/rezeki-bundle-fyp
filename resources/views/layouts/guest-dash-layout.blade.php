@@ -30,7 +30,7 @@
     </ul>
     <ul class="navbar-nav">
     <li  class="nav-item"><a href="#" class="nav-link"> Call: +0000000000 </a></li>
- 
+
   </ul> <!-- list-inline //  -->
   
 </div> <!-- container //  -->
@@ -40,7 +40,7 @@
 <div class="row align-items-center">
   <div class="col-lg-2 col-6">
     <a href="#" class="brand-wrap">
-     Rezeki Bundle
+      Rezeki Bundle
     </a> <!-- brand-wrap.// -->
   </div>
   <div class="col-lg-6 col-12 col-sm-12">
@@ -61,7 +61,26 @@
         <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
         <span class="badge badge-pill badge-danger notify">0</span>
       </div>
-
+      <div class="widget-header icontext">
+        <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+        <div class="text">
+          <span class="text-muted">Welcome!</span>
+          <div> 
+       
+            @if (Route::has('login'))
+               
+                    @auth
+                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                    @else
+                    <a href="{{ route('login') }}">Sign in</a> |  
+                    <a href="{{ route('register') }}"> Register</a>
+                       
+                    @endauth
+                
+            @endif
+          </div>
+        </div>
+      </div>
     </div> <!-- widgets-wrap.// -->
   </div> <!-- col.// -->
 </div> <!-- row.// -->
@@ -111,11 +130,25 @@
   </div> <!-- container .// -->
 </nav>
 </header> <!-- section-header.// -->
-
+<!-- ========================= SECTION INTRO ========================= -->
 <section class="section-intro padding-y-sm">
 <div class="container">
 @yield('content')
 </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+<!-- ========================= SECTION FEATURE ========================= -->
+
+
+
+<!-- ========================= SECTION  END// ========================= -->
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y">
+<div class="container">
+<h3 class="mb-3">Download app demo text</h3>
+<a href="#"><img src="assets/images/misc/appstore.png" height="40"></a>
+<a href="#"><img src="assets/images/misc/appstore.png" height="40"></a>
+</div><!-- container // -->
 </section>
 <!-- ========================= SECTION  END// ======================= -->
 <!-- ========================= FOOTER ========================= -->
@@ -174,7 +207,7 @@
     </section>  <!-- footer-top.// -->
     <section class="footer-bottom row">
       <div class="col-md-2">
-        <p class="text-muted">   2021 Rezeki Bundle </p>
+        <p class="text-muted">   2021 Company name </p>
       </div>
       <div class="col-md-8 text-md-center">
         <span  class="px-2">info@com</span>
