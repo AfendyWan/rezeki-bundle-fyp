@@ -46,6 +46,20 @@
         </tr>
 
         <tr>
+            <th>Item Brand</th>
+            <td>{{ $saleitem->itemBrand  }}</td>
+        </tr>
+
+        <tr>
+            <th>Item Size</th>
+            <td>{{ $saleitem->itemSize  }}</td>
+        </tr>
+
+        <tr>
+            <th>Item Color</th>
+            <td>{{ $saleitem->itemColor  }}</td>
+        </tr>
+        <tr>
             <th>Item Stock</th>
             <td>{{ $saleitem->itemStock }}</td>
         </tr>

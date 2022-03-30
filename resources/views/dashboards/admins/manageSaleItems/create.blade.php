@@ -58,6 +58,54 @@
                 <input type="text" name="stock" class="form-control" placeholder="Stock">
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <strong>Size:</strong>
+                <input list="list-sizes" name="size" class="form-control" placeholder="Size"/>
+                <datalist id="list-sizes">
+                    <option value="Small (S)">
+                    <option value="Medium (M)">
+                    <option value="Large (L)">
+                    <option value="XLarge (XL)">
+                    <option value="2XLarge (2XL)">
+                    <option value="3XLarge (3XL)">
+                </datalist>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <strong>Color:</strong>
+                <input list="list-colors" name="color" class="form-control" placeholder="Color"/>
+                <datalist id="list-colors">
+                    <option value="White">
+                    <option value="Yellow">
+                    <option value="Yellow-Green">
+                    <option value="Green">
+                    <option value="Blue-Green">
+                    <option value="Blue">
+                    <option value="Blue-Violet">
+                    <option value="Violet">
+                    <option value="Red-Violet">
+                    <option value="Red">
+                    <option value="Red-Orange">
+                    <option value="Orange">
+                    <option value="Yellow-Orange">
+                    <option value="Mixed">
+                    <option value="Black">
+                </datalist>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Brand:</strong>
+                <input list="list-brand" name="brand" class="form-control" placeholder="Brand"/>
+                <datalist id="list-brand">
+                    @foreach ($brandList as $brand)
+                    <option value="{{ $brand->itemBrand }}">
+                    @endforeach
+                </datalist>
+            </div>
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Description:</strong>

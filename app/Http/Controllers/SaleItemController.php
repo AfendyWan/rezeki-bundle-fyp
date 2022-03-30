@@ -32,7 +32,9 @@ class SaleItemController extends Controller
     public function create()
     {
         $categoryName = SaleItemCategory::select('name')->get();
-        return view('dashboards.admins.manageSaleItems.create', compact('categoryName'));
+        $brandList =  SaleItem::select('itemBrand')->distinct()->get();
+   
+        return view('dashboards.admins.manageSaleItems.create', compact('categoryName', 'brandList'));
         
     }
 
@@ -43,13 +45,18 @@ class SaleItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+    
+
         $request->validate([
             'name' => 'required|string|max:255|unique:sale_items,itemName',
             'description' => ['required', 'string', 'max:255'],
             'price' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
             'stock' => ['required', 'numeric'],
             'category' => 'required',
+            'size' => 'required',
+            'color' => 'required',
+            'brand' => 'required',
             'images' => 'required|max:6',
           //  'images' => 'required|mimes:png,jpg,jpeg|max:5'
         ]);
@@ -63,6 +70,9 @@ class SaleItemController extends Controller
         $saleItem->itemPrice = $request->price;
         $saleItem->itemStock = $request->price;
         $saleItem->itemCategory = $category->id;
+        $saleItem->itemSize = $request->size;
+        $saleItem->itemColor = $request->color;
+        $saleItem->itemBrand = $request->brand;
         $saleItem->itemPromotionPrice =  0.00;
         $saleItem->itemActivationStatus = 1;
        
@@ -138,7 +148,8 @@ class SaleItemController extends Controller
     {
         $saleItemCategory = SaleItemCategory::all();
         $saleItem  = SaleItem::find($id);
-        return view('dashboards.admins.manageSaleItems.edit', compact('saleItemCategory'))->withSaleitem($saleItem);
+        $brandList =  SaleItem::select('itemBrand')->distinct()->get();
+        return view('dashboards.admins.manageSaleItems.edit', compact('saleItemCategory', 'brandList'))->withSaleitem($saleItem);
     }
 
     /**
@@ -153,6 +164,9 @@ class SaleItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => ['required', 'string', 'max:255'],
+            'size' => 'required',
+            'color' => 'required',
+            'brand' => 'required',
             'price' => 'regex:/^[0-9]*\.[0-9][0-9]$/',
             'stock' => ['required', 'numeric'],
             'category' => 'required',
@@ -165,6 +179,9 @@ class SaleItemController extends Controller
         ->update([
                'itemName' => $request->name,
                'itemDescription' => $request->description,
+               'itemColor' => $request->color,
+               'itemSize' => $request->size,
+               'itemBrand' => $request->brand,
                'itemPrice' => $request->price,
                'itemStock' => $request->stock,
                'itemCategory' => $category->id,
@@ -172,6 +189,7 @@ class SaleItemController extends Controller
                'itemPromotionPrice' => 0.00,
                'itemActivationStatus' => 1,
         ]);
+    
 
         $allSaleItemImages = SaleItemImage::where('sale_item_id', $request->id)->get();
         
