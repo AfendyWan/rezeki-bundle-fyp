@@ -12,7 +12,8 @@
   
 <div class="row">
   @foreach ($allSaleItem as $c)
-  <div class="col-md-3">
+    @if ($c->itemActivationStatus != 0)
+    <div class="col-md-3">
     <div href="{{ route('saleItems.show', $c->id) }}" class="card card-product-grid">
       <a href="{{ route('saleItems.show', $c->id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
       <figcaption class="info-wrap">
@@ -34,6 +35,7 @@
       </figcaption>
     </div>
   </div> 
+    @endif
   @endforeach
 <!-- col.// -->
 
