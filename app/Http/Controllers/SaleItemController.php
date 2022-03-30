@@ -284,12 +284,26 @@ class SaleItemController extends Controller
          $allSaleItem = DB::table('sale_items')
         ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
         ->where('sale_items.itemCategory', $id)
-        ->select('sale_items.*', 'sale_item_images.*')
+        ->select('sale_item_images.*', 'sale_items.*') //clash column name, the 2nd one will be chosen
         ->groupby('sale_item_images.sale_item_id')
         ->get();
       
+     
         $saleItemCategory = SaleItemCategory::where('id', $id)->first();
+        
         return view('dashboards.users.manageSaleItems.index',compact('allSaleItem', 'saleItemCategory'));
+            
+    }
+
+    public function userShowItem($id)
+    {
+        $saleItem  = SaleItem::find($id);
+       
+        $category = SaleItemCategory::where('id', $saleItem->itemCategory )->first();
+        $firstSaleItemImage = SaleItemImage::where('sale_item_id', $id)->first();
+        
+        $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
+        return view('dashboards.users.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages'))->withSaleitem($saleItem);
             
     }
 

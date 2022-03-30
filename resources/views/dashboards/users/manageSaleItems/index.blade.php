@@ -13,10 +13,10 @@
 <div class="row">
   @foreach ($allSaleItem as $c)
   <div class="col-md-3">
-    <div href="saleItems.index" class="card card-product-grid">
-      <a href="saleItems.index" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
+    <div href="{{ route('saleItems.show', $c->id) }}" class="card card-product-grid">
+      <a href="{{ route('saleItems.show', $c->id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
       <figcaption class="info-wrap">
-        <a href="" class="title">{{ $c->itemName }}</a>
+        <a href="{{ route('saleItems.show', $c->id) }}" class="title">{{ $c->itemName }}</a>
                  
         <!-- <div class="rating-wrap">
           <ul class="rating-stars">
