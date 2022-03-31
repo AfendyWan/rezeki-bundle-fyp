@@ -14,11 +14,11 @@
   @foreach ($saleItemImage as $c)
     @if ($c->itemPromotionStatus == 1)
     <div class="col-md-3">
-    <div href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="card card-product-grid">
-      <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
+    <div href="{{ route('saleItems.show', $c->sale_item_id) }}" class="card card-product-grid">
+      <a href="{{ route('saleItems.show', $c->sale_item_id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
       <figcaption class="info-wrap">
        
-        <h5 class="section-title" style="color: blue"> <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="title">{{ $c->itemName  }}</a></h5>
+        <h5 class="section-title" style="color: blue"> <a href="{{ route('saleItems.show', $c->sale_item_id) }}" class="title">{{ $c->itemName  }}</a></h5>
         <!-- <div class="rating-wrap">
           <ul class="rating-stars">
             <li style="width:80%" class="stars-active"> 
