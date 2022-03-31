@@ -127,7 +127,7 @@
           <a class="nav-link" href="#">Clothing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Furnitures</a>
+          <a class="nav-link" href="{{ route('saleItems.showPromotionList') }}" style="color: red">Promotions</a>
         </li>
       </ul>
     </div> <!-- collapse .// -->

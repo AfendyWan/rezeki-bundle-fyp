@@ -325,4 +325,20 @@ class SaleItemController extends Controller
             
     }
 
+    public function userShowPromotionList()
+    {
+        $promotionSaleItems  = SaleItem::where('itemPromotionStatus', 1)->get();
+    
+        $saleItemImage = DB::table('sale_item_images')
+        ->join('sale_items', 'sale_item_images.sale_item_id', '=', 'sale_items.id')
+        ->select('sale_item_images.*', 'sale_items.*')
+        ->groupby('sale_item_images.sale_item_id')
+        ->get();
+       
+        $allSaleItemImages =  SaleItemImage::select('sale_item_id')->distinct()->get();
+
+        return view('dashboards.users.manageSaleItems.showPromotionList', compact('promotionSaleItems', 'saleItemImage'));
+            
+    }
+
 }

@@ -1,24 +1,24 @@
 @extends('dashboards.users.layouts.user-dash-layout')
-@section('title', 'showItemList')
+@section('title', 'PromotionList')
 
 @section('content')
 <section class="section-content">
 <div class="container">
 
 <header class="section-heading">
-  <h3 class="section-title">{{ $saleItemCategory->name }}</h3>
+  <h3 class="section-title">Promotion List of Items</h3>
 </header><!-- sect-heading -->
 
   
 <div class="row">
-  @foreach ($allSaleItem as $c)
-    @if ($c->itemActivationStatus != 0)
+  @foreach ($saleItemImage as $c)
+    @if ($c->itemPromotionStatus == 1)
     <div class="col-md-3">
-    <div href="{{ route('saleItems.show', $c->id) }}" class="card card-product-grid">
-      <a href="{{ route('saleItems.show', $c->id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
+    <div href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="card card-product-grid">
+      <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="img-wrap"> <img src="{{  url($c->url) }}"> </a>
       <figcaption class="info-wrap">
-        <a href="{{ route('saleItems.show', $c->id) }}" class="title">{{ $c->itemName }}</a>
-                 
+       
+        <h5 class="section-title" style="color: blue"> <a href="{{ route('saleItems.index', $c->sale_item_category_id) }}" class="title">{{ $c->itemName  }}</a></h5>
         <!-- <div class="rating-wrap">
           <ul class="rating-stars">
             <li style="width:80%" class="stars-active"> 
@@ -30,12 +30,16 @@
           </ul>
           <span class="label-rating text-muted"> 34 reviws</span>
         </div> -->
-        <!-- <span class="label-rating text-muted">{{ $c->itemStock }} items in this catalogue</span> -->
-        <div class="">Price: RM{{ $c->itemPrice }} </div> <!-- price-wrap.// -->
+        <!-- <span class="label-rating text-muted">{{ $c->itemName }} items in this catalogue</span> -->
+        <h5 class="section-title" style="color: red">Promotion: RM {{ $c->itemPromotionPrice }}</h5>
+        <h6 class="section-title">Normal: RM <s>{{ $c->itemPrice }}</s></h6>
+       
+        <div class="text-muted mt-1">{{ $c->itemPromotionStartDate }} - {{ $c->itemPromotionEndDate }}</div> 
+     
       </figcaption>
     </div>
   </div> 
-    @endif
+  @endif
   @endforeach
 <!-- col.// -->
 

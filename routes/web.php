@@ -54,6 +54,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');
     Route::get('viewSaleItemList/{id}',[SaleItemController::class,'userIndex'])->name('saleItems.index');
     Route::get('viewSaleItem/{id}',[SaleItemController::class,'userShowItem'])->name('saleItems.show');
+    Route::get('viewSaleItemPromotionList',[SaleItemController::class,'userShowPromotionList'])->name('saleItems.showPromotionList');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
