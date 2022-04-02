@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SaleItemCategoryController;
 use App\Http\Controllers\SaleItemController;
+use App\Http\Controllers\CartController;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -55,6 +57,9 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('viewSaleItemList/{id}',[SaleItemController::class,'userIndex'])->name('saleItems.index');
     Route::get('viewSaleItem/{id}',[SaleItemController::class,'userShowItem'])->name('saleItems.show');
     Route::get('viewSaleItemPromotionList',[SaleItemController::class,'userShowPromotionList'])->name('saleItems.showPromotionList');
+
+    
+    Route::resource('manageCarts', CartController::class);
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
