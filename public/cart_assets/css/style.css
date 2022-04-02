@@ -44,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 /*-- Index-Page-Styling --*/
 
 body {
-	background: url("../images/bg.jpg");
+
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -62,7 +62,7 @@ body a {
 	clear: both;
 }
 
-.container {
+.container1 {
     width: 55%;
     margin: 0 auto;
 }
@@ -72,12 +72,11 @@ h1 {
     font-family: 'FjallaOne-Regular';
     font-size: 45px;
     letter-spacing: 1px;
-    color: #EEE;
 }
 
 .main-bar {
     padding: 20px 10px;
-    background-color: #70658A;
+    background-color: #1c4bcc;
     margin-bottom: 30px;
     border-radius: 5px;
 }
@@ -216,7 +215,7 @@ p {
     padding-top: 7px;
 }
 .add a {
-    color: #70658a;
+    color: #1c4bcc;
     font-weight: bold;
 }
 .add a:hover {
@@ -231,7 +230,7 @@ p {
     padding: 7px 30px;
     color: #FFF;
     font-weight: bold;
-    background-color: #70658a;
+    background-color: #1c4bcc;
     border-radius: 5px;
 }
 .checkout-btn a:hover {
@@ -263,8 +262,8 @@ p {
         padding: 60px 0;
         font-size: 50px;
     }
-    .container {
-        width: 40%;
+    .container1 {
+        width: 80%;
     }
     .copyright {
         margin-top: 200px;
@@ -272,13 +271,13 @@ p {
 }
 
 @media screen and (max-width: 1680px) {
-    .container {
+    .container1 {
         width: 45%;
     }
 }
 
 @media screen and (max-width: 1600px) {
-    .container {
+    .container1 {
         width: 47%;
     }
     .copyright {
@@ -287,7 +286,7 @@ p {
 }
 
 @media screen and (max-width: 1440px) {
-    .container {
+    .container1 {
         width: 52%;
     }
 }
@@ -297,7 +296,7 @@ p {
         padding: 35px 0;
         font-size: 45px;
     }
-    .container {
+    .container1 {
         width: 55%;
     }
     .main-bar {
@@ -313,44 +312,44 @@ p {
 }
 
 @media screen and (max-width: 1280px) {
-    .container {
+    .container1 {
         width: 58%;
     }
 }
 
 @media screen and (max-width: 1080px) {
-    .container {
+    .container1 {
         width: 70%;
     }
 }
 
 
 @media screen and (max-width: 1024px) {
-    .container {
+    .container1 {
         width: 73%;
     }
 }
 
 @media screen and (max-width: 991px) {
-    .container {
+    .container1 {
         width: 77%;
     }
 }
 
 @media screen and (max-width: 900px) {
-    .container {
+    .container1 {
         width: 82%;
     }
 }
 
 @media screen and (max-width: 853px) {
-    .container {
+    .container1 {
         width: 87%;
     }
 }
 
 @media screen and (max-width: 800px) {
-    .container {
+    .container1 {
         width: 90%;
     }
 }
@@ -491,7 +490,7 @@ p {
 }
 
 @media screen and (max-width: 414px) {
-    .container {
+    .container1 {
         width: 95%;
     }
     .title1 p, .title2 p, .title3 p {

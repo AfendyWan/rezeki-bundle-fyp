@@ -16,4 +16,9 @@ class SaleItem extends Model
     {
         return $this->hasMany('App\SaleItemImage', 'sale_item_id');
     }
+
+    public function cartItem()
+    {
+        return $this->hasMany('App\CartItem', 'sale_item_id');
+    }
 }

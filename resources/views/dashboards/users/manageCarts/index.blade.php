@@ -1,3 +1,9 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 @extends('dashboards.users.layouts.user-dash-layout')
 @section('title', 'showItemList')
 
@@ -15,7 +21,8 @@
 <!-- //For-Mobile-Apps -->
 
 <!-- Custom-Theme-Files -->
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<base href="{{\URL::to('/')}}">
+	<link rel="stylesheet" href="cart_assets/css/style.css" type="text/css" media="all" />
 <!-- //Custom-Theme-Files -->
 
 <!-- Remove-Item-JavaScript -->
@@ -54,7 +61,7 @@
 	<h1>E SHOP CART WIDGET</h1>
 
 	<!-- Content-Starts-Here -->
-	<div class="container">
+	<div class="container1">
 
 		<!-- Mainbar-Starts-Here -->
 		<div class="main-bar">
@@ -79,7 +86,7 @@
 				<div class="close1">
 					<!-- Remove-Item --><div class="alert-close1"> </div><!-- //Remove-Item -->
 					<div class="image1">
-						<img src="images/item1.png" alt="item1">
+						<img src="cart_assets/images/item1.png" alt="item1">
 					</div>
 					<div class="title1">
 						<p>Gucci Gg1078/S 4Uavk Grey Wayfarer</p>
@@ -102,7 +109,7 @@
 				<div class="close2">
 					<!-- Remove-Item --><div class="alert-close2"> </div><!-- //Remove-Item -->
 					<div class="image2">
-						<img src="images/item2.png" alt="item2">
+						<img src="cart_assets/images/item2.png" alt="item2">
 					</div>
 					<div class="title2">
 						<p>Gucci Men's YA131202 Coupe Dual</p>
@@ -125,7 +132,7 @@
 				<div class="close3">
 					<!-- Remove-Item --><div class="alert-close3"> </div><!-- //Remove-Item -->
 					<div class="image3">
-						<img src="images/item3.png" alt="item3">
+						<img src="cart_assets/images/item3.png" alt="item3">
 					</div>
 					<div class="title3">
 						<p>Gucci Cufflinks with Interlocking G Motif</p>
@@ -183,4 +190,3 @@
 
 </html>
 @endsection
-
