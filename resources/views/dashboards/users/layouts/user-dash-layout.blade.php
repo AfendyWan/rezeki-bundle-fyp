@@ -44,25 +44,24 @@
     </a> <!-- brand-wrap.// -->
   </div>
   <div class="col-lg-6 col-12 col-sm-12">
-    <form action="#" class="search">
-      <div class="input-group w-100">
+    <div class="input-group w-100">
           <input type="text" class="form-control" placeholder="Search">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fa fa-search"></i>
             </button>
           </div>
-        </div>
-    </form> <!-- search-wrap .end// -->
+        </div><!-- search-wrap .end// -->
   </div> <!-- col.// -->
+ 
   <div class="col-lg-4 col-sm-6 col-12">
     <div class="widgets-wrap float-md-right">
-      <div class="widget-header  mr-3">
-        <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-        <span class="badge badge-pill badge-danger notify">0</span>
+      <div class="widget-header mr-3">
+      <i class="fa fa-shopping-cart icon-sm"></i>
+       <a> <span class="badge badge-pill badge-danger notify">0</span></a>
       </div>
       <div class="widget-header icontext">
-        <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+      <a> <i class="fa fa-user icon-sm"></i>  </a>
         <div class="text">
           <div> 
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
