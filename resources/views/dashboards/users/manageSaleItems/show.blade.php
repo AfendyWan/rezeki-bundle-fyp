@@ -9,7 +9,16 @@
   <h3 class="section-title">{{ $category->name  }}</h3>
 </header><!-- sect-heading -->
 
-
+@if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        {{ $message }}
+    </div>
+@endif
+@if ($message = Session::get('error'))
+    <div class="alert alert-danger">
+        {{ $message }}
+    </div>
+@endif
 
 </div> <!-- container .//  -->
 <section class="content">
@@ -30,16 +39,25 @@
 
 </div>
 </div>
+
 <div class="col-12 col-sm-6">
   <h3 class="my-3">{{ $saleitem->itemName }}</h3>
-  <h5>Brand: {{ $saleitem->itemBrand }}</h5>
+
+  <hr>
+  <h4>Brand:</h4>
+  <p style="font-size: 20">{{ $saleitem->itemBrand }}</p>
   <hr>
   <h4>Description: </h4>
-  <p>{{ $saleitem->itemDescription }}</p>
+  <p style="font-size: 20">{{ $saleitem->itemDescription }}</p>
   <hr>
-  <h4>Color: {{ $saleitem->itemColor }}</h4> <br>
+  <h4>Color:</h4>
+  <p style="font-size: 20"> {{ $saleitem->itemColor }}</p>
   <hr>
-  <h4>Sizes: {{ $saleitem->itemSize }}</h4> <br>
+  <h4>Sizes: </h4>
+  <p style="font-size: 20">{{ $saleitem->itemSize }}</p>
+  <hr>
+  <h4>Stock: </h4>
+  <p style="font-size: 20">{{ $saleitem->itemStock }}</p>
   <hr>
   <div class="bg-gray py-2 px-3 mt-4">
   <h2 class="mb-0">
@@ -66,14 +84,21 @@
 </h4>
 </div>
 <div class="mt-4">
- <div class="btn btn-primary btn-lg btn-flat">
-<i class="fas fa-cart-plus fa-lg mr-2"></i>
-Add to Cart
-</div>
-<div class="btn btn-default btn-lg btn-flat">
-<i class="fas fa-heart fa-lg mr-2"></i>
-Add to Wishlist
-</div>
+<div class="row">
+&nbsp &nbsp
+<form action="{{ route('manageCarts.store') }}" method="POST">
+    @csrf
+    <button type="button" class="btn btn-primary btn-lg btn-flat" data-toggle="modal" data-target="#saleItemQuantityCart">
+    <i class="fas fa-cart-plus fa-lg mr-2"></i> Add to Cart
+    </button>
+</form>
+&nbsp&nbsp&nbsp
+<form action="{{ route('manageCarts.store') }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-default btn-lg btn-flat"><i class="fas fa-heart fa-lg mr-2"></i> Add to Wishlist </button>
+</form></div>
+
+
 </div>
 <div class="mt-4 product-share">
 <a href="#" class="text-gray">
@@ -109,6 +134,34 @@ Add to Wishlist
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="saleItemQuantityCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter item quantity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('manageCarts.store') }}" method="POST">
+        @csrf
+      <div class="modal-body">
+          <div class="form-group">
+           <label class="col-form-label">Quantity: <small>(Max quantity: {{ $saleitem->itemStock }})</small></label>
+            <input type="number" class="form-control" name="quantity">
+            <input type="hidden" name="userID" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="saleItemID" value="{{ $saleitem->id }}">
+          </div>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 </section>
 
 <script>

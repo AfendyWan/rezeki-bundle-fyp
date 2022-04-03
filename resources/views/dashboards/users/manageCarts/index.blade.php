@@ -1,17 +1,12 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 @extends('dashboards.users.layouts.user-dash-layout')
-@section('title', 'showItemList')
+@section('title', 'cart')
 
 @section('content')
 <!DOCTYPE html>
 <html>
 <head>
-<title>E Shop Cart Widget A Flat Responsive Widget Template :: W3layouts</title>
+
 
 <!-- For-Mobile-Apps -->
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +53,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- Body-Starts-Here -->
 <body>
 
-	<h1>E SHOP CART WIDGET</h1>
+	<h1>SHOPPING CART</h1>
 
 	<!-- Content-Starts-Here -->
 	<div class="container1">
@@ -179,11 +174,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div>
 	<!-- Content-Ends-Here -->
 
-	<!-- Copyright-Starts-Here -->
-	<div class="copyright">
-	    <p>&copy; 2016 E Shop Cart. All Rights Reserved | Template by <a href="http://w3layouts.com/"> W3layouts </a></p>
-	</div>
-	<!-- //Copyright-Ends-Here -->
+<br>
 
 </body>
 <!-- Body-Ends-Here -->

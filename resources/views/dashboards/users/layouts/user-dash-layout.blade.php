@@ -57,8 +57,14 @@
   <div class="col-lg-4 col-sm-6 col-12">
     <div class="widgets-wrap float-md-right">
       <div class="widget-header mr-3">
-      <i class="fa fa-shopping-cart icon-sm"></i>
-       <a> <span class="badge badge-pill badge-danger notify">0</span></a>
+      <a href="{{ route('manageCarts.index') }}">  <i class="fa fa-shopping-cart icon-sm"></i>
+    
+       @if (!$cartQuantity || $cartQuantity->cartItemQuantity==0)
+       <span class="badge badge-pill badge-danger notify">0</span>
+            @else
+            <span class="badge badge-pill badge-danger notify">{{$cartQuantity->cartItemQuantity}}</span>
+            @endif     
+      </a>
       </div>
       <div class="widget-header icontext">
       <a> <i class="fa fa-user icon-sm"></i>  </a>
