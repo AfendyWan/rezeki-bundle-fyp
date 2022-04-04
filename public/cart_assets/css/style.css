@@ -38,7 +38,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     .underline{	padding-bottom:5px;	border-bottom: 1px solid #eee; margin:0 0 20px 0;}/* Add 5px bottom padding and a underline */
     nav.vertical ul li{	display:block;}/* vertical menu */
     nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
-    img{max-width:100%;}
+    img{max-width:80%;}
 /*-- Reset Code --*/
 
 /*-- Index-Page-Styling --*/
@@ -153,8 +153,8 @@ img {
     text-align: center;
 }
 p {
-    margin-top: 15px;
-    color: #8D8E98;
+    
+    color: #2833af;
 }
 .quantity1 input[type="number"], .quantity2 input[type="number"], .quantity3 input[type="number"] {
     width: 70%;
@@ -278,7 +278,7 @@ p {
 
 @media screen and (max-width: 1600px) {
     .container1 {
-        width: 47%;
+        width: 60%;
     }
     .copyright {
         margin-top: 100px;

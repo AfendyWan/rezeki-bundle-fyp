@@ -8,6 +8,8 @@ use App\Models\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Redirect;
+use Auth;
+use DB;
 
 class CartController extends Controller
 {
@@ -18,7 +20,20 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('dashboards.users.manageCarts.index');
+        $getCart = Cart::where([
+            ['userID', '=', Auth::user()->id],
+            ['cartStatus', '=', 1],
+        ])->first();
+
+
+        $getSaleItemInCart = DB::table('cart_items')
+        ->join('sale_items', 'cart_items.sale_item_id', '=', 'sale_items.id')
+        ->join('sale_item_images', 'cart_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
+        ->select('cart_items.*', 'sale_items.*', 'sale_item_images.*')
+        ->groupby('cart_items.sale_item_id')
+        ->get();
+        
+        return view('dashboards.users.manageCarts.index', compact('getCart','getSaleItemInCart'));
     }
 
     /**
@@ -120,6 +135,23 @@ class CartController extends Controller
             }
         }
 
+        return Redirect::back()->with(['success' => 'Item had been added to cart successfully']);
+    }
+
+    public function updateCartItemQuantity(Request $request){
+
+        $saleItem = SaleItem::where('id', $request->saleItemID)->first();
+       
+        if($request->quantity > $saleItem->itemStock){
+            return Redirect::back()->with(['error' => 'Item quantity added to cart exceed item stock']);
+        }
+
+        CartItem::where([
+            ['cart_id', '=', $request->cartID],
+            ['sale_item_id', '=', $request->saleItemID],
+        ])->update([
+            'quantity' => $request->quantity,
+        ]);
         return Redirect::back()->with(['success' => 'Item had been added to cart successfully']);
     }
 

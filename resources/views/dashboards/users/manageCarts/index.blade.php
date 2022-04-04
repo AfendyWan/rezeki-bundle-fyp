@@ -21,8 +21,8 @@
 <!-- //Custom-Theme-Files -->
 
 <!-- Remove-Item-JavaScript -->
-	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-	<script>$(document).ready(function(c) {
+	<!-- <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script> -->
+	<!-- <script>$(document).ready(function(c) {
 		$('.alert-close1').on('click', function(c){
 			$('.close1').fadeOut('slow', function(c){
 		  		$('.close1').remove();
@@ -45,7 +45,7 @@
 			});
 		});	  
 	});
-	</script>
+	</script> -->
 <!-- //Remove-Item-JavaScript -->
 
 </head>
@@ -54,7 +54,16 @@
 <body>
 
 	<h1>SHOPPING CART</h1>
-
+	@if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        {{ $message }}
+    </div>
+	@endif
+	@if ($message = Session::get('error'))
+    <div class="alert alert-danger">
+        {{ $message }}
+    </div>
+	@endif
 	<!-- Content-Starts-Here -->
 	<div class="container1">
 
@@ -77,81 +86,90 @@
 		<div class="items">
 
 			<!-- Item1-Starts-Here -->
+			@foreach ($getSaleItemInCart as $c)
 			<div class="item1">
 				<div class="close1">
-					<!-- Remove-Item --><div class="alert-close1"> </div><!-- //Remove-Item -->
+					<!-- Remove-Item --><!-- //Remove-Item -->
 					<div class="image1">
-						<img src="cart_assets/images/item1.png" alt="item1">
+						<img src="{{  url($c->url) }}" alt="item1">
 					</div>
 					<div class="title1">
-						<p>Gucci Gg1078/S 4Uavk Grey Wayfarer</p>
+						<p style="font-size:20px">{{ $c->itemName }}</p>
 					</div>
 					<div class="quantity1">
 						<form action="action_page.php">
-							<input type="number" name="quantity" min="1" max="10" value="1">
+						<button type="button" class="btn btn-outline-primary" data-id="{{ $c->quantity }}" data-toggle="modal" data-target="#saleItemQuantityCart<?php echo $c->id;?>" id="submit">{{ $c->quantity }}</button>
+							<input type="hidden" name="originalQuantity" id="originalQuantity"  min="1" max="10" value="{{ $c->quantity }}">
+							<input type="hidden" name="marks" id="marks" min="1" max="10" value="{{ $c->quantity }}">
+							
 						</form>
+				
 					</div>
 					<div class="price1">
-						<p>$ 210</p>
+						<p style="font-size:24px" float="top">RM {{ $c->itemPrice }}</p>
 					</div>
 					<div class="clear"></div>
 				</div>
 			</div>
+			<div id="message<?php echo $c->id;?>" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+						<p>Some text in the modal.</p>
+						<?php echo $c->id;?>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+					</div>
+
+				</div>
+				</div>
+
+			<!-- modal -->
+			<div class="modal fade" id="saleItemQuantityCart<?php echo $c->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Enter item quantity</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="{{ route('manageCarts.updateCartItemQuantity') }}" method="POST">
+					@csrf
+				<div class="modal-body">
+					<div class="form-group">
+					<label class="col-form-label">Quantity: <small></small></label>
+						<input type="number" class="form-control" id="quantity" name="quantity" value="{{$c->quantity}}">
+						<input type="hidden" name="userID" value="{{ auth()->user()->id }}">
+						<input type="hidden" name="saleItemID" value="{{$c->sale_item_id}}">
+						<input type="hidden" name="cartID" value="{{$c->cart_id}}">
+					</div>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+				</form>
+				</div>
+			</div>
+			</div>
+			@endforeach
 			<!-- //Item1-Ends-Here -->
-
-			<!-- Item2-Starts-Here -->
-			<div class="item2">
-				<div class="close2">
-					<!-- Remove-Item --><div class="alert-close2"> </div><!-- //Remove-Item -->
-					<div class="image2">
-						<img src="cart_assets/images/item2.png" alt="item2">
-					</div>
-					<div class="title2">
-						<p>Gucci Men's YA131202 Coupe Dual</p>
-					</div>
-					<div class="quantity2">
-						<form action="action_page.php">
-							<input type="number" name="quantity" min="1" max="10" value="1">
-						</form>
-					</div>
-					<div class="price2">
-						<p>$ 545</p>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-			<!-- //Item2-Ends-Here -->
-
-			<!-- Item3-Starts-Here -->
-			<div class="item3">
-				<div class="close3">
-					<!-- Remove-Item --><div class="alert-close3"> </div><!-- //Remove-Item -->
-					<div class="image3">
-						<img src="cart_assets/images/item3.png" alt="item3">
-					</div>
-					<div class="title3">
-						<p>Gucci Cufflinks with Interlocking G Motif</p>
-					</div>
-					<div class="quantity3">
-						<form action="action_page.php">
-							<input type="number" name="quantity" min="1" max="10" value="1">
-						</form>
-					</div>
-					<div class="price3">
-						<p>$ 169</p>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-			<!-- //Item3-Ends-Here -->
-
 		</div>
 		<!-- //Items-Ends-Here -->
 
 		<!-- Total-Price-Starts-Here -->
 		<div class="total">
 			<div class="total1">Total Price</div>
-			<div class="total2">$ 924</div>
+			<div class="total2">RM {{ $getCart->totalPrice }}</div>
 			<div class="clear"></div>
 		</div>
 		<!-- //Total-Price-Ends-Here -->
@@ -172,6 +190,11 @@
 		<!-- //Checkout-Ends-Here -->
 
 	</div>
+	
+	<!-- Modal -->
+
+
+
 	<!-- Content-Ends-Here -->
 
 <br>
