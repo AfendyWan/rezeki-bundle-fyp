@@ -108,7 +108,15 @@
 							var a = <?php echo $c->itemPrice * $c->quantity?> ; 
 							document.write(a); 
 							</script> </td>
-						<td>button1</td>
+						<td>
+							<form action="{{ route('manageCarts.deleteCartItem') }}" method="POST">
+								@csrf
+								<input type="hidden" name="cartID" value="{{ $c->cart_id }}">
+								<input type="hidden" name="cartItemID" value="{{ $c->id }}">
+								<input type="hidden" name="saleItemID" value="{{ $c->sale_item_id }}">
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>	
+						</td>
 					</tr>
 
 					<!-- Modal here -->

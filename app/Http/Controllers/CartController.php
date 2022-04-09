@@ -218,4 +218,39 @@ class CartController extends Controller
     {
         //
     }
+
+    public function deleteCartItem(Request $request)
+    {
+        $findCart = Cart::find($request->cartID);
+        $saleItem = SaleItem::where('id', $request->saleItemID)->first();
+
+        $findCartItem =  CartItem::where([
+            ['cart_id', '=', $request->cartID],
+            ['sale_item_id', '=', $request->saleItemID],
+        ])->first();
+       
+
+        if($saleItem->itemPromotionStatus == 1){
+            $saleItemTotalPrice = $saleItem->itemPromotionPrice * $findCartItem->quantity;
+          
+        }else{
+            $saleItemTotalPrice = $saleItem->itemPrice * $findCartItem->quantity;
+          
+        }
+        
+        $newCartQuantity = $findCart->cartItemQuantity - $findCartItem->quantity;
+        $newCartTotalPrice = $findCart->totalPrice - $saleItemTotalPrice;
+        
+        Cart::where([
+            ['id', '=', $request->cartID],
+        ])->update([
+            'totalPrice' => $newCartTotalPrice,
+            'cartItemQuantity' => $newCartQuantity
+        ]);
+
+        $findCartItem->delete();
+        
+        return Redirect::back()->with(['danger' => 'Item had been deleted from the cart successfully']);
+    }
+
 }

@@ -61,7 +61,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     
     Route::resource('manageCarts', CartController::class);
     Route::post('updateCartItemQuantity/',[CartController::class,'updateCartItemQuantity'])->name('manageCarts.updateCartItemQuantity');
-
+    Route::post('deleteCartItem/',[CartController::class,'deleteCartItem'])->name('manageCarts.deleteCartItem');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
