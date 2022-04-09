@@ -60,21 +60,25 @@ class CartController extends Controller
             ['cartStatus', '=', 1],
         ])->get();
 
+        //get sale item
         $saleItem = SaleItem::where('id', $request->saleItemID)->first();
 
+        //validate stock quantity added
         if($request->quantity > $saleItem->itemStock){
             return Redirect::back()->with(['error' => 'Item quantity added to cart exceed item stock']);
         }
-        
+       
+        //check if user have cart or not
         if ($checkCart->isEmpty()) {
             $newCart = new Cart;
             $newCart->userID  = $request->userID;
             $newCart->totalPrice =  $saleItem->itemPrice;
-            $newCart->cartItemQuantity =  1;
+            $newCart->cartItemQuantity =  $request->quantity;
             $newCart->cartStatus = 1; 
 
-            $newCart->save();
+            $newCart->save();   //user create new cart
 
+            //create new cart item
             $newCartItem = new CartItem;
             $newCartItem->cart_id  = $newCart->id;
             $newCartItem->quantity  =  $request->quantity;
@@ -82,14 +86,23 @@ class CartController extends Controller
 
             $newCartItem->save();
         } else {
+
+            //if there is existing cart
             foreach($checkCart as $c){
                 if ($c->cartStatus == 1) {
 
                     //get existing cart
                     $getExistingCart = Cart::where('id', $c->id)->first();
-
+                   
                     //get current total price
-                    $currentTotalPrice = $getExistingCart->totalPrice + $saleItem->itemPrice;
+                    if($saleItem->itemPromotionStatus == 1){ 
+                        $getItemTotalPrice = $saleItem->itemPromotionPrice * $request->quantity;
+                       
+                        $currentTotalPrice = $getExistingCart->totalPrice + $getItemTotalPrice; 
+                    }else{
+                        $currentTotalPrice = $getExistingCart->totalPrice + ($saleItem->itemPrice * $request->quantity);
+                    }
+                    
                     
                     //get existing cart item quantity
                     $getCartItemQuantity = CartItem::where([

@@ -103,10 +103,24 @@
 								</form>				
 							</div>
 						</td>
-						<td>RM {{ $c->itemPrice }}</td>
-						<td><script> 
-							var a = <?php echo $c->itemPrice * $c->quantity?> ; 
-							document.write(a); 
+						<td>
+							@if ($c->itemPromotionStatus==1)
+								<strike>RM {{ $c->itemPrice }}</strike> <br>
+								RM {{ $c->itemPromotionPrice }}
+							@else
+								RM {{ $c->itemPrice }}
+							@endif 
+						
+						</td>
+						<td>RM <script> 
+							if ( <?php echo $c->itemPromotionPrice?>==1){
+								var a = <?php echo $c->itemPromotionPrice * $c->quantity?> ; 
+							}else{
+								var a = <?php echo $c->itemPrice * $c->quantity?> ; 
+							}
+							
+							var b = (Math.round(a * 100) / 100).toFixed(2);
+							document.write(b); 
 							</script> </td>
 						<td>
 							<form action="{{ route('manageCarts.deleteCartItem') }}" method="POST">
