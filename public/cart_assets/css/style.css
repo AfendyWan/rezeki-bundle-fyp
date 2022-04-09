@@ -80,21 +80,30 @@ h1 {
     margin-bottom: 30px;
     border-radius: 5px;
 }
+.productImage {
+    width: 20%;
+    float: left;
+}
 .product {
-    width: 65%;
+    width: 20%;
     float: left;
 }
 .product h3 {
     padding-left: 20px;
 }
 .quantity {
-    width: 15%;
+    width: 20%;
     float: left;
     text-align: center;
 }
 .price {
     width: 20%;
     float: left;
+    text-align: center;
+}
+.action {
+    width: 20%;
+    float: right;
     text-align: center;
 }
 .main-bar h3 {
@@ -139,25 +148,31 @@ img {
 }
 
 .title1, .title2, .title3 {
-    width: 45%;
+    width: 30%;
     float: left;
 }
 .quantity1, .quantity2, .quantity3 {
-    width: 15%;
+    width: 5%;
     float: left;
     text-align: center;
 }
 .price1, .price2, .price3 {
-    width: 20%;
+    width: 30%;
     float: left;
     text-align: center;
 }
+.action1, .action2, .action3 {
+    width: 10%;
+    float: left;
+    text-align: center;
+}
+
 p {
     
     color: #2833af;
 }
 .quantity1 input[type="number"], .quantity2 input[type="number"], .quantity3 input[type="number"] {
-    width: 70%;
+    width: 40%;
     margin-top: 10px;
     padding: 7px 5px;
     text-align: center;
@@ -278,7 +293,7 @@ p {
 
 @media screen and (max-width: 1600px) {
     .container1 {
-        width: 60%;
+        width: 100%;
     }
     .copyright {
         margin-top: 100px;
@@ -297,7 +312,7 @@ p {
         font-size: 45px;
     }
     .container1 {
-        width: 55%;
+        width: 70%; /*control*/
     }
     .main-bar {
         padding: 15px 10px;
@@ -308,6 +323,9 @@ p {
     }
     .copyright {
         margin-top: 55px;
+    }
+    p {
+        font-size: 24px;
     }
 }
 
@@ -370,6 +388,10 @@ p {
     }
     .discount input[type="text"] {
         margin-left: 15px;
+    }
+    
+    p {
+        font-size: 15px;
     }
 }
 
@@ -530,6 +552,9 @@ p {
     .quantity {
         width: 20%;
     }
+    .action {
+        width: 20%;
+    }
     .items {
         padding: 20px 0px;
     }
@@ -594,6 +619,9 @@ p {
         width: 40%;
     }
     .price1, .price2, .price3 {
+        width: 25%;
+    }
+    .action1, .action2, .action3 {
         width: 25%;
     }
     .price1 p, .price2 p, .price3 p {

@@ -141,10 +141,29 @@ class CartController extends Controller
     public function updateCartItemQuantity(Request $request){
 
         $saleItem = SaleItem::where('id', $request->saleItemID)->first();
-       
+        $cart = Cart::where('id', $request->cartID)->first();
+
         if($request->quantity > $saleItem->itemStock){
             return Redirect::back()->with(['error' => 'Item quantity added to cart exceed item stock']);
         }
+
+        if($saleItem->itemPromotionStatus == 1){
+            $previousSaleItemTotalPrice = $saleItem->itemPromotionPrice * $request->previousQuantity;
+            $latestSaleItemTotalPrice =  $saleItem->itemPromotionPrice * $request->quantity;
+        }else{
+            $previousSaleItemTotalPrice = $saleItem->itemPrice * $request->previousQuantity;
+            $latestSaleItemTotalPrice =  $saleItem->itemPrice * $request->quantity;
+        }
+
+        $newCartQuantity = $cart->cartItemQuantity - $request->previousQuantity +  $request->quantity;
+        $newTotalPrice = $cart->totalPrice - $previousSaleItemTotalPrice + $latestSaleItemTotalPrice;
+
+        Cart::where([
+            ['id', '=', $request->cartID],
+        ])->update([
+            'totalPrice' => $newTotalPrice,
+            'cartItemQuantity' => $newCartQuantity
+        ]);
 
         CartItem::where([
             ['cart_id', '=', $request->cartID],

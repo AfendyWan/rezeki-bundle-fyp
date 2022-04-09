@@ -68,105 +68,84 @@
 	<div class="container1">
 
 		<!-- Mainbar-Starts-Here -->
-		<div class="main-bar">
-			<div class="product">
-				<h3>Product</h3>
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title"></h3>
+					<div class="card-tools">
+			
 			</div>
-			<div class="quantity">
-				<h3>Quantity</h3>
-			</div>
-			<div class="price">
-				<h3>Price</h3>
-			</div>
-			<div class="clear"></div>
 		</div>
-		<!-- //Mainbar-Ends-Here -->
+		<div class="card-body table-responsive p-0">
+			<table class="table table-hover text-nowrap">
+				<thead>
+					<tr>
+						<th >Image</th>
+						<th>Product</th>
+						<th>Quantity</th>
+						<th>Unit Price</th>
+						<th>Total Price</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				@foreach ($getSaleItemInCart as $c)
+					<tr>
+						<td style="height:20%; width:20%;" align="center"><img style="display:block;" width="100%" height="100%" src="{{  url($c->url) }}" alt="item1" ></td>
+						<td style="height:20%; width:20%;">{{ $c->itemName }}</td>
+						<td>	
+							<div class="quantity1">
+								<form action="action_page.php">
+									<button type="button" class="btn btn-outline-primary" data-id="{{ $c->quantity }}" data-toggle="modal" data-target="#saleItemQuantityCart<?php echo $c->id;?>" id="submit">{{ $c->quantity }}</button>
+										<input type="hidden" name="originalQuantity" id="originalQuantity"  min="1" max="10" value="{{ $c->quantity }}">
+										<input type="hidden" name="marks" id="marks" min="1" max="10" value="{{ $c->quantity }}">
+								</form>				
+							</div>
+						</td>
+						<td>RM {{ $c->itemPrice }}</td>
+						<td><script> 
+							var a = <?php echo $c->itemPrice * $c->quantity?> ; 
+							document.write(a); 
+							</script> </td>
+						<td>button1</td>
+					</tr>
 
-		<!-- Items-Starts-Here -->
-		<div class="items">
-
-			<!-- Item1-Starts-Here -->
-			@foreach ($getSaleItemInCart as $c)
-			<div class="item1">
-				<div class="close1">
-					<!-- Remove-Item --><!-- //Remove-Item -->
-					<div class="image1">
-						<img src="{{  url($c->url) }}" alt="item1">
-					</div>
-					<div class="title1">
-						<p style="font-size:20px">{{ $c->itemName }}</p>
-					</div>
-					<div class="quantity1">
-						<form action="action_page.php">
-						<button type="button" class="btn btn-outline-primary" data-id="{{ $c->quantity }}" data-toggle="modal" data-target="#saleItemQuantityCart<?php echo $c->id;?>" id="submit">{{ $c->quantity }}</button>
-							<input type="hidden" name="originalQuantity" id="originalQuantity"  min="1" max="10" value="{{ $c->quantity }}">
-							<input type="hidden" name="marks" id="marks" min="1" max="10" value="{{ $c->quantity }}">
-							
+					<!-- Modal here -->
+					<div class="modal fade" id="saleItemQuantityCart<?php echo $c->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Enter item quantity</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action="{{ route('manageCarts.updateCartItemQuantity') }}" method="POST">
+							@csrf
+						<div class="modal-body">
+							<div class="form-group">
+							<label class="col-form-label">Quantity: <small></small></label>
+								<input type="number" class="form-control" id="quantity" name="quantity" value="{{$c->quantity}}">
+								<input type="hidden" name="previousQuantity" value="{{$c->quantity}}">
+								<input type="hidden" name="userID" value="{{ auth()->user()->id }}">
+								<input type="hidden" name="saleItemID" value="{{$c->sale_item_id}}">
+								<input type="hidden" name="cartID" value="{{$c->cart_id}}">
+							</div>
+							</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</div>
 						</form>
-				
-					</div>
-					<div class="price1">
-						<p style="font-size:24px" float="top">RM {{ $c->itemPrice }}</p>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-			<div id="message<?php echo $c->id;?>" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-
-					<!-- Modal content-->
-					<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Modal Header</h4>
-					</div>
-					<div class="modal-body">
-						<p>Some text in the modal.</p>
-						<?php echo $c->id;?>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
 					</div>
 					</div>
-
-				</div>
-				</div>
-
-			<!-- modal -->
-			<div class="modal fade" id="saleItemQuantityCart<?php echo $c->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Enter item quantity</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form action="{{ route('manageCarts.updateCartItemQuantity') }}" method="POST">
-					@csrf
-				<div class="modal-body">
-					<div class="form-group">
-					<label class="col-form-label">Quantity: <small></small></label>
-						<input type="number" class="form-control" id="quantity" name="quantity" value="{{$c->quantity}}">
-						<input type="hidden" name="userID" value="{{ auth()->user()->id }}">
-						<input type="hidden" name="saleItemID" value="{{$c->sale_item_id}}">
-						<input type="hidden" name="cartID" value="{{$c->cart_id}}">
-					</div>
-					</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Add</button>
-				</div>
-				</form>
-				</div>
-			</div>
-			</div>
-			@endforeach
-			<!-- //Item1-Ends-Here -->
+					@endforeach
+				</tbody>
+			</table>
 		</div>
-		<!-- //Items-Ends-Here -->
-
-		<!-- Total-Price-Starts-Here -->
+		<hr>
 		<div class="total">
 			<div class="total1">Total Price</div>
 			<div class="total2">RM {{ $getCart->totalPrice }}</div>
@@ -191,9 +170,6 @@
 
 	</div>
 	
-	<!-- Modal -->
-
-
 
 	<!-- Content-Ends-Here -->
 
