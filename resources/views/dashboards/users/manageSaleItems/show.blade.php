@@ -93,9 +93,17 @@
     </button>
 </form>
 &nbsp&nbsp&nbsp
-<form action="{{ route('manageCarts.store') }}" method="POST">
+<form action="{{ route('manageWishList.store') }}" method="POST">
     @csrf
-    <button type="submit" class="btn btn-default btn-lg btn-flat"><i class="fas fa-heart fa-lg mr-2"></i> Add to Wishlist </button>
+    <input type="hidden" name="userID" value="{{ auth()->user()->id }}">
+    <input type="hidden" name="sale_item_id" value="{{ $saleitem->id }}">
+    @if ($wishListItemStatus == 1)
+      <input type="hidden" name="liked" value="0">
+      <button type="submit" class="btn btn-lg btn-flat" style="color:red; background-color: #FFDBE9;"><i class="fas fa-heart fa-lg mr-2" style="color:red"></i> Add to Wishlist </button>
+    @else
+    <input type="hidden" name="liked" value="1">
+      <button type="submit" class="btn btn-lg btn-flat" style="color:red; background-color: #FFDBE9;"><i class="fas fa-heart fa-lg mr-2" style="color:black"></i> Add to Wishlist </button>
+    @endif
 </form></div>
 
 

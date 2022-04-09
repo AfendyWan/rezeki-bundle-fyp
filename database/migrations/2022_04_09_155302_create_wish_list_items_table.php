@@ -13,14 +13,14 @@ class CreateWishListItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wishList_items', function (Blueprint $table) {
+        Schema::create('wish_list_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-           
+
             $table->bigInteger('wish_id')->unsigned()->nullable();
             $table->bigInteger('sale_item_id')->unsigned()->nullable();
          
-            $table->foreign('wish_id')->references('id')->on('wishLists')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('wish_id')->references('id')->on('wish_lists')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('sale_item_id')->references('id')->on('sale_items')->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -32,6 +32,6 @@ class CreateWishListItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wishList_items');
+        Schema::dropIfExists('wish_list_items');
     }
 }

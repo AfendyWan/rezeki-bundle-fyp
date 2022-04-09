@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\SaleItem;
 use App\Models\SaleItemCategory;
 use App\Models\SaleItemImage;
+use App\Models\WishList;
+use App\Models\WishListItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 class SaleItemController extends Controller
 {
     /**
@@ -321,8 +324,28 @@ class SaleItemController extends Controller
         $firstSaleItemImage = SaleItemImage::where('sale_item_id', $id)->first();
         
         $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
-        return view('dashboards.users.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages'))->withSaleitem($saleItem);
+
+
+        $userID = auth()->user()->id;
+        $wishList = WishList::where('userID', $userID)->first();
+        if(!$wishList){
+            $wishListItemStatus = 0;
+           
+            return view('dashboards.users.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages', 'wishListItemStatus'))->withSaleitem($saleItem);
+        }else{
+            $wishListItem =  WishListItem::where([
+                                ['wish_id', '=', $wishList->id],
+                                ['sale_item_id', '=', $id],
+                            ])->first();
             
+            if(!$wishListItem){
+                $wishListItemStatus = 0;
+                return view('dashboards.users.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages', 'wishListItemStatus'))->withSaleitem($saleItem);
+            }else{
+                $wishListItemStatus = 1;
+                return view('dashboards.users.manageSaleItems.show', compact('category', 'firstSaleItemImage', 'allSaleItemImages', 'wishListItemStatus'))->withSaleitem($saleItem);
+            }
+        }
     }
 
     public function userShowPromotionList()

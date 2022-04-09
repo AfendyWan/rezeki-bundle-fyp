@@ -13,7 +13,7 @@ class CreateWishListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wishLists', function (Blueprint $table) {
+        Schema::create('wish_lists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             
@@ -30,6 +30,6 @@ class CreateWishListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wishLists');
+        Schema::dropIfExists('wish_lists');
     }
 }

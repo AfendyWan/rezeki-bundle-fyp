@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\WishList;
+use App\Models\WishListItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Redirect;
+use DB;
 class WishListController extends Controller
 {
     /**
@@ -36,7 +38,49 @@ class WishListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $checkWishList = WishList::where([
+            ['userID', '=', $request->userID],
+        ])->first();
+
+
+        if(!$checkWishList){
+            $newWishList = new WishList;
+            $newWishList->userID  = $request->userID;
+            $newWishList->wishItemQuantity =  1;
+
+            $newWishList->save();
+            
+            $newWishListItem = new WishListItem;
+            $newWishListItem->wish_id  = $newWishList->id;
+            $newWishListItem->sale_item_id = $request->sale_item_id;
+            $newWishListItem->save();
+            
+        }else{
+            if($request->liked == 0){
+                WishList::where('id', $checkWishList->id)->update([
+                    'wishItemQuantity' => $checkWishList->wishItemQuantity - 1,
+                ]);
+
+                $findWishListItem =  WishListItem::where([
+                    ['wish_id', '=', $checkWishList->id],
+                    ['sale_item_id', '=', $request->sale_item_id],
+                ])->first();
+
+                $findWishListItem->delete();
+            }else{
+                WishList::where('id', $checkWishList->id)->update([
+                    'wishItemQuantity' => $checkWishList->wishItemQuantity + 1,
+                ]);
+
+                $newWishListItem = new WishListItem;
+                $newWishListItem->wish_id  = $checkWishList->id;
+                $newWishListItem->sale_item_id = $request->sale_item_id;
+                $newWishListItem->save();
+            }
+        }
+        return Redirect::back()->with(['danger' => 'Item had been deleted from the cart successfully']);
+
+        
     }
 
     /**
