@@ -169,7 +169,7 @@
 		</div>
 		<hr>
 		<div class="total">
-			<div class="total1">Total Price</div>
+			<div class="total1">Total Price:</div>
 			<div class="total2">RM {{ $getCart->totalPrice }}</div>
 			<div class="clear"></div>
 		</div>

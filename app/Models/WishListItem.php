@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CartItem extends Model
+class WishListItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['quantity ', 'cart_id ', 'sale_item_id '];
+    protected $fillable = ['wish_id', 'sale_item_id '];
    
     public function saleItem()
     {
@@ -18,6 +18,6 @@ class CartItem extends Model
 
     public function Cart()
     {
-        return $this->belongsTo('App\Cart', 'cart_id');
+        return $this->belongsTo('App\WishList', 'wish_id');
     }
 }
