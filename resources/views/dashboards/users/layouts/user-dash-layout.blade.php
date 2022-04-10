@@ -129,7 +129,7 @@
           <a class="nav-link" href="#">Fitness sport</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Clothing</a>
+          <a class="nav-link" href="{{ route('manageWishList.index') }}">Wish List</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('saleItems.showPromotionList') }}" style="color: red">Promotions</a>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Redirect;
 use DB;
+use Auth;
 class WishListController extends Controller
 {
     /**
@@ -17,7 +18,19 @@ class WishListController extends Controller
      */
     public function index()
     {
-        //
+        $getWishList = WishList::where([
+            ['userID', '=', Auth::user()->id],
+        ])->first();
+
+
+        $getSaleItemInWishList = DB::table('wish_list_items')
+        ->join('sale_items', 'wish_list_items.sale_item_id', '=', 'sale_items.id')
+        ->join('sale_item_images', 'wish_list_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
+        ->select('wish_list_items.*', 'sale_items.*', 'sale_item_images.*')
+        ->groupby('wish_list_items.sale_item_id')
+        ->get();
+        return view('dashboards.users.manageWishList.index', compact('getWishList','getSaleItemInWishList'));
+
     }
 
     /**
