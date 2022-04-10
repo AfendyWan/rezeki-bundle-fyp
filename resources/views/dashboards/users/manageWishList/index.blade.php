@@ -104,10 +104,10 @@
 						</td>
 				
 						<td>
-							<form action="{{ route('manageCarts.deleteCartItem') }}" method="POST">
+							<form action="{{ route('manageWishList.delete') }}" method="POST">
 								@csrf
-								<input type="hidden" name="cartItemID" value="{{ $c->id }}">
-								<input type="hidden" name="saleItemID" value="{{ $c->sale_item_id }}">
+								<input type="hidden" name="wish_id" value="{{ $c->wish_id }}">
+								<input type="hidden" name="sale_item_id" value="{{ $c->sale_item_id }}">
 								<button type="submit" class="btn btn-danger">Delete</button>
 							</form>	
 						</td>

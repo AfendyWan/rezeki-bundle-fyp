@@ -138,6 +138,19 @@ class WishListController extends Controller
      */
     public function destroy(WishList $wishList)
     {
-        //
+       
+    }
+
+    public function delete(Request $request)
+    {
+      
+        $findWishListItem =  WishListItem::where([
+            ['wish_id', '=', $request->wish_id],
+            ['sale_item_id', '=', $request->sale_item_id],
+        ])->first();
+
+        $findWishListItem->delete();
+
+        return Redirect::back()->with(['danger' => 'Item had been deleted from the cart successfully']);
     }
 }

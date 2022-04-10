@@ -64,6 +64,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::post('deleteCartItem/',[CartController::class,'deleteCartItem'])->name('manageCarts.deleteCartItem');
 
     Route::resource('manageWishList', WishListController::class);
+    Route::post('delete/',[WishListController::class,'delete'])->name('manageWishList.delete');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
