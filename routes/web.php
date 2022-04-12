@@ -57,7 +57,17 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('viewSaleItemList/{id}',[SaleItemController::class,'userIndex'])->name('saleItems.index');
     Route::get('viewSaleItem/{id}',[SaleItemController::class,'userShowItem'])->name('saleItems.show');
     Route::get('viewSaleItemPromotionList',[SaleItemController::class,'userShowPromotionList'])->name('saleItems.showPromotionList');
+   //Route::post('userSearchSaleItem/',[SaleItemController::class,'userSearchSaleItem'])->name('manageSaleItems.userSearchSaleItem');
+         
+    Route::get('redirect-with-params', [
+        'as' => 'search',
+        'uses' => 'App\Http\Controllers\SaleItemController@searchWithParams'
+    ]);
 
+    Route::get('userSearchSaleItem/{param1}/', [
+        'as' => 'userSearchSaleItem',
+        'uses' => 'App\Http\Controllers\SaleItemController@userSearchSaleItem'
+    ]);
     
     Route::resource('manageCarts', CartController::class);
     Route::post('updateCartItemQuantity/',[CartController::class,'updateCartItemQuantity'])->name('manageCarts.updateCartItemQuantity');

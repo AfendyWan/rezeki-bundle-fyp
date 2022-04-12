@@ -16,11 +16,12 @@
         <link href="assets/css/all.min.css" rel="stylesheet">
         <script src="assets/js/jquery.min.js" type="text/javascript"></script>
         <script src="assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-                
+  
     </head>
     <body>
        
 <header class="section-header">
+
 <nav class="navbar navbar-dark navbar-expand p-0 bg-primary">
 <div class="container">
     <ul class="navbar-nav d-none d-md-flex mr-auto">
@@ -44,14 +45,17 @@
     </a> <!-- brand-wrap.// -->
   </div>
   <div class="col-lg-6 col-12 col-sm-12">
-    <div class="input-group w-100">
-          <input type="text" class="form-control" placeholder="Search">
+    <form action="{{ route('search') }}" method="get">
+      @csrf
+        <div class="input-group w-100">
+          <input type="text" name="param1" class="form-control" placeholder="Search">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fa fa-search"></i>
             </button>
           </div>
-        </div><!-- search-wrap .end// -->
+        </div>
+    </form>
   </div> <!-- col.// -->
  
   <div class="col-lg-4 col-sm-6 col-12">

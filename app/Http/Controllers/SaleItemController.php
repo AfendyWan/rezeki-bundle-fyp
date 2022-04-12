@@ -364,4 +364,30 @@ class SaleItemController extends Controller
             
     }
 
+    public function searchWithParams(Request $request){
+       
+        if($request->param1 == null){
+            $request->param1="emptysearch";
+        }
+        return \Redirect::route('userSearchSaleItem', ['param1' => $request->param1]);
+    }
+
+    public function userSearchSaleItem(Request $request)
+    {
+        $saleItemImage = DB::table('sale_item_images')
+        ->join('sale_items', 'sale_item_images.sale_item_id', '=', 'sale_items.id')
+        ->where('sale_items.itemName', 'LIKE', '%'.$request->param1.'%')
+        ->select('sale_item_images.*', 'sale_items.*')
+        ->groupby('sale_item_images.sale_item_id')
+        ->get();
+
+        $messageNoResult = false;
+        if($saleItemImage->isEmpty()){
+            $messageNoResult = true;
+           
+            return view('dashboards.users.manageSaleItems.search', compact('saleItemImage', 'messageNoResult'));       
+        }
+        return view('dashboards.users.manageSaleItems.search', compact('saleItemImage', 'messageNoResult'));            
+    }
+
 }
