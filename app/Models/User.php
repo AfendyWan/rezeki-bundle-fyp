@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Payment', 'userID');
     }
+
+    public function userShippingAddress()
+    {
+        return $this->hasMany('App\UserShippingAddress', 'userID');
+    }
 }
