@@ -15,7 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboards.users.managePayment.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

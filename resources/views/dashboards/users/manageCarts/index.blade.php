@@ -184,7 +184,7 @@
 				<a href="#">Add to Cart</a>
 			</div>
 			<div class="checkout-btn">
-				<a href="#">Checkout</a>
+				<a href="{{ route('managePayment.index') }}">Checkout</a>
 			</div>
 			<div class="clear"></div>
 		</div>
