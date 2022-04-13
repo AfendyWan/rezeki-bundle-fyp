@@ -8,6 +8,8 @@ use App\Http\Controllers\SaleItemCategoryController;
 use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishListController;
+use App\Http\Controllers\PaymentController;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -72,9 +74,11 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::resource('manageCarts', CartController::class);
     Route::post('updateCartItemQuantity/',[CartController::class,'updateCartItemQuantity'])->name('manageCarts.updateCartItemQuantity');
     Route::post('deleteCartItem/',[CartController::class,'deleteCartItem'])->name('manageCarts.deleteCartItem');
-    
+
     Route::resource('manageWishList', WishListController::class);
     Route::post('delete/',[WishListController::class,'delete'])->name('manageWishList.delete');
+
+    Route::resource('managePayment', PaymentController::class);
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 

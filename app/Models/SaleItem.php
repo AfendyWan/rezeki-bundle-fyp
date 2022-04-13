@@ -21,4 +21,10 @@ class SaleItem extends Model
     {
         return $this->hasMany('App\CartItem', 'sale_item_id');
     }
+
+    public function payment()
+    {
+        return $this->hasMany('App\Payment', 'sale_item_id');
+    }
+
 }
