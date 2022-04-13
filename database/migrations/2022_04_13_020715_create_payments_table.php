@@ -19,12 +19,12 @@ class CreatePaymentsTable extends Migration
             $table->integer('paymentStatus')->nullable();
 
             $table->bigInteger('cart_id')->unsigned()->nullable();
-            $table->bigInteger('sale_item_id')->unsigned()->nullable();
+           
             $table->bigInteger('userID')->unsigned()->nullable();
             $table->dateTime('paymentDate')->nullable();
             
             $table->foreign('cart_id')->references('id')->on('carts')->onUpdate('cascade');
-            $table->foreign('sale_item_id')->references('id')->on('sale_items')->onUpdate('cascade');
+            
             $table->foreign('userID')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();
         });

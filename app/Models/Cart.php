@@ -25,4 +25,9 @@ class Cart extends Model
     {
         return $this->hasMany('App\Payment', 'cart_id');
     }
+
+    public function shipment()
+    {
+        return $this->hasMany('App\Shipment', 'cart_id');
+    }
 }

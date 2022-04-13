@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class Shipment extends Model
 {
     use HasFactory;
-    protected $fillable = ['totalPrice', 'paymentStatus', 'cart_id', 'userID', 'paymentDate'];
 
- 
+    protected $fillable = [
+        'shippingOption', 'shippingStatus', 'shippingCourier', 'shippingTrackingNumber', 'payment_id ', 'userID', 'cart_id',
+    ];
 
     public function Cart()
     {
@@ -22,8 +23,9 @@ class Payment extends Model
         return $this->belongsTo('App\User', 'userID');
     }
 
-    public function shipment()
+    public function payment()
     {
-        return $this->hasMany('App\Shipment', 'payment_id');
+        return $this->belongsTo('App\Payment', 'payment_id');
     }
+
 }
