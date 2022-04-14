@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\UserShippingAddress;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -70,17 +71,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'role'=>2,
-            'gender' => $data['gender'],
-          //  'birthday' => $data['birthday'],
-            'postcode' => $data['postcode'],
-            'phone_number' => $data['phone_number'],
+        $newUser = new User;
+        $newUser->first_name = $data['first_name'];
+        $newUser->last_name = $data['last_name'];
+        $newUser->email = $data['email'];
+        $newUser->role = 2;
+        $newUser->gender = $data['gender'];
+        $newUser->postcode = $data['postcode'];
+        $newUser->phone_number = $data['phone_number'];
+        $newUser->shipping_address = $data['shipping_address'];
+        $newUser->password = Hash::make($data['password']);
+        $newUser->save();
+
+        $userID = $newUser->id;
+        
+        UserShippingAddress::create([
+            'userID' => 11,
+            'shipping_default_status' => 1,
             'shipping_address' => $data['shipping_address'],
-            'password' => Hash::make($data['password']),
+            
         ]);
+        return $newUser;
     }
 }
