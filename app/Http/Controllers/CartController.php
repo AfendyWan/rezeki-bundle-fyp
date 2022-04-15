@@ -25,13 +25,18 @@ class CartController extends Controller
             ['cartStatus', '=', 1],
         ])->first();
 
-
-        $getSaleItemInCart = DB::table('cart_items')
-        ->join('sale_items', 'cart_items.sale_item_id', '=', 'sale_items.id')
-        ->join('sale_item_images', 'cart_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
-        ->select('cart_items.*', 'sale_items.*', 'sale_item_images.*')
-        ->groupby('cart_items.sale_item_id')
-        ->get();
+        if(!$getCart){
+            $getSaleItemInCart = "";
+        }else{
+            $getSaleItemInCart = DB::table('cart_items')
+            ->join('sale_items', 'cart_items.sale_item_id', '=', 'sale_items.id')
+            ->join('sale_item_images', 'cart_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
+            ->select('cart_items.*', 'sale_items.*', 'sale_item_images.*')
+            ->where('cart_id', '=', $getCart->id)
+            ->groupby('cart_items.sale_item_id')
+            ->get();
+        }
+        
         
         return view('dashboards.users.manageCarts.index', compact('getCart','getSaleItemInCart'));
     }

@@ -124,7 +124,7 @@
                                     <input id="shipping_address" type="text" class="input--style-4 form-control @error('shipping_address') is-invalid @enderror" name="shipping_address" required autocomplete="shipping_address">
                                     @error('password')
                                         <span class="text-danger" style="color:red" role="alert">
-                                            <strong>{{ $shipping_address }}</strong>
+                                            <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>

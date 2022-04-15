@@ -54,6 +54,9 @@
 <body>
 
 	<h1>SHOPPING CART</h1>
+	@if ($getSaleItemInCart == "")
+		<h2>Cart is currently empty</h2><br>
+	@endif
 	@if ($message = Session::get('success'))
     <div class="alert alert-success">
         {{ $message }}
@@ -77,6 +80,7 @@
 			
 			</div>
 		</div>
+		@if ($getSaleItemInCart != "")
 		<div class="card-body table-responsive p-0">
 			<table class="table table-hover text-nowrap">
 				<thead>
@@ -90,7 +94,8 @@
 					</tr>
 				</thead>
 				<tbody>
-				@foreach ($getSaleItemInCart as $c)
+					
+					@foreach ($getSaleItemInCart as $c)
 					<tr>
 						<td style="height:20%; width:20%;" align="center"><img style="display:block;" width="100%" height="100%" src="{{  url($c->url) }}" alt="item1" ></td>
 						<td style="height:20%; width:20%;">{{ $c->itemName }}</td>
@@ -164,13 +169,21 @@
 					</div>
 					</div>
 					@endforeach
+
+					
 				</tbody>
 			</table>
 		</div>
+		
+		@endif
 		<hr>
 		<div class="total">
 			<div class="total1">Total Price:</div>
-			<div class="total2">RM {{ $getCart->totalPrice }}</div>
+			@if ($getCart != "")
+				<div class="total2">RM {{ $getCart->totalPrice }}</div>
+			@else
+			<div class="total2">RM 0.00 </div>			
+			@endif
 			<div class="clear"></div>
 		</div>
 		<!-- //Total-Price-Ends-Here -->
@@ -183,8 +196,13 @@
 			<div class="add">
 				<a href="#">Add to Cart</a>
 			</div>
+			
 			<div class="checkout-btn">
+			@if ($getCart != "")
+				@if ($getCart->cartItemQuantity!="0")
 				<a href="{{ route('managePayment.index') }}">Checkout</a>
+				@endif
+			@endif
 			</div>
 			<div class="clear"></div>
 		</div>
