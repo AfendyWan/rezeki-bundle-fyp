@@ -82,6 +82,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
 
     Route::resource('manageShipments', ShipmentController::class);
     Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');
+    Route::post('addNewShippingAddress/',[ShipmentController::class,'addNewShippingAddress'])->name('manageShipments.addNewShippingAddress');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 

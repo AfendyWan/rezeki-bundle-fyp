@@ -51,6 +51,35 @@ class ShipmentController extends Controller
 
         return Redirect::back()->with(['success' => 'Default shipping address had been updated']);
     }
+
+    public function addNewShippingAddress(Request $request)
+    {
+        $request->validate([
+            'postcode' => ['required', 'numeric','digits:5'],
+            'shipping_address' => ['required', 'string', 'max:255'],
+        ]);
+        
+        $getUserShippingAddress = UserShippingAddress::where([
+            ['userID', '=', Auth::user()->id],          
+        ])->get();
+        
+        foreach($getUserShippingAddress as $c){
+            UserShippingAddress::where('id', $c->id)->update([
+                'shipping_default_status' => 0,                
+            ]);
+        }
+        $newUserShipping = new UserShippingAddress;
+        $newUserShipping->shipping_default_status = 1;
+        $newUserShipping->shipping_address = $request->shipping_address;
+        $newUserShipping->postcode = $request->postcode;
+        $newUserShipping->userID = Auth::user()->id;
+        $newUserShipping->save();
+        
+  
+
+        return Redirect::back()->with(['success' => 'New shipping address had been added']);
+    }
+ 
     /**
      * Store a newly created resource in storage.
      *
