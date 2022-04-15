@@ -89,7 +89,7 @@ class RegisterController extends Controller
             'userID' => $userID,
             'shipping_default_status' => 1,
             'shipping_address' => $data['shipping_address'],
-            
+            'postcode' => $data['postcode'],
         ]);
         return $newUser;
     }
