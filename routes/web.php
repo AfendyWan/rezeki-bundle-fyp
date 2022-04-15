@@ -9,7 +9,7 @@ use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishListController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\ShipmentController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -79,6 +79,9 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::post('delete/',[WishListController::class,'delete'])->name('manageWishList.delete');
 
     Route::resource('managePayment', PaymentController::class);
+
+    Route::resource('manageShipments', ShipmentController::class);
+    Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 

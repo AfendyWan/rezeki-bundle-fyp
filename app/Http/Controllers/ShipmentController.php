@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shipment;
+use App\Models\UserShippingAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Auth;
+use Redirect;
 class ShipmentController extends Controller
 {
     /**
@@ -25,9 +27,30 @@ class ShipmentController extends Controller
      */
     public function create()
     {
-        //
+        $getUserShippingAddress = UserShippingAddress::where([
+            ['userID', '=', Auth::user()->id],          
+        ])->get();
+        
+        return view('dashboards.users.manageShipments.create', compact('getUserShippingAddress'));
     }
 
+    public function updateShippingDefault(Request $request)
+    {
+        $getUserShippingAddress = UserShippingAddress::where([
+            ['userID', '=', Auth::user()->id],          
+        ])->get();
+        
+        foreach($getUserShippingAddress as $c){
+            UserShippingAddress::where('id', $c->id)->update([
+                'shipping_default_status' => 0,                
+            ]);
+        }
+        UserShippingAddress::where('id', $request->shipping_default)->update([
+            'shipping_default_status' => 1,                
+        ]);
+
+        return Redirect::back()->with(['success' => 'Default shipping address had been updated']);
+    }
     /**
      * Store a newly created resource in storage.
      *

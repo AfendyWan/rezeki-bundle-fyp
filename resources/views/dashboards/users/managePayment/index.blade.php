@@ -150,9 +150,9 @@
           <button type="button" class="btn btn-primary float-right">
           Proceed to Payment
           </button>
-          <button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
+          <a href="{{route('manageShipments.create')}}"><button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
              Edit Shipping Address
-          </button>
+          </button></a>
         </div>
       </div>
   </div>
