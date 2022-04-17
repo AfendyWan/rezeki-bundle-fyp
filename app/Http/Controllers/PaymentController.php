@@ -158,6 +158,16 @@ class PaymentController extends Controller
         ////////////////////Get user cart items
         $getCartItems = CartItem::where('cart_id', $checkCart->id)->get();
 
+        ////////////////////Create new order item
+        foreach($getCartItems as $c){
+            $newOrderItem = new OrderItem;
+            $newOrderItem->quantity = $c->quantity;
+            $newOrderItem->order_id   = $newOrder->id;            
+            $newOrderItem->sale_item_id   = $c->sale_item_id;          
+
+            $newOrderItem->save();
+        }  
+
         ////////////////////Get sale item
         $getSaleItem = SaleItem::all();
 
