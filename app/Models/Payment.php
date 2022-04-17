@@ -26,4 +26,10 @@ class Payment extends Model
     {
         return $this->hasMany('App\Shipment', 'payment_id');
     }
+
+    
+    public function order()
+    {
+        return $this->hasMany('App\Order', 'payment_id');
+    }
 }

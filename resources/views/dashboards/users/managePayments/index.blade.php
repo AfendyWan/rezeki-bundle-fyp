@@ -147,9 +147,11 @@
       <div class="row no-print">
         <div class="col-12">
          
-          <button type="button" class="btn btn-primary float-right">
-          Proceed to Payment
-          </button>
+          <a href="{{route('managePayments.updatePaymentResult')}}">
+            <button type="button" class="btn btn-primary float-right">
+            Proceed to Payment
+            </button>
+          </a>
           <a href="{{route('manageShipments.create')}}"><button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
              Edit Shipping Address
           </button></a>

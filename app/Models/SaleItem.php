@@ -22,6 +22,9 @@ class SaleItem extends Model
         return $this->hasMany('App\CartItem', 'sale_item_id');
     }
 
-
+    public function orderItem()
+    {
+        return $this->hasMany('App\OrderItem', 'sale_item_id');
+    }
 
 }

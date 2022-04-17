@@ -28,4 +28,10 @@ class Shipment extends Model
         return $this->belongsTo('App\Payment', 'payment_id');
     }
 
+    
+    public function order()
+    {
+        return $this->hasMany('App\Order', 'shipmentID');
+    }
+
 }

@@ -7,6 +7,10 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\UserShippingAddress;
+use App\Models\SaleItem;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Shipment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -39,7 +43,7 @@ class PaymentController extends Controller
         ->get();
         $todayDate = date('Y-m-d');
         
-        return view('dashboards.users.managePayment.index', compact('adminDetails', 'userDetails','userShippingAddress', 'todayDate', 'getCart', 'getSaleItemInCart'));
+        return view('dashboards.users.managePayments.index', compact('adminDetails', 'userDetails','userShippingAddress', 'todayDate', 'getCart', 'getSaleItemInCart'));
     }
 
     /**
@@ -106,5 +110,117 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         //
+    }
+
+    public function updatePaymentResult(){
+
+        ////////////////////Get user cart
+        $checkCart = Cart::where([
+            ['userID', '=', auth()->user()->id],
+            ['cartStatus', '=', 1],
+        ])->first();
+
+        ////////////////////Get today date
+        $todayDate = date('Y-m-d H:i:s');
+
+        ////////////////////Create new payment
+        $newPayment = new Payment;
+        $newPayment->totalPrice = 10; //this total price will be get from payment gateway
+        $newPayment->paymentStatus = 1; //this payment status will be get from payment gateway
+        $newPayment->cart_id = $checkCart->id; 
+        $newPayment->userID = auth()->user()->id;
+        $newPayment->paymentDate = $todayDate;
+            
+        $newPayment->save();
+
+        ////////////////////Create new shipping
+        $newShipment = new Shipment;
+        $newShipment->shippingOption = ""; //kiv
+        $newShipment->shippingStatus = "To ship"; 
+        $newShipment->shippingCourier = ""; //this will be later updated by admin
+        $newShipment->shippingTrackingNumber = ""; //this will be later updated by admin
+        $newShipment->cart_id = $checkCart->id; 
+        $newShipment->payment_id = $newPayment->id;
+        $newShipment->userID = auth()->user()->id;
+
+        $newShipment->save();
+
+        ////////////////////Create new order
+        $newOrder = new Order;
+        $newOrder->orderDate = $todayDate;
+        $newOrder->userID  = auth()->user()->id;
+        $newOrder->paymentID  = $newPayment->id;
+        $newOrder->shipmentID  = $newShipment->id;
+        $newOrder->orderStatus = $checkCart->id; 
+       
+        $newOrder->save();
+
+        ////////////////////Get user cart items
+        $getCartItems = CartItem::where('cart_id', $checkCart->id)->get();
+
+        ////////////////////Get sale item
+        $getSaleItem = SaleItem::all();
+
+        ////////////////////Update sale item quantity
+        foreach($getCartItems as $c){
+            foreach($getSaleItem as $s){
+                if($c->sale_item_id == $s->id){
+                     $a = $s->itemStock;
+                     $b = $c->quantity;
+                    $newItemQuantity = $a- $b;
+                    if($newItemQuantity == 0){
+                        SaleItem::where('id', $s->id)
+                        ->update([
+                            'itemStock' => $newItemQuantity, 
+                            'itemActivationStatus' => 0, 
+                         ]);
+                    }else{
+                        SaleItem::where('id', $s->id)
+                        ->update([
+                            'itemStock' => $newItemQuantity, 
+                         ]); 
+                    }                  
+                }
+            }
+        }
+
+        ////////////////////Update all user cart item if sale item is no longer available
+        $getAllCartItems = CartItem::all();
+        foreach($getAllCartItems as $ci){
+            foreach($getCartItems as $c){
+                if($ci->sale_item_id==$c->cart_item_id){
+                    if($ci->quantity!=0){
+                        $getSaleItem1 = SaleItem::where('id', $ci->sale_item_id)->first();
+                        if($getSaleItem1->itemStock!=0){
+                            $newCartItemQuantity = $ci->quantity - $c-$quantity;
+                            if($newCartItemQuantity < $getSaleItem1->itemStock){
+                                CartItem::where('id', $ci->id)
+                                ->update([
+                                    'quantity' => $getSaleItem1->itemStock, 
+                                ]);
+                            }else{
+                                CartItem::where('id', $ci->id)
+                                ->update([
+                                    'quantity' => $newCartItemQuantity, 
+                                ]);
+                            }                            
+                        }else{
+                            CartItem::where('id', $ci->id)
+                                ->update([
+                                    'quantity' => 0, 
+                            ]);
+                        }                        
+                    }
+                }
+            }
+        }
+        Cart::where([
+            ['userID', '=', auth()->user()->id],
+            ['cartStatus', '=', 1],
+        ])->update([
+            'cartStatus' => 0, 
+        ]);
+       // dd($getCartItems);
+        return view('dashboards.users.managePayments.result');
     }
 }
