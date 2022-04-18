@@ -224,6 +224,8 @@ class PaymentController extends Controller
                 }
             }
         }
+
+        ////////////////////Update cart status
         Cart::where([
             ['userID', '=', auth()->user()->id],
             ['cartStatus', '=', 1],
