@@ -10,6 +10,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishListController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\TransactionController;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -37,16 +39,20 @@ Route::middleware(['middleware'=>'PreventBackHistory'])->group(function(){
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackHistory']], function(){
-      Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
-      Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
-      Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
+    Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
+    Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
      
-      Route::resource('manageCategories', SaleItemCategoryController::class);
+    Route::resource('manageCategories', SaleItemCategoryController::class);
 
-      Route::get('editPromotion/{id}',[SaleItemController::class,'editPromotion'])->name('manageSaleItems.editPromotion');
-      Route::post('updatePromotion/{id}',[SaleItemController::class,'updatePromotion'])->name('manageSaleItems.updatePromotion');
-      Route::get('toggleActivationStatus/{id}',[SaleItemController::class,'toggleActivationStatus'])->name('manageSaleItems.toggleActivationStatus');
-      Route::resource('manageSaleItems', SaleItemController::class);
+    Route::get('editPromotion/{id}',[SaleItemController::class,'editPromotion'])->name('manageSaleItems.editPromotion');
+    Route::post('updatePromotion/{id}',[SaleItemController::class,'updatePromotion'])->name('manageSaleItems.updatePromotion');
+    Route::get('toggleActivationStatus/{id}',[SaleItemController::class,'toggleActivationStatus'])->name('manageSaleItems.toggleActivationStatus');
+    Route::resource('manageSaleItems', SaleItemController::class);
+
+    Route::resource('manageTransactions', TransactionController::class);
+    Route::get('viewUserDailyTransaction/',[TransactionController::class,'viewUserDailyTransaction'])->name('manageTransactions.viewUserDailyTransaction');
+    Route::get('viewOrderItems/{id}',[TransactionController::class,'viewOrderItems'])->name('manageTransactions.viewOrderItems');
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');
@@ -84,6 +90,9 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::resource('manageShipments', ShipmentController::class);
     Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');
     Route::post('addNewShippingAddress/',[ShipmentController::class,'addNewShippingAddress'])->name('manageShipments.addNewShippingAddress');
+
+    
+
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 

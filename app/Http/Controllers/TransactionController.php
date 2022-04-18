@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use DB;
+use Carbon\Carbon;
 class TransactionController extends Controller
 {
     /**
@@ -15,9 +16,29 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
+    public function viewUserDailyTransaction()
+    {
+        $todayDate = date('Y-m-d');
+        $getDailyTransaction = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->where('payments.paymentDate', '>=', $todayDate)        
+        ->get();
+       
+
+        return view('dashboards.admins.manageTransactions.dailyTransaction', compact('getDailyTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
+    public function viewOrderItems(Request $request, $id)
+    {
+    
+       dd("A");
+        // return redirect()->route('manageSaleItems.show', $id)->with('success','Sale item promotion updated successfully.');
+    }
     /**
      * Show the form for creating a new resource.
      *

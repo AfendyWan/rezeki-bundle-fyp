@@ -148,6 +148,42 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  Transactions
+                  <i class="fas fa-angle-left right"></i>
+                 
+                </p>
+            </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('manageTransactions.viewUserDailyTransaction')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Daily Transactions</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Weekly Transactions</p>
+                  </a>
+                </li>  
+                <li class="nav-item">
+                  <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Montly Transactions</p>
+                  </a>
+                </li>    
+                <li class="nav-item">
+                  <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>History Transactions</p>
+                  </a>
+                </li>       
+              </ul>
+          </li>
        </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -151,7 +151,7 @@ class PaymentController extends Controller
         $newOrder->userID  = auth()->user()->id;
         $newOrder->paymentID  = $newPayment->id;
         $newOrder->shipmentID  = $newShipment->id;
-        $newOrder->orderStatus = $checkCart->id; 
+        $newOrder->orderStatus = "Order Placed";
        
         $newOrder->save();
 
