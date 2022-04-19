@@ -16,7 +16,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        
+        $getAllTransaction = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->get();
+
+        return view('dashboards.admins.manageTransactions.allHistoryTransaction', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     public function viewUserDailyTransaction()
