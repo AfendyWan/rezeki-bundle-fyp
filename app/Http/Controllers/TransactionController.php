@@ -29,15 +29,56 @@ class TransactionController extends Controller
         ->where('payments.paymentDate', '>=', $todayDate)        
         ->get();
        
+        $isEmpty = 0;
+        if($getDailyTransaction->isEmpty()){
+            $isEmpty = 1;
+        }
 
-        return view('dashboards.admins.manageTransactions.dailyTransaction', compact('getDailyTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('dashboards.admins.manageTransactions.dailyTransaction', compact('getDailyTransaction', 'isEmpty')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     public function viewOrderItems(Request $request, $id)
     {
-    
-       dd("A");
-        // return redirect()->route('manageSaleItems.show', $id)->with('success','Sale item promotion updated successfully.');
+        $getOrderItems = DB::table('order_items')
+        ->join('sale_items', 'order_items.sale_item_id', '=', 'sale_items.id')
+        ->where('order_id', '=', $id)        
+        ->get();
+
+       
+        return view('dashboards.admins.manageTransactions.showOrderItems', compact('getOrderItems')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
+    public function searchWithDate(Request $request){
+       
+        $todayDate = date('Y-m-d');
+        $reformatDate = \Carbon\Carbon::parse($request->param1)->format('y-m-d');
+        if($request->param1 == null){
+            $request->param1=$todayDate;
+        }
+        $request->param1 = $reformatDate;
+        return \Redirect::route('adminSearchDateTransaction', ['param1' => $request->param1]);
+    }
+
+    public function adminSearchDateTransaction(Request $request){
+              
+        $limitDate = Carbon::createFromFormat('y-m-d', $request->param1);
+        $daysToAdd = 1;
+        $limitDate = $limitDate->addDays($daysToAdd)->startOfDay();
+       
+        $getDailyTransaction = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->where('payments.paymentDate', '>=', $request->param1) 
+        ->where('payments.paymentDate', '<', $limitDate)   
+        ->get();
+        
+        $isEmpty = 0;
+        if($getDailyTransaction->isEmpty()){
+            $isEmpty = 1;
+        }
+        
+        return view('dashboards.admins.manageTransactions.dailyTransaction', compact('getDailyTransaction', 'isEmpty')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
     /**
      * Show the form for creating a new resource.

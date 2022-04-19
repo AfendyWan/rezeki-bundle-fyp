@@ -53,6 +53,14 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::resource('manageTransactions', TransactionController::class);
     Route::get('viewUserDailyTransaction/',[TransactionController::class,'viewUserDailyTransaction'])->name('manageTransactions.viewUserDailyTransaction');
     Route::get('viewOrderItems/{id}',[TransactionController::class,'viewOrderItems'])->name('manageTransactions.viewOrderItems');
+    Route::get('redirect-with-date', [
+        'as' => 'searchDateTransaction',
+        'uses' => 'App\Http\Controllers\TransactionController@searchWithDate'
+    ]);
+    Route::get('adminSearchDateTransaction/{param1}/', [
+        'as' => 'adminSearchDateTransaction',
+        'uses' => 'App\Http\Controllers\TransactionController@adminSearchDateTransaction'
+    ]);
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');
