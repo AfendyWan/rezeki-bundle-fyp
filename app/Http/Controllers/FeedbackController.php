@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feedback;
+use App\Models\Order;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use DB;
+use Redirect;
 class FeedbackController extends Controller
 {
     /**
@@ -36,7 +39,29 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->filled('feedbackTitle')){
+            if(!$request->filled('feedbackDescription')){
+                return Redirect::back()->with(['error' => 'Feedback title and description is empty']);
+            }
+            return Redirect::back()->with(['error' => 'Feedback title is empty']);
+        }else{
+            if(!$request->filled('feedbackDescription')){
+                return Redirect::back()->with(['error' => 'Feedback description is empty']);
+            }
+            $getPaymentID = Order::where([
+                ['id', '=',$request->order_id],               
+            ])->first();
+
+            $feedback = new Feedback;
+            $feedback->feedbackTitle = $request->feedbackTitle;
+            $feedback->feedbackDescription = $request->feedbackDescription;
+            $feedback->userID = auth()->user()->id; 
+            $feedback->sale_item_id = $request->sale_item_id;
+            $feedback->order_id = $request->order_id;
+            $feedback->payment_id = $getPaymentID->paymentID;
+            $feedback->save();
+        }
+        return Redirect::back()->with(['success' => 'Feedback had been submitted successfully']);
     }
 
     /**

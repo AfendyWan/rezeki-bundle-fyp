@@ -16,6 +16,11 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
 
     <table class="table table-bordered">
         <tr>
@@ -53,6 +58,36 @@
             </td>
             <td>
             <a href="{{ route('saleItems.show',$ot->sale_item_id) }}" class="btn btn-sm btn-info">Show Sale Item</a>
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#submitFeedback<?php echo $ot->id;?>">Submit Feedback</button>
+            <div class="modal fade" id="submitFeedback<?php echo $ot->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Feedback for {{$ot->itemName}}</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action="{{ route('manageFeedback.store') }}" method="POST">
+							@csrf
+						<div class="modal-body">
+							<div class="form-group">
+							<label class="col-form-label"><b>Feedback Title:</b> <small></small></label>
+                            <input type="text" class="form-control" name="feedbackTitle" placeholder="Title">  
+                            <label class="col-form-label"><b>Feedback Description:</b> <small></small></label>
+                            <textarea class="form-control" style="height:150px" name="feedbackDescription" placeholder="Description"></textarea>
+                            <input type="hidden" name="sale_item_id" value="{{$ot->sale_item_id}}">
+                            <input type="hidden" name="order_id" value="{{$ot->order_id}}">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+						</form>
+						</div>
+					</div>
+					</div>
             </td>
         </tr>  
         @endforeach
