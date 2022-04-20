@@ -11,6 +11,7 @@ use App\Http\Controllers\WishListController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\FeedbackController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -103,7 +104,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('userIndex',[TransactionController::class,'userIndex'])->name('manageTransactions.userIndex');
     Route::get('userViewOrderItems/{id}',[TransactionController::class,'userViewOrderItems'])->name('manageTransactions.userViewOrderItems');
     
-
+    Route::resource('manageFeedback', FeedbackController::class);
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
