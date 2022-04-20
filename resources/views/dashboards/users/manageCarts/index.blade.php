@@ -177,39 +177,37 @@
 		
 		@endif
 		<hr>
-		<div class="total">
-			<div class="total1">Total Price:</div>
-			@if ($getCart != "")
-				<div class="total2">RM {{ $getCart->totalPrice }}</div>
-			@else
-			<div class="total2">RM 0.00 </div>			
-			@endif
-			<div class="clear"></div>
-		</div>
+
 		<!-- //Total-Price-Ends-Here -->
 
 		<!-- Checkout-Starts-Here -->
-		<div class="checkout">
-			<div class="discount">
-				<span>Apply Discount Code</span> <input type="text">
+	
+		<!-- //Checkout-Ends-Here -->
+		<div style="display: flex; justify-content: space-around">
+			<div style="font-size: 23px; font-weight: bold; color: #47484A;">Total Price: 	
+				&nbsp 
+				@if ($getCart != "")
+					RM {{ $getCart->totalPrice }}
+				@else
+					RM 0.00 
+				@endif
 			</div>
-			<div class="add">
-				<a href="#">Add to Cart</a>
-			</div>
+			<div style="font-size: 23px; font-weight: bold; color: #47484A;">
 			
-			<div class="checkout-btn">
+			</div>
+			<div class="" style="font-weight: bold; color: #47484A;">
 			@if ($getCart != "")
 				@if ($getCart->cartItemQuantity!="0")
-				<a href="{{ route('managePayment.index') }}">Checkout</a>
+				<a href="{{ route('managePayment.index') }}"><button type="" class="btn btn-primary">Checkout</button></a>
 				@endif
 			@endif
-			</div>
-			<div class="clear"></div>
 		</div>
-		<!-- //Checkout-Ends-Here -->
-
+		</div>
+		<br>
 	</div>
-	
+	<br>
+
+
 
 	<!-- Content-Ends-Here -->
 

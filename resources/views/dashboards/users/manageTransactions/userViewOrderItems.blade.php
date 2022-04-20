@@ -1,5 +1,5 @@
-@extends('dashboards.admins.layouts.admin-dash-layout')
-@section('title', 'ShowAllSaleItems')
+@extends('dashboards.users.layouts.user-dash-layout')
+@section('title', 'userTransactionItem')
 
 @section('content')
 
@@ -52,11 +52,11 @@
 				</script> 
             </td>
             <td>
-            <a href="{{ route('manageSaleItems.show',$ot->sale_item_id) }}" class="btn btn-sm btn-info">Show Sale Item</a>
+            <a href="{{ route('saleItems.show',$ot->sale_item_id) }}" class="btn btn-sm btn-info">Show Sale Item</a>
             </td>
         </tr>  
         @endforeach
     </table>
 
-
+<br><br><br>
 @endsection

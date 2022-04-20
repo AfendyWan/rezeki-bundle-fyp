@@ -25,6 +25,17 @@ class TransactionController extends Controller
         return view('dashboards.admins.manageTransactions.allHistoryTransaction', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
+    public function userIndex()
+    {
+        $getAllTransaction = DB::table('orders')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->select('orders.*', 'payments.*', 'orders.id as orderID')
+        ->where('orders.userID', '=', auth()->user()->id)      
+        ->get();
+
+        return view('dashboards.users.manageTransactions.index', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
     public function viewUserDailyTransaction()
     {
         $todayDate = date('Y-m-d');
@@ -53,7 +64,17 @@ class TransactionController extends Controller
        
         return view('dashboards.admins.manageTransactions.showOrderItems', compact('getOrderItems')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
+    public function userViewOrderItems(Request $request, $id)
+    {
+        $getOrderItems = DB::table('order_items')
+        ->join('sale_items', 'order_items.sale_item_id', '=', 'sale_items.id')
+        ->where('order_id', '=', $id)        
+        ->get();
 
+       
+        return view('dashboards.users.manageTransactions.userViewOrderItems', compact('getOrderItems')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+    
     public function searchWithDate(Request $request){
        
         $todayDate = date('Y-m-d');

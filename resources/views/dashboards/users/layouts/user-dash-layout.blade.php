@@ -130,7 +130,7 @@
           <a class="nav-link" href="#">Baby &amp Toys</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Fitness sport</a>
+          <a class="nav-link" href="{{ route('manageTransactions.userIndex') }}">Order History</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageWishList.index') }}">Wish List</a>

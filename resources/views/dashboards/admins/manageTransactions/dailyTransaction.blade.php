@@ -37,6 +37,7 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
+            <th>Order Number</th>
             <th>Customer Name</th>
             <th>Total Price</th>
             <th>Order Date and Time</th>
@@ -46,6 +47,7 @@
         @foreach ($getDailyTransaction as $dt)
         <tr>
             <td>{{ ++$i }}</td>
+            <td>{{ $dt->order_number }}</td>
             <td>{{ $dt->first_name}} {{ $dt->last_name }}</td>
             <td>RM {{ $dt->totalPrice }}</td>
             <td>{{ $dt->orderDate }}</td>

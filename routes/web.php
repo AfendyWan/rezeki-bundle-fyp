@@ -61,6 +61,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
         'as' => 'adminSearchDateTransaction',
         'uses' => 'App\Http\Controllers\TransactionController@adminSearchDateTransaction'
     ]);
+    
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');
@@ -99,6 +100,8 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');
     Route::post('addNewShippingAddress/',[ShipmentController::class,'addNewShippingAddress'])->name('manageShipments.addNewShippingAddress');
 
+    Route::get('userIndex',[TransactionController::class,'userIndex'])->name('manageTransactions.userIndex');
+    Route::get('userViewOrderItems/{id}',[TransactionController::class,'userViewOrderItems'])->name('manageTransactions.userViewOrderItems');
     
 
   //  Route::get('logout', 'Auth\LoginController@logout');

@@ -152,9 +152,11 @@ class PaymentController extends Controller
         $newOrder->paymentID  = $newPayment->id;
         $newOrder->shipmentID  = $newShipment->id;
         $newOrder->orderStatus = "Order Placed";
-       
+        
         $newOrder->save();
-
+        $orderID = $newOrder->id;
+        $newOrder->order_number = "OD00" . $orderID;
+        $newOrder->save();
         ////////////////////Get user cart items
         $getCartItems = CartItem::where('cart_id', $checkCart->id)->get();
 
