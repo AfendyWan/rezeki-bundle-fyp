@@ -2,6 +2,24 @@
 @section('title', 'checkout')
 
 @section('content')
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
 <section class="section-content">
 <div class="container">
 
@@ -33,6 +51,14 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $f->feedbackTitle}}</h5>
                         <p class="card-text">{{ $f->feedbackDescription}}</p>
+                        <div class="row">
+                          @foreach ($allFeedbackImages as $image)
+                            @if($image->feedback_id ==$f->feedbackID)
+                            <img src="{{ url($image->url) }}" alt="Product Image"style="width:15%">
+                            &nbsp  &nbsp  &nbsp  &nbsp  &nbsp
+                            @endif
+                          @endforeach
+                        </div>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>

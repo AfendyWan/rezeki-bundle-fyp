@@ -22,11 +22,18 @@ class FeedbackController extends Controller
         $getAllUserFeedback = DB::table('feedback')
         ->join('sale_items', 'feedback.sale_item_id', '=', 'sale_items.id')
         ->join('users', 'feedback.userID', '=', 'users.id')
-        ->select('feedback.*', 'sale_items.*', 'users.*')
+        ->select('feedback.*', 'sale_items.*', 'users.*', 'feedback.id as feedbackID')
         ->get();
 
-       
-        return view('dashboards.users.manageFeedback.index', compact('getAllUserFeedback'))
+        $allFeedbackImages = FeedbackImage::all();
+        // $getAllUserFeedback = DB::table('feedback')
+        // ->join('sale_items', 'feedback.sale_item_id', '=', 'sale_items.id')
+        // ->join('users', 'feedback.userID', '=', 'users.id')
+        // ->join('feedback_images', 'feedback.id', '=', 'feedback_images.feedback_id')
+        // ->select('feedback.*', 'sale_items.*', 'users.*', 'feedback_images.*')
+        // ->get();
+
+        return view('dashboards.users.manageFeedback.index', compact('getAllUserFeedback', 'allFeedbackImages'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
