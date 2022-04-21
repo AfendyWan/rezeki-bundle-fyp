@@ -19,6 +19,12 @@
   clear: both;
   display: table;
 }
+
+.zoom:hover {
+  -ms-transform: scale(2.0); /* IE 9 */
+  -webkit-transform: scale(2.0); /* Safari 3-8 */
+  transform: scale(2.0); 
+}
 </style>
 <section class="section-content">
 <div class="container">
@@ -52,9 +58,10 @@
                         <h5 class="card-title">{{ $f->feedbackTitle}}</h5>
                         <p class="card-text">{{ $f->feedbackDescription}}</p>
                         <div class="row">
+                        &nbsp  &nbsp  &nbsp  &nbsp  &nbsp
                           @foreach ($allFeedbackImages as $image)
                             @if($image->feedback_id ==$f->feedbackID)
-                            <img src="{{ url($image->url) }}" alt="Product Image"style="width:15%">
+                            <img src="{{ url($image->url) }}" alt="Product Image"style="width:15%" class="zoom">                          
                             &nbsp  &nbsp  &nbsp  &nbsp  &nbsp
                             @endif
                           @endforeach
