@@ -68,7 +68,7 @@
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form action="{{ route('manageFeedback.store') }}" method="POST">
+						<form action="{{ route('manageFeedback.store') }}" method="POST" enctype="multipart/form-data">
 							@csrf
 						<div class="modal-body">
 							<div class="form-group">
@@ -76,6 +76,9 @@
                             <input type="text" class="form-control" name="feedbackTitle" placeholder="Title">  
                             <label class="col-form-label"><b>Feedback Description:</b> <small></small></label>
                             <textarea class="form-control" style="height:150px" name="feedbackDescription" placeholder="Description"></textarea>
+                            <label class="col-form-label"><b>Images</b> <small></small></label>
+                            <input type="file" name="images[]" multiple class="form-control" accept="image/*">
+            
                             <input type="hidden" name="sale_item_id" value="{{$ot->sale_item_id}}">
                             <input type="hidden" name="order_id" value="{{$ot->order_id}}">
 							</div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feedback;
+use App\Models\FeedbackImage;
 use App\Models\Order;
 
 use App\Http\Controllers\Controller;
@@ -68,6 +69,23 @@ class FeedbackController extends Controller
             $feedback->order_id = $request->order_id;
             $feedback->payment_id = $getPaymentID->paymentID;
             $feedback->save();
+
+            if ($request->hasfile('images')) {
+                $images = $request->file('images');
+                foreach($images as $image) {
+                    $name = time() .'-'.$image->getClientOriginalName();
+    
+                    //save to upload folder within the public
+                    $path = $image->storeAs('feedback', $name, 'public');
+                    
+                    //Save to public folder
+                    //$path = $image->storeAs('public/', $name);
+                    FeedbackImage::create([
+                        'feedback_id' => $feedback->id,
+                        'url' => '/storage/'.$path
+                    ]);
+                }
+           }
         }
         return Redirect::back()->with(['success' => 'Feedback had been submitted successfully']);
     }
