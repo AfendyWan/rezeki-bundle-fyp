@@ -127,7 +127,7 @@
           <a class="nav-link" href="#">Electronics</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Baby &amp Toys</a>
+          <a class="nav-link" href="{{ route('manageFeedback.index') }}">Feedback</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageTransactions.userIndex') }}">Order History</a>

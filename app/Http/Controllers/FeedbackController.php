@@ -18,7 +18,15 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        $getAllUserFeedback = DB::table('feedback')
+        ->join('sale_items', 'feedback.sale_item_id', '=', 'sale_items.id')
+        ->join('users', 'feedback.userID', '=', 'users.id')
+        ->select('feedback.*', 'sale_items.*', 'users.*')
+        ->get();
+
+       
+        return view('dashboards.users.manageFeedback.index', compact('getAllUserFeedback'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -28,7 +36,7 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
