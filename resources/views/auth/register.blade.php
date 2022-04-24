@@ -206,8 +206,8 @@
                          if(data){
                             $('#city').empty();
                             $('#city').append('<option hidden>Choose City</option>'); 
-                            $.each(data, function(key, course){
-                                $('select[name="city"]').append('<option value="'+ key +'">' + course.cities_name+ '</option>');
+                            $.each(data, function(key, city){
+                                $('select[name="city"]').append('<option value="'+ city.cities_name +'">' + city.cities_name+ '</option>');
                             });
                         }else{
                             $('#city').empty();

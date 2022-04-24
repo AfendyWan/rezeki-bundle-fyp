@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shipment;
+use App\Models\State;
+use App\Models\City;
 use App\Models\UserShippingAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -31,7 +33,10 @@ class ShipmentController extends Controller
             ['userID', '=', Auth::user()->id],          
         ])->get();
         
-        return view('dashboards.users.manageShipments.create', compact('getUserShippingAddress'));
+        $state = State::all();
+     
+
+        return view('dashboards.users.manageShipments.create', compact('getUserShippingAddress', 'state'));
     }
 
     public function updateShippingDefault(Request $request)
@@ -68,9 +73,12 @@ class ShipmentController extends Controller
                 'shipping_default_status' => 0,                
             ]);
         }
+
         $newUserShipping = new UserShippingAddress;
         $newUserShipping->shipping_default_status = 1;
         $newUserShipping->shipping_address = $request->shipping_address;
+        $newUserShipping->state = $request->state;
+        $newUserShipping->city = $request->city;
         $newUserShipping->postcode = $request->postcode;
         $newUserShipping->userID = Auth::user()->id;
         $newUserShipping->save();
