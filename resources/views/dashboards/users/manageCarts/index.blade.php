@@ -55,7 +55,7 @@
 
 	<h1>SHOPPING CART</h1>
 	@if ($getSaleItemInCart == "")
-		<h2>Cart is currently empty</h2><br>
+	
 	@endif
 	@if ($message = Session::get('success'))
     <div class="alert alert-success">

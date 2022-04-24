@@ -11,6 +11,8 @@ use App\Models\SaleItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Shipment;
+use App\Models\Adminsetting;
+use App\Models\State;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -27,7 +29,30 @@ class PaymentController extends Controller
         $adminDetails = User::where('role', 1)->select('email', 'shipping_address', 'phone_number')->first();
         $userShippingAddress = UserShippingAddress::where([
            ['userID', '=', Auth::user()->id],
+           ['shipping_default_status', '=', 1],           
         ])->first();
+
+        $userShippingAddressState = State::where([
+            ['id', '=', $userShippingAddress->state],                   
+         ])->first();
+
+         $localDelivery = Adminsetting::where([
+            ['key', '=', 'local delivery'],                   
+         ])->first();
+
+         $SabahShippingFee = Adminsetting::where([
+            ['key', '=', 'Sabah courier delivery shipping fee'],                   
+         ])->first();
+
+         $SarawakShippingFee = Adminsetting::where([
+            ['key', '=', 'Sarawak courier delivery shipping fee'],                   
+         ])->first();
+
+         $PeninsularShippingFee = Adminsetting::where([
+            ['key', '=', 'Peninsular courier delivery shipping fee'],                   
+         ])->first();
+        
+
          
         $userDetails = User::where('id', Auth::user()->id)->select('first_name', 'last_name','email', 'phone_number')->first();
         $getCart = Cart::where([
@@ -43,7 +68,7 @@ class PaymentController extends Controller
         ->get();
         $todayDate = date('Y-m-d');
         
-        return view('dashboards.users.managePayments.index', compact('adminDetails', 'userDetails','userShippingAddress', 'todayDate', 'getCart', 'getSaleItemInCart'));
+        return view('dashboards.users.managePayments.index', compact('adminDetails', 'userDetails','userShippingAddress', 'todayDate', 'getCart', 'getSaleItemInCart', 'userShippingAddressState', 'localDelivery', 'SabahShippingFee', 'SarawakShippingFee', 'PeninsularShippingFee'));
     }
 
     /**
@@ -112,7 +137,8 @@ class PaymentController extends Controller
         //
     }
 
-    public function updatePaymentResult(){
+    public function updatePaymentResult(Request $request){
+  
 
         ////////////////////Get user cart
         $checkCart = Cart::where([
@@ -135,7 +161,12 @@ class PaymentController extends Controller
 
         ////////////////////Create new shipping
         $newShipment = new Shipment;
-        $newShipment->shippingOption = ""; //kiv
+        if(str_contains($request->deliveryOptionName, 'Local Delivery')){
+            $newShipment->shippingOption = "local delivery"; //kiv
+        }else{
+            $newShipment->shippingOption = "courier delivery"; //kiv
+        }
+       
         $newShipment->shippingStatus = "To ship"; 
         $newShipment->shippingCourier = ""; //this will be later updated by admin
         $newShipment->shippingTrackingNumber = ""; //this will be later updated by admin

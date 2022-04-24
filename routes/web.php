@@ -106,7 +106,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::post('delete/',[WishListController::class,'delete'])->name('manageWishList.delete');
 
     Route::resource('managePayment', PaymentController::class);
-    Route::get('updatePaymentResult/',[PaymentController::class,'updatePaymentResult'])->name('managePayments.updatePaymentResult');
+    Route::post('updatePaymentResult/',[PaymentController::class,'updatePaymentResult'])->name('managePayments.updatePaymentResult');
 
     Route::resource('manageShipments', ShipmentController::class);
     Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');

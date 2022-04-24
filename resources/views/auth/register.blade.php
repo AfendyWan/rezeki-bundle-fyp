@@ -121,7 +121,7 @@
                             <div class="col-111">
                                 <div class="input-group1">
                                     <label class="label1">Shipping Address</label>
-                                    <input id="shipping_address" type="text" class="input--style-4 form-control @error('shipping_address') is-invalid @enderror" name="shipping_address" required autocomplete="shipping_address">
+                                    <textarea id="shipping_address" class="input--style-4 form-control @error('shipping_address') is-invalid @enderror" name="shipping_address" required autocomplete="shipping_address"rows="4" cols="50"></textarea>
                                     @error('shipping_address')
                                         <span class="text-danger" style="color:red" role="alert">
                                             <strong>{{ $message }}</strong>

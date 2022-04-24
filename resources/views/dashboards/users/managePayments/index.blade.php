@@ -55,7 +55,7 @@
             To
             <address>
             <strong>{{$userDetails->first_name}} {{$userDetails->last_name}}</strong><br>
-            {{$userShippingAddress->shipping_address}}<br>
+            {{$userShippingAddress->shipping_address}},  {{$userShippingAddress->city}}, {{$userShippingAddressState->states_name}},  {{$userShippingAddress->postcode}}<br>
   
             Phone: {{$userDetails->phone_number}}<br>
             Email: [{{$userDetails->email}}]
@@ -120,35 +120,82 @@
         dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
         </p>
       </div>
+      <form method="POST" action="{{ route('managePayments.updatePaymentResult') }}" class="col-6">
+      @csrf
+      <p class="lead">Amount Due</p>
+                <div class="table-responsive">
+                <table class="table">
+                <tr>
+                  <th style="width:50%">Subtotal:</th>
+                    <td>RM {{$getCart->totalPrice}}</td>
+                </tr>
+              
+                <tr>
+                  <th>Flat Rate Shipping:</th>
+                  <td>
+                    @if ($userShippingAddressState->states_name == "Johor")
+                      @if ($userShippingAddress->city == "Bandar Maharani")
+                      <select class="form-control" name="deliveryOption" id="deliveryOption">
+                        <option value="{{$localDelivery->value}}" selected>Local Delivery (COD) RM{{$localDelivery->value}}</option>
+                        <option value="{{$SabahShippingFee->value}}">Courier Delivery RM{{$SabahShippingFee->value}}</option>                
+                      </select>
+                      @else
+                      <select class="form-control" name="deliveryOption" id="deliveryOption">
+                        <option value="{{$SabahShippingFee->value}}">RM {{$SabahShippingFee->value}}</option>                        
+                      </select>
+                      
+                      @endif
+                    @elseif ($userShippingAddressState->states_name == "Sarawak")
+                    <select class="form-control" name="deliveryOption" id="deliveryOption">
+                        <option value="{{$SarawakShippingFee->value}}">RM {{$SarawakShippingFee->value}}</option>                        
+                    </select>                   
+                    @else
+                    <select class="form-control" name="deliveryOption" id="deliveryOption">
+                        <option value="{{$PeninsularShippingFee->value}}">RM {{$PeninsularShippingFee->value}}</option>                        
+                    </select>  
+                 
+                    @endif
+                    <input type="hidden" id="deliveryOptionName" name="deliveryOptionName" value="">
+                  </td>         
+                    <!-- <td>RM 10.00</td> -->
+                </tr>
+                <tr>
+                  <th>Total:</th>
+                    <td id="detailInfo"> 
+                    <script type="text/javascript">
 
-      <div class="col-6">
-        <p class="lead">Amount Due</p>
-          <div class="table-responsive">
-          <table class="table">
-          <tr>
-            <th style="width:50%">Subtotal:</th>
-              <td>RM {{$getCart->totalPrice}}</td>
-          </tr>
-         
-          <tr>
-            <th>Flat Rate Shipping:</th>
-              <td>RM 10.00</td>
-          </tr>
-          <tr>
-            <th>Total:</th>
-              <td>RM {{$getCart->totalPrice}}</td>
-          </tr>
-          </table>
-          </div>
-        </div>
-      </div>
+                      $(document).ready(function () {
+                          var shippingFee = $('#deliveryOption').val();
+                          var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
+                          var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
+                          var selectedName = $('#deliveryOption :selected').text();
+                          $('input[name="deliveryOptionName"]').val(selectedName);
+                       
+							            $('#detailInfo').html('RM ' + decimalTotalPrice);
+                          $('#deliveryOption').on("change", function () {
+                              var shippingFee = $('#deliveryOption').val();
+                             
+                              var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
+                              var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
+                              var selectedName = $('#deliveryOption :selected').text();
+                              
+                              $('input[name="deliveryOptionName"]').val(selectedName);
+                              $('#detailInfo').html('RM ' + decimalTotalPrice);
+                          });
+                      });
 
-
-      <div class="row no-print">
+                      </script>
+                    
+                      </td>
+                </tr>
+                </table>
+                </div>
+              </div>
+         <div class="row no-print">
         <div class="col-12">
          
           <a href="{{route('managePayments.updatePaymentResult')}}">
-            <button type="button" class="btn btn-primary float-right">
+            <button type="submit" class="btn btn-primary float-right">
             Proceed to Payment
             </button>
           </a>
@@ -157,6 +204,11 @@
           </button></a>
         </div>
       </div>
+      </form>
+     
+
+
+      
   </div>
 
 

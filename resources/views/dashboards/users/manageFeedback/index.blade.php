@@ -1,5 +1,5 @@
 @extends('dashboards.users.layouts.user-dash-layout')
-@section('title', 'checkout')
+@section('title', 'feedback')
 
 @section('content')
 <style>
