@@ -130,6 +130,26 @@
                                 </div>
                             </div>
                         </div>
+                      
+                        <div class="row1 row-space1">
+                            <div class="col-222">
+                                <div class="input-group1">
+                                <label for="category" class="form-label">State</label>
+                                    <select class="form-control" name="state" id="state">
+                                        <option hidden>Choose States</option>
+                                        @foreach ($state as $item)
+                                        <option value="{{ $item->id }}">{{ $item->states_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-222">
+                                <div class="input-group1">
+                                <label for="course" class="form-label">City</label>
+                                <select class="form-control" name="city" id="city"></select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row1 row-space1">
                             <div class="col-222">
                                 <div class="input-group1">
@@ -149,7 +169,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Sign Up</button>
                         </div>
@@ -161,6 +181,35 @@
         </div>
         </div>
 
+        <script>
+            $(document).ready(function() {
+            $('#state').on('change', function() {
+               var stateID = $(this).val();
+               if(stateID) {
+                   $.ajax({
+                       url: '/getCities/'+stateID,
+                       type: "GET",
+                       data : {"_token":"{{ csrf_token() }}"},
+                       dataType: "json",
+                       success:function(data)
+                       {
+                         if(data){
+                            $('#city').empty();
+                            $('#city').append('<option hidden>Choose City</option>'); 
+                            $.each(data, function(key, course){
+                                $('select[name="city"]').append('<option value="'+ key +'">' + course.cities_name+ '</option>');
+                            });
+                        }else{
+                            $('#city').empty();
+                        }
+                     }
+                   });
+               }else{
+                 $('#course').empty();
+               }
+            });
+            });
+        </script>
     <!-- Jquery JS-->
     <script src="register_assets/vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->

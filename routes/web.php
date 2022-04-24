@@ -35,7 +35,15 @@ Route::middleware(['middleware'=>'PreventBackHistory'])->group(function(){
     Auth::routes();
 });
 
+Route::get('/registers', function () {
+    $state = App\Models\State::all();
+    return view('auth/register',['state' => $state]);
+});
 
+Route::get('getCities/{id}', function ($id) {
+    $city = App\Models\City::where('states_id',$id)->get();
+    return response()->json($city);
+});
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -107,6 +115,8 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::get('userViewOrderItems/{id}',[TransactionController::class,'userViewOrderItems'])->name('manageTransactions.userViewOrderItems');
     
     Route::resource('manageFeedback', FeedbackController::class);
+
+
   //  Route::get('logout', 'Auth\LoginController@logout');
 });
 
