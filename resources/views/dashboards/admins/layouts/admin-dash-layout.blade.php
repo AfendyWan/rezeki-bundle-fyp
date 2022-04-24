@@ -133,7 +133,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('manageCategories.index')}}#" class="nav-link">
+            <a href="{{route('manageCategories.index')}}" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
               Manage Category 
@@ -141,7 +141,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('manageSaleItems.index')}}#" class="nav-link">
+            <a href="{{route('manageSaleItems.index')}}" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
               Manage Catalogue 
@@ -171,6 +171,14 @@
                   </a>
                 </li>       
               </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('manageFeedback.adminIndex')}}" class="nav-link">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+              View Feedback
+              </p>
+            </a>
           </li>
        </ul>
       </nav>

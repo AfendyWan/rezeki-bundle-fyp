@@ -37,6 +37,26 @@ class FeedbackController extends Controller
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function adminIndex(){
+        $getAllUserFeedback = DB::table('feedback')
+        ->join('sale_items', 'feedback.sale_item_id', '=', 'sale_items.id')
+        ->join('users', 'feedback.userID', '=', 'users.id')
+        ->select('feedback.*', 'sale_items.*', 'users.*', 'feedback.id as feedbackID')
+        ->get();
+
+        $allFeedbackImages = FeedbackImage::all();
+    
+        // $getAllUserFeedback = DB::table('feedback')
+        // ->join('sale_items', 'feedback.sale_item_id', '=', 'sale_items.id')
+        // ->join('users', 'feedback.userID', '=', 'users.id')
+        // ->join('feedback_images', 'feedback.id', '=', 'feedback_images.feedback_id')
+        // ->select('feedback.*', 'sale_items.*', 'users.*', 'feedback_images.*')
+        // ->get();
+
+        return view('dashboards.admins.manageFeedback.index', compact('getAllUserFeedback', 'allFeedbackImages'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

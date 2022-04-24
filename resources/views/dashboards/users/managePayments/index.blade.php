@@ -131,7 +131,7 @@
           </tr>
          
           <tr>
-            <th>Fate Rate Shipping:</th>
+            <th>Flat Rate Shipping:</th>
               <td>RM 10.00</td>
           </tr>
           <tr>

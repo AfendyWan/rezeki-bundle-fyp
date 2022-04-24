@@ -63,6 +63,8 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
         'uses' => 'App\Http\Controllers\TransactionController@adminSearchDateTransaction'
     ]);
     
+    Route::resource('manageFeedback', FeedbackController::class);
+    Route::get('adminIndex',[FeedbackController::class,'adminIndex'])->name('manageFeedback.adminIndex');
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');

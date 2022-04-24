@@ -66,8 +66,9 @@
         <div class="text">
           <span class="text-muted">Welcome!</span>
           <div> 
-            <a href="#">Sign in</a> |  
-            <a href="#"> Register</a>
+            <a href="{{ route('login') }}">Sign in</a> |  
+            <a href="{{ route('register') }}"> Register</a>
+            
           </div>
         </div>
       </div>
