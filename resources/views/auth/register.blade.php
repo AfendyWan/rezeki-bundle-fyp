@@ -122,7 +122,7 @@
                                 <div class="input-group1">
                                     <label class="label1">Shipping Address</label>
                                     <input id="shipping_address" type="text" class="input--style-4 form-control @error('shipping_address') is-invalid @enderror" name="shipping_address" required autocomplete="shipping_address">
-                                    @error('password')
+                                    @error('shipping_address')
                                         <span class="text-danger" style="color:red" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -134,19 +134,29 @@
                         <div class="row1 row-space1">
                             <div class="col-222">
                                 <div class="input-group1">
-                                <label for="category" class="form-label">State</label>
+                                <label for="state" class="form-label">State</label>
                                     <select class="form-control" name="state" id="state">
                                         <option hidden>Choose States</option>
                                         @foreach ($state as $item)
                                         <option value="{{ $item->id }}">{{ $item->states_name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('state')
+                                        <span class="text-danger" style="color:red" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-222">
                                 <div class="input-group1">
-                                <label for="course" class="form-label">City</label>
+                                <label for="city" class="form-label">City</label>
                                 <select class="form-control" name="city" id="city"></select>
+                                @error('city')
+                                    <span class="text-danger" style="color:red" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                         </div>

@@ -32,13 +32,14 @@ Route::get('/', function () {
 });
 
 Route::middleware(['middleware'=>'PreventBackHistory'])->group(function(){
+    Route::get('/registers', function () {
+        $state = App\Models\State::all();
+        return view('auth/register',['state' => $state]);
+    });
     Auth::routes();
 });
 
-Route::get('/registers', function () {
-    $state = App\Models\State::all();
-    return view('auth/register',['state' => $state]);
-});
+
 
 Route::get('getCities/{id}', function ($id) {
     $city = App\Models\City::where('states_id',$id)->get();

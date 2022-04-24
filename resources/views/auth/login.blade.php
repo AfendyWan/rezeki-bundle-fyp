@@ -75,7 +75,7 @@
 
             </form>
             <br>
-            <p style="color:black">Don't have an account?  &nbsp<a href="{{ route('register') }}" style="color:blue">Sign up</a> here</p>
+            <p style="color:black">Don't have an account?  &nbsp<a href="{{ url('/registers') }}" style="color:blue">Sign up</a> here</p>
           </div>
         </div>
       </div>

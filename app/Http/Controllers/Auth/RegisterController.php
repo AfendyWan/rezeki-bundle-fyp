@@ -60,6 +60,8 @@ class RegisterController extends Controller
             'phone_number' => 'required|numeric|regex:/(01)[0-9]/|digits_between:10,11',
             'shipping_address' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'state' => ['required'],
+            'city' => ['required'],
         ]);
     }
 
@@ -89,6 +91,8 @@ class RegisterController extends Controller
             'userID' => $userID,
             'shipping_default_status' => 1,
             'shipping_address' => $data['shipping_address'],
+            'state' => $data['state'],
+            'city' => $data['city'],
             'postcode' => $data['postcode'],
         ]);
         return $newUser;
