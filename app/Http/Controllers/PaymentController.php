@@ -159,8 +159,20 @@ class PaymentController extends Controller
             
         $newPayment->save();
         
-   
-   
+
+        ////////////////////get user default shipping address
+        $userShippingAddress = UserShippingAddress::where([           
+            ['shipping_default_status', '=', 1], 
+            ['userID', '=', auth()->user()->id],           
+         ])->first();
+
+         $userShippingAddressState = State::where([           
+            ['id', '=', $userShippingAddress->state],                  
+         ])->first();
+
+        
+         $userFullShippingAddress = $userShippingAddress->shipping_address. ", " . $userShippingAddress->city. ", " . $userShippingAddressState->states_name. ", " . $userShippingAddress->postcode;
+        
         ////////////////////Create new shipping
         $newShipment = new Shipment;
         if(str_contains($request->deliveryOptionName, 'Local Delivery')){
@@ -168,13 +180,15 @@ class PaymentController extends Controller
         }else{
             $newShipment->shippingOption = "courier delivery"; //kiv
         }
-       
+
+        $newShipment->shippingAddress = $userFullShippingAddress; 
         $newShipment->shippingStatus = "Preparing to Ship"; 
         $newShipment->shippingCourier = ""; //this will be later updated by admin
         $newShipment->shippingTrackingNumber = ""; //this will be later updated by admin
         $newShipment->cart_id = $checkCart->id; 
         $newShipment->payment_id = $newPayment->id;
         $newShipment->userID = auth()->user()->id;
+
         if($request->filled('deliveryDateTime')) {
             $splitDateTime = explode('T', $request->deliveryDateTime, 2); 
             $dateLocalDelivery = $splitDateTime[0];

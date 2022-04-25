@@ -47,6 +47,19 @@ class ShipmentController extends Controller
         return view('dashboards.admins.manageShipments.index', compact('getAllShipmentOrders', 'userShippingAddress', 'userShippingAddressState')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
+    public function userShipmentIndex()
+    {
+        $getUserShipment = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
+        ->get();
+   
+       
+        return view('dashboards.users.manageShipments.index', compact('getUserShipment')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
     public function adminUpdateShipment($id){
         $shipment = Shipment::find($id);
        

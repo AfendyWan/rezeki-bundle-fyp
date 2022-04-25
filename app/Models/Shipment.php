@@ -10,7 +10,7 @@ class Shipment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'shippingOption', 'shippingStatus', 'shippingCourier', 'shippingTrackingNumber', 'payment_id ', 'userID', 'cart_id',
+        'shippingOption', 'shippingStatus', 'shippingCourier', 'shippingTrackingNumber', 'payment_id ', 'userID', 'cart_id', 'shippingLocalDateTime'
     ];
 
     public function Cart()

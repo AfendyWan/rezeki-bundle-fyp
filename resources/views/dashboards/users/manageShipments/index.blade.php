@@ -25,7 +25,7 @@
 <!-- Body-Starts-Here -->
 <body>
 
-	<h1>Order History</h1>
+	<h1>Shipment</h1>
 	@if ($message = Session::get('success'))
     <div class="alert alert-success">
         {{ $message }}
@@ -41,22 +41,50 @@
     <table class="table table-hover text-nowrap">
         <thead>
             <tr>
-                <th>No.</th>            
-                <th>Order ID</th>                
-                <th>Order Date and Time</th>
-                <th>Order Status</th>
-                <th>Total Price</th>
+                <th>No.</th>        
+                <th width="280px">Full Address</th>   
+                         
+                <th>Shipping Fee</th>
+                <th>Shipping Option</th>
+                <th>Delivery Date Time</th>
+                <th>Shipping Courier Delivery</th>
+                <th>Shipping Tracking Number</th>
+                <th>Shipping Status</th>
+                <th>Payment Date Time</th> 
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($getAllTransaction as $dt)
+        @foreach ($getUserShipment as $dt)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $dt->order_number }}</td>
-            <td>{{ $dt->orderDate }}</td>
-            <td>{{ $dt->orderStatus }}</td>
-            <td>RM {{ $dt->totalPrice }}</td>
+            <td>{{ $dt->shippingAddress }}</td>
+            
+            <td>RM 1</td>
+            <td>{{ $dt->shippingOption }}</td>
+            <td>
+                @if($dt->shippingLocalDateTime=="")
+                    Not Available
+                @else
+                    {{$dt->shippingLocalDateTime}}
+                @endif
+            </td>
+            <td>
+                @if($dt->shippingCourier=="")
+                    Not yet update
+                @else
+                    {{$dt->shippingCourier}}
+                @endif
+            </td>
+            <td>
+                @if($dt->shippingTrackingNumber=="")
+                    Not yet update
+                @else
+                    {{$dt->shippingTrackingNumber}}
+                @endif
+            </td>
+            <td>{{ $dt->shippingStatus }}</td>
+            <td>{{ $dt->paymentDate }}</td>
             <td>
             <a href="{{ route('manageTransactions.userViewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-info">View order Items</a>
             </td>

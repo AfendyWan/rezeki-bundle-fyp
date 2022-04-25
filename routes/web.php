@@ -122,6 +122,7 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     
     Route::resource('manageFeedback', FeedbackController::class);
 
+    Route::get('userShipmentIndex',[ShipmentController::class,'userShipmentIndex'])->name('manageShipments.userShipmentIndex');
 
   //  Route::get('logout', 'Auth\LoginController@logout');
 });

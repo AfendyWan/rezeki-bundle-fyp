@@ -123,14 +123,15 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Supermarket</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Electronics</a>
-        </li>
+       
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageFeedback.index') }}">Feedback</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageTransactions.userIndex') }}">Order History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('manageShipments.userShipmentIndex') }}">View Shipping Status</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageWishList.index') }}">Wish List</a>

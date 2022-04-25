@@ -39,18 +39,7 @@
             <td>{{ ++$i }}</td>
             <td>{{ $a->first_name }} {{ $a->last_name }}</td>
             <td>
-                @foreach($userShippingAddress as $b)
-                    @if ($b->userID == $a->userID)
-                        {{$b->shipping_address}},
-                        {{$b->city}},
-                        @foreach($userShippingAddressState as $c)
-                            @if ($c->id == $b->state)
-                                {{$c->states_name}},
-                            @endif
-                        @endforeach
-                        Postcode {{ $b->postcode }}
-                    @endif
-                @endforeach
+            {{ $a->shippingAddress }}
               
           </td>
             <td>RM 1</td>
