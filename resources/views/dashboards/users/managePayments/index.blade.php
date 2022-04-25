@@ -136,7 +136,7 @@
                     @if ($userShippingAddressState->states_name == "Johor")
                       @if ($userShippingAddress->city == "Bandar Maharani")
                       <select class="form-control" name="deliveryOption" id="deliveryOption">
-                        <option value="{{$localDelivery->value}}" selected>Local Delivery (COD) RM{{$localDelivery->value}}</option>
+                        <option value="{{$localDelivery->value}}" selected>Local Delivery RM{{$localDelivery->value}}</option>
                         <option value="{{$SabahShippingFee->value}}">Courier Delivery RM{{$SabahShippingFee->value}}</option>                
                       </select>
                       @else
@@ -155,9 +155,16 @@
                     </select>  
                  
                     @endif
+                   
                     <input type="hidden" id="deliveryOptionName" name="deliveryOptionName" value="">
                   </td>         
                     <!-- <td>RM 10.00</td> -->
+                </tr>
+                <tr id="chooseDate">
+                <th>Delivery date and time:</th>
+                  <td id="">
+                    <input type="datetime-local" id="deliveryDateTime" name="deliveryDateTime">                   
+                  </td> 
                 </tr>
                 <tr>
                   <th>Total:</th>
@@ -169,6 +176,12 @@
                           var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
                           var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
                           var selectedName = $('#deliveryOption :selected').text();
+                          console.log(selectedName.includes('Local')); 
+                          if (selectedName.includes("Local")){
+                            $("#chooseDate").show();
+                          }else{
+                            $("#chooseDate").hide();
+                          }
                           $('input[name="deliveryOptionName"]').val(selectedName);
                        
 							            $('#detailInfo').html('RM ' + decimalTotalPrice);
@@ -178,7 +191,11 @@
                               var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
                               var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
                               var selectedName = $('#deliveryOption :selected').text();
-                              
+                              if (selectedName.includes("Local")){
+                                $("#chooseDate").show();
+                              }else{
+                                $("#chooseDate").hide();
+                              }
                               $('input[name="deliveryOptionName"]').val(selectedName);
                               $('#detailInfo').html('RM ' + decimalTotalPrice);
                           });

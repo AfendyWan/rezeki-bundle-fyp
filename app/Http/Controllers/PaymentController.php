@@ -158,7 +158,9 @@ class PaymentController extends Controller
         $newPayment->paymentDate = $todayDate;
             
         $newPayment->save();
-
+        
+   
+   
         ////////////////////Create new shipping
         $newShipment = new Shipment;
         if(str_contains($request->deliveryOptionName, 'Local Delivery')){
@@ -173,6 +175,13 @@ class PaymentController extends Controller
         $newShipment->cart_id = $checkCart->id; 
         $newShipment->payment_id = $newPayment->id;
         $newShipment->userID = auth()->user()->id;
+        if($request->filled('deliveryDateTime')) {
+            $splitDateTime = explode('T', $request->deliveryDateTime, 2); 
+            $dateLocalDelivery = $splitDateTime[0];
+            $timeLocalDelivery = $splitDateTime[1];
+            $timeDateLocalDelivery = $dateLocalDelivery. " " . $timeLocalDelivery;
+            $newShipment->shippingLocalDateTime = $timeDateLocalDelivery;           
+        }
 
         $newShipment->save();
 
