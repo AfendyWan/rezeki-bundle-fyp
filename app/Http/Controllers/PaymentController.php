@@ -167,7 +167,7 @@ class PaymentController extends Controller
             $newShipment->shippingOption = "courier delivery"; //kiv
         }
        
-        $newShipment->shippingStatus = "To ship"; 
+        $newShipment->shippingStatus = "Preparing to Ship"; 
         $newShipment->shippingCourier = ""; //this will be later updated by admin
         $newShipment->shippingTrackingNumber = ""; //this will be later updated by admin
         $newShipment->cart_id = $checkCart->id; 

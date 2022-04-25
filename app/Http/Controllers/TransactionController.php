@@ -107,6 +107,19 @@ class TransactionController extends Controller
         
         return view('dashboards.admins.manageTransactions.dailyTransaction', compact('getDailyTransaction', 'isEmpty')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
+
+    public function viewUserOrder(Request $request, $id){
+                     
+        $getUserTransaction = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->where('orders.id', '=', $id)       
+        ->first();
+        
+        return view('dashboards.admins.manageTransactions.viewUserOrder', compact('getUserTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

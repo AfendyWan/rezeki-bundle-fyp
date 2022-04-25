@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shipment;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\User;;
 use App\Models\State;
 use App\Models\City;
 use App\Models\UserShippingAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 use Auth;
 use Redirect;
 class ShipmentController extends Controller
@@ -19,7 +23,53 @@ class ShipmentController extends Controller
      */
     public function index()
     {
-        //
+       
+    }
+
+    public function adminShipmentIndex()
+    {
+        $getAllShipmentOrders = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
+        ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
+        ->get();
+       
+
+        $userShippingAddress = UserShippingAddress::where([
+           
+            ['shipping_default_status', '=', 1],           
+         ])->get();
+ 
+     
+         $userShippingAddressState = State::all();
+
+        return view('dashboards.admins.manageShipments.index', compact('getAllShipmentOrders', 'userShippingAddress', 'userShippingAddressState')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
+    public function adminUpdateShipment($id){
+        $shipment = Shipment::find($id);
+       
+        return view('dashboards.admins.manageShipments.edit', compact('shipment'));
+    }
+
+    public function adminSaveShipment(Request $request){
+        $request->validate([
+            'couriers' => 'required',
+            'shippingTrackingNumber' => ['required'],
+            'status' => 'required',
+            
+        ]);
+
+        Shipment::where('id', $request->id)
+        ->update([
+               'shippingCourier' => $request->couriers,
+               'shippingTrackingNumber' => $request->shippingTrackingNumber,
+               'shippingStatus' => $request->status,              
+        ]);
+        
+        return redirect()->route('manageShipments.adminShipmentIndex')->with('success','Shipment updated successfully.');
+       
     }
 
     /**

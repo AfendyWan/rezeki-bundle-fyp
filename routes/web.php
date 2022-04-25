@@ -63,6 +63,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::resource('manageTransactions', TransactionController::class);
     Route::get('viewUserDailyTransaction/',[TransactionController::class,'viewUserDailyTransaction'])->name('manageTransactions.viewUserDailyTransaction');
     Route::get('viewOrderItems/{id}',[TransactionController::class,'viewOrderItems'])->name('manageTransactions.viewOrderItems');
+    Route::get('viewUserOrder/{id}',[TransactionController::class,'viewUserOrder'])->name('manageTransactions.viewUserOrder');
     Route::get('redirect-with-date', [
         'as' => 'searchDateTransaction',
         'uses' => 'App\Http\Controllers\TransactionController@searchWithDate'
@@ -72,8 +73,12 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
         'uses' => 'App\Http\Controllers\TransactionController@adminSearchDateTransaction'
     ]);
     
-    Route::resource('manageFeedback', FeedbackController::class);
     Route::get('adminIndex',[FeedbackController::class,'adminIndex'])->name('manageFeedback.adminIndex');
+
+    Route::get('adminShipmentIndex',[ShipmentController::class,'adminShipmentIndex'])->name('manageShipments.adminShipmentIndex');
+    Route::get('adminUpdateShipment/{id}',[ShipmentController::class,'adminUpdateShipment'])->name('manageShipments.adminUpdateShipment');
+    Route::post('adminSaveShipment/',[ShipmentController::class,'adminSaveShipment'])->name('manageShipments.adminSaveShipment');
+    
       //Route::get('manageCategories',[SaleItemCategoryController::class,'index'])->name('manageCategories.index');
      //Format Route::get('url naming',[Controller name::class,'index'])->name('route name');
     //  Route::get('logout', 'Auth\LoginController@logout');

@@ -149,6 +149,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('manageShipments.adminShipmentIndex')}}" class="nav-link">
+              <i class="nav-icon fas fa-ship"></i>
+              <p>
+              Manage Shipment 
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
                 <p>
