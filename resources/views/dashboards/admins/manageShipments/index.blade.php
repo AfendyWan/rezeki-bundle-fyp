@@ -28,6 +28,7 @@
             <th width="280px">Shipping Full Address</th>           
             <th>Shipping Fee</th>
             <th>Shipping Option</th>
+            <th>Delivery Date Time</th>
             <th>Shipping Courier Delivery</th>
             <th>Shipping Tracking Number</th>
             <th>Shipping Status</th>
@@ -55,12 +56,20 @@
             <td>RM 1</td>
             <td>{{ $a->shippingOption }}</td>
             <td>
+                @if($a->shippingLocalDateTime=="")
+                    Not Available
+                @else
+                    {{$a->shippingLocalDateTime}}
+                @endif
+            </td>
+            <td>
                 @if($a->shippingCourier=="")
                     Not yet update
                 @else
                     {{$a->shippingCourier}}
                 @endif
             </td>
+      
             <td>
                 @if($a->shippingTrackingNumber=="")
                     Not yet update

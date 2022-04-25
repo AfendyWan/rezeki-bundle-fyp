@@ -8,7 +8,7 @@
                 <h2>Edit Shipment</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('manageSaleItems.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('manageShipments.adminShipmentIndex') }}"> Back</a>
             </div>
         </div>
     </div>

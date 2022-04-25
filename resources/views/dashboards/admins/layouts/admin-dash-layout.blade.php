@@ -128,7 +128,7 @@
             <a href="{{route('admin.profile')}}" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
-               Profile
+               Business Profile
               </p>
             </a>
           </li>

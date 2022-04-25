@@ -47,7 +47,7 @@
       <div class="center">
         <a href="{{route('user.dashboard')}}"><button type="submit" class="btn btn-lg btn-flat" style="color:black; background-color: white; border: 1px solid black;">CONTINUE SHOPPING</button></a>
         &nbsp &nbsp &nbsp
-        <a href=""><button type="submit" class="btn btn-lg btn-flat" style="color:red; background-color: #FFDBE9; border: 1px solid red">VIEW ORDER</button></a>
+        <a href="{{route('manageTransactions.userIndex')}}"><button type="submit" class="btn btn-lg btn-flat" style="color:red; background-color: #FFDBE9; border: 1px solid red">VIEW ORDER</button></a>
         
       </div>
         <br>
