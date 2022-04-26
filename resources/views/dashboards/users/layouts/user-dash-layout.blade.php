@@ -25,12 +25,12 @@
 <nav class="navbar navbar-dark navbar-expand p-0 bg-primary">
 <div class="container">
     <ul class="navbar-nav d-none d-md-flex mr-auto">
-    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Delivery</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Payment</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{route('user.dashboard')}}">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('manageShipments.userShipmentIndex') }}">Shipping</a></li>
+   
     </ul>
     <ul class="navbar-nav">
-    <li  class="nav-item"><a href="#" class="nav-link"> Call: +0000000000 </a></li>
+    <li  class="nav-item"><a href="#" class="nav-link"> Call: +089-210100 </a></li>
  
   </ul> <!-- list-inline //  -->
   
@@ -40,7 +40,7 @@
   <div class="container">
 <div class="row align-items-center">
   <div class="col-lg-2 col-6">
-    <a href="#" class="brand-wrap">
+    <a href="{{route('user.dashboard')}}" class="brand-wrap">
      Rezeki Bundle
     </a> <!-- brand-wrap.// -->
   </div>
@@ -109,21 +109,20 @@
         <li class="nav-item dropdown">
           <a class="nav-link pl-0" data-toggle="dropdown" href="#"><strong> <i class="fa fa-bars"></i>    All category</strong></a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Foods and Drink</a>
-            <a class="dropdown-item" href="#">Home interior</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Category 1</a>
+           
+            @foreach ($brandList as $bl)
+            <a class="dropdown-item" href="{{ route('saleItems.index', $bl->id) }}">{{$bl->name}}</a>            
+            @endforeach
+            <!-- <div class="dropdown-divider"></div> -->
+            <!-- <a class="dropdown-item" href="#">Category 1</a>
             <a class="dropdown-item" href="#">Category 2</a>
-            <a class="dropdown-item" href="#">Category 3</a>
+            <a class="dropdown-item" href="#">Category 3</a> -->
           </div>
         </li>
+    
         <li class="nav-item">
-          <a class="nav-link" href="#">Fashion</a>
+          <a class="nav-link" href="{{ route('manageFeedback.index') }}">My Profile</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Supermarket</a>
-        </li>
-       
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageFeedback.index') }}">Feedback</a>
         </li>
@@ -157,12 +156,13 @@
     <section class="footer-top  padding-y">
       <div class="row">
         <aside class="col-md col-6">
-          <h6 class="title">Brands</h6>
+          <h6 class="title">Category</h6>
           <ul class="list-unstyled">
-            <li> <a href="#">Adidas</a></li>
-            <li> <a href="#">Puma</a></li>
-            <li> <a href="#">Reebok</a></li>
-            <li> <a href="#">Nike</a></li>
+            @foreach ($brandListFooter as $bl)
+              <li> <a href="{{ route('saleItems.index', $bl->id) }}">{{$bl->name}}</a></li>
+                 
+            @endforeach
+            
           </ul>
         </aside>
         <aside class="col-md col-6">
@@ -170,7 +170,7 @@
           <ul class="list-unstyled">
             <li> <a href="#">About us</a></li>
             <li> <a href="#">Career</a></li>
-            <li> <a href="#">Find a store</a></li>
+            <!-- <li> <a href="#">Find a store</a></li> -->
             <li> <a href="#">Rules and terms</a></li>
             <li> <a href="#">Sitemap</a></li>
           </ul>
@@ -178,20 +178,18 @@
         <aside class="col-md col-6">
           <h6 class="title">Help</h6>
           <ul class="list-unstyled">
-            <li> <a href="#">Contact us</a></li>
-            <li> <a href="#">Money refund</a></li>
-            <li> <a href="#">Order status</a></li>
-            <li> <a href="#">Shipping info</a></li>
-            <li> <a href="#">Open dispute</a></li>
+            <!-- <li> <a href="#">Contact us</a></li>
+            <li> <a href="#">Money refund</a></li> -->
+            <li> <a href="{{ route('manageTransactions.userIndex') }}">Order status</a></li>
+            <li> <a href="{{ route('manageShipments.userShipmentIndex') }}">Shipping info</a></li>
+            <!-- <li> <a href="#">Open dispute</a></li> -->
           </ul>
         </aside>
         <aside class="col-md col-6">
           <h6 class="title">Account</h6>
           <ul class="list-unstyled">
-            <li> <a href="#"> User Login </a></li>
-            <li> <a href="#"> User register </a></li>
-            <li> <a href="#"> Account Setting </a></li>
-            <li> <a href="#"> My Orders </a></li>
+            <li> <a href="#"> My Profile </a></li>
+            <li> <a href="{{ route('manageTransactions.userIndex') }}"> My Orders </a></li>
           </ul>
         </aside>
         <aside class="col-md">
@@ -207,12 +205,11 @@
     </section>  <!-- footer-top.// -->
     <section class="footer-bottom row">
       <div class="col-md-2">
-        <p class="text-muted">   2021 Rezeki Bundle </p>
+        <p class="text-muted">    Rezeki Bundle </p>
       </div>
       <div class="col-md-8 text-md-center">
-        <span  class="px-2">info@com</span>
-        <span  class="px-2">+000-000-0000</span>
-        <span  class="px-2">Street name 123, ABC</span>
+        <span  class="px-2">rb@gmail.com</span>
+        <span  class="px-2">+089-210100</span>
       </div>
       <div class="col-md-2 text-md-right text-muted">
         <i class="fab fa-lg fa-cc-visa"></i> 

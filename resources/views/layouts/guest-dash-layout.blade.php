@@ -24,12 +24,12 @@
 <nav class="navbar navbar-dark navbar-expand p-0 bg-primary">
 <div class="container">
     <ul class="navbar-nav d-none d-md-flex mr-auto">
-    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Delivery</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Payment</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"></a></li>
+    <li class="nav-item"><a class="nav-link" href="#"></a></li>
+    <li class="nav-item"><a class="nav-link" href="#"></a></li>
     </ul>
     <ul class="navbar-nav">
-    <li  class="nav-item"><a href="#" class="nav-link"> Call: +0000000000 </a></li>
+    <li  class="nav-item"><a href="#" class="nav-link"> </a></li>
 
   </ul> <!-- list-inline //  -->
   
@@ -207,12 +207,12 @@
     </section>  <!-- footer-top.// -->
     <section class="footer-bottom row">
       <div class="col-md-2">
-        <p class="text-muted">   2021 Company name </p>
+        <p class="text-muted">   Rezeki Bundle </p>
       </div>
       <div class="col-md-8 text-md-center">
-        <span  class="px-2">info@com</span>
-        <span  class="px-2">+000-000-0000</span>
-        <span  class="px-2">Street name 123, ABC</span>
+        <span  class="px-2">rb@gmail.com</span>
+        <span  class="px-2">+089-210100</span>
+       
       </div>
       <div class="col-md-2 text-md-right text-muted">
         <i class="fab fa-lg fa-cc-visa"></i> 

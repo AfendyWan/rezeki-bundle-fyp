@@ -28,7 +28,17 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        if(Auth::user()->role == "1"){
+            return redirect('admin/dashboard');            
+        }
+        else if(Auth::user()->role == "2"){
+            return redirect('user/dashboard');            
+        }
+    }else{
+        return view('auth/login');
+    }
+    
 });
 
 Route::middleware(['middleware'=>'PreventBackHistory'])->group(function(){
@@ -85,6 +95,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
 });
 
 Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHistory']], function(){
+   
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
     Route::get('profile',[UserController::class,'profile'])->name('user.profile');
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');

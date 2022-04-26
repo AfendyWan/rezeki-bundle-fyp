@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use View;
 use App\Models\Cart;
+use App\Models\SaleItem;
+use App\Models\SaleItemCategory;
+
 use Auth;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,7 +35,12 @@ class AppServiceProvider extends ServiceProvider
                 ['userID', '=', Auth::user()->id],
                 ['cartStatus', '=', '1'],
             ])->first();
-            $view->with('cartQuantity', $cartQuantity );
+
+
+            $brandList =  SaleItemCategory::all();
+            $brandListFooter =  SaleItemCategory::all()->take(3);
+           
+            $view->with('cartQuantity', $cartQuantity )->with('brandList', $brandList)->with('brandListFooter', $brandListFooter);
             //pass the data to the view
             
         } );
