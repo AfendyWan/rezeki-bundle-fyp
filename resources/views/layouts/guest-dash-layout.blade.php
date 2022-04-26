@@ -92,7 +92,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="main_nav">
-      <ul class="navbar-nav">
+      <!-- <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link pl-0" data-toggle="dropdown" href="#"><strong> <i class="fa fa-bars"></i>    All category</strong></a>
           <div class="dropdown-menu">
@@ -125,7 +125,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Furnitures</a>
         </li>
-      </ul>
+      </ul> -->
     </div> <!-- collapse .// -->
   </div> <!-- container .// -->
 </nav>
@@ -156,7 +156,7 @@
   <div class="container">
     <section class="footer-top  padding-y">
       <div class="row">
-        <aside class="col-md col-6">
+        <!-- <aside class="col-md col-6">
           <h6 class="title">Brands</h6>
           <ul class="list-unstyled">
             <li> <a href="#">Adidas</a></li>
@@ -164,13 +164,13 @@
             <li> <a href="#">Reebok</a></li>
             <li> <a href="#">Nike</a></li>
           </ul>
-        </aside>
+        </aside> -->
         <aside class="col-md col-6">
           <h6 class="title">Company</h6>
           <ul class="list-unstyled">
             <li> <a href="#">About us</a></li>
             <li> <a href="#">Career</a></li>
-            <li> <a href="#">Find a store</a></li>
+            <!-- <li> <a href="#">Find a store</a></li> -->
             <li> <a href="#">Rules and terms</a></li>
             <li> <a href="#">Sitemap</a></li>
           </ul>
@@ -179,19 +179,19 @@
           <h6 class="title">Help</h6>
           <ul class="list-unstyled">
             <li> <a href="#">Contact us</a></li>
-            <li> <a href="#">Money refund</a></li>
+            <!-- <li> <a href="#">Money refund</a></li>
             <li> <a href="#">Order status</a></li>
             <li> <a href="#">Shipping info</a></li>
-            <li> <a href="#">Open dispute</a></li>
+            <li> <a href="#">Open dispute</a></li> -->
           </ul>
         </aside>
         <aside class="col-md col-6">
           <h6 class="title">Account</h6>
           <ul class="list-unstyled">
-            <li> <a href="#"> User Login </a></li>
-            <li> <a href="#"> User register </a></li>
-            <li> <a href="#"> Account Setting </a></li>
-            <li> <a href="#"> My Orders </a></li>
+            <li> <a href="{{ route('login') }}"> User Login </a></li>
+            <li> <a href="{{ url('/registers') }}"> User register </a></li>
+            <!-- <li> <a href="#"> Account Setting </a></li>
+            <li> <a href="#"> My Orders </a></li> -->
           </ul>
         </aside>
         <aside class="col-md">

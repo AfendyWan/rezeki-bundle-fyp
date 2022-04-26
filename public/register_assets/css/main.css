@@ -194,6 +194,12 @@ h6 {
   background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
   background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
   background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+
+  background-size:     cover;                  
+  background-repeat:   no-repeat;
+  background-position: center center;
+  background-image: url('/assets/images/bundle.jpg');
+  background-color: whitesmoke;
 }
 
 /* ==========================================================================

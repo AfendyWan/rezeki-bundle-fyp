@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-check content location
+Insert Report Here
 @endsection
 <!-- @section('content')
 <div class="container">
