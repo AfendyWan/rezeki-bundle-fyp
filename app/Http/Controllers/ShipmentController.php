@@ -54,6 +54,7 @@ class ShipmentController extends Controller
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
         ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
+        ->where('users.id', '=', auth()->user()->id)
         ->get();
    
        

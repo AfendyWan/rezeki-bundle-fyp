@@ -176,6 +176,7 @@ class CartController extends Controller
         $newCartQuantity = $cart->cartItemQuantity - $request->previousQuantity +  $request->quantity;
         $newTotalPrice = $cart->totalPrice - $previousSaleItemTotalPrice + $latestSaleItemTotalPrice;
 
+      
         Cart::where([
             ['id', '=', $request->cartID],
         ])->update([
