@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\saleItem\SaleItemController;
+use App\Http\Controllers\Api\auth\UserController;
+use App\Http\Controllers\Api\saleItem\SaleItemController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,10 +15,15 @@ use App\Http\Controllers\api\saleItem\SaleItemController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    //Authentication
+    Route::post('register', [UserController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+});
 Route::group([
     'middleware' => 'api',
     'prefix' => 'saleItem'
