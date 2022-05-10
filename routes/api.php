@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\auth\UserController;
+use App\Http\Controllers\Api\settings\SettingsController;
 use App\Http\Controllers\Api\saleItem\SaleItemController;
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,17 @@ Route::group([
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'settings'
+], function ($router) {
+   
+    Route::get('showAllStates', [SettingsController::class, 'showAllStates']);
+    Route::get('showAllCities', [SettingsController::class, 'showAllCities']);
+
+});
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'saleItem'
