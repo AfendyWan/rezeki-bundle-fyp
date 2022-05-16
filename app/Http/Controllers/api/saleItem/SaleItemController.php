@@ -7,12 +7,44 @@ use App\Models\SaleItemCategory;
 use App\Models\SaleItemImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class SaleItemController extends Controller{
     public function showAllSaleItem()
     {
         $allSaleItem = SaleItem::all();
         return response()->json($allSaleItem);
+    }
+
+    public function showSaleItemList($id)
+    {
+        $saleItemList = DB::table('sale_items')
+        ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
+        ->select('sale_items.*', 'sale_item_images.*')
+        ->where('sale_items.itemCategory', '=', $id)
+        ->get();
+        return response()->json($saleItemList);
+    }
+
+    public function showFirstThreeSaleItemCategory()
+    {
+        $saleItemCatalogue = DB::table('sale_item_categories')
+        ->join('sale_item_images', 'sale_item_categories.id', '=', 'sale_item_images.sale_item_category_id')
+        ->select('sale_item_categories.*', 'sale_item_images.*', 'sale_item_categories.id as saleItemCategoryID')
+        ->groupby('sale_item_images.sale_item_category_id')
+        ->take(3)->get();
+        return response()->json($saleItemCatalogue);
+    }
+
+    
+    public function showAllSsaleItemCategory()
+    {
+        $saleItemCatalogue = DB::table('sale_item_categories')
+        ->join('sale_item_images', 'sale_item_categories.id', '=', 'sale_item_images.sale_item_category_id')
+        ->select('sale_item_categories.*', 'sale_item_images.*', 'sale_item_categories.id as saleItemCategoryID')
+        ->groupby('sale_item_images.sale_item_category_id')
+        ->get();
+        return response()->json($saleItemCatalogue);
     }
 
     public function store(Request $request){

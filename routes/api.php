@@ -41,6 +41,10 @@ Route::group([
     'prefix' => 'saleItem'
 ], function ($router) {
     //saleItem
+    Route::get('showFirstThreeSaleItemCategory', [SaleItemController::class, 'showFirstThreeSaleItemCategory']);
+    Route::get('showAllSsaleItemCategory', [SaleItemController::class, 'showAllSsaleItemCategory']);
+    Route::get('showSaleItemList/{id}', [SaleItemController::class, 'showSaleItemList']);
+    
     Route::get('showAllSaleItem', [SaleItemController::class, 'showAllSaleItem']);
     Route::post('store', [SaleItemController::class, 'store']);
     Route::delete('deleteSaleItem/{id}', [SaleItemController::class, 'destroy']);
