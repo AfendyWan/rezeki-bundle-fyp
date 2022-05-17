@@ -20,10 +20,20 @@ class SaleItemController extends Controller{
     {
         $saleItemList = DB::table('sale_items')
         ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
-        ->select('sale_items.*', 'sale_item_images.*')
+        ->select('sale_items.*', 'sale_item_images.*', 'sale_items.id as itemID') 
+        ->groupby('sale_item_images.sale_item_id')
         ->where('sale_items.itemCategory', '=', $id)
         ->get();
         return response()->json($saleItemList);
+    }
+
+    public function showSaleItemImages($id)
+    {
+        $saleItemImages = DB::table('sale_item_images')       
+        ->select('sale_item_images.*',)
+        ->where('sale_item_images.sale_item_id', '=', $id)
+        ->get();
+        return response()->json($saleItemImages);
     }
 
     public function showFirstThreeSaleItemCategory()

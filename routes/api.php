@@ -44,6 +44,7 @@ Route::group([
     Route::get('showFirstThreeSaleItemCategory', [SaleItemController::class, 'showFirstThreeSaleItemCategory']);
     Route::get('showAllSsaleItemCategory', [SaleItemController::class, 'showAllSsaleItemCategory']);
     Route::get('showSaleItemList/{id}', [SaleItemController::class, 'showSaleItemList']);
+    Route::get('showSaleItemImages/{id}', [SaleItemController::class, 'showSaleItemImages']);
     
     Route::get('showAllSaleItem', [SaleItemController::class, 'showAllSaleItem']);
     Route::post('store', [SaleItemController::class, 'store']);
