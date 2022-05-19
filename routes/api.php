@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\auth\UserController;
 use App\Http\Controllers\Api\settings\SettingsController;
 use App\Http\Controllers\Api\saleItem\SaleItemController;
+use App\Http\Controllers\Api\wishlist\WishListController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,3 +52,14 @@ Route::group([
     Route::delete('deleteSaleItem/{id}', [SaleItemController::class, 'destroy']);
     Route::post('updateSaleItem/', [SaleItemController::class, 'updateSaleItem']);
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'wishList'
+], function ($router) {
+    //saleItem
+    Route::get('isWishList', [WishListController::class, 'isWishList']);
+    Route::get('toggleWishList', [WishListController::class, 'toggleWishList']);
+ 
+});
+

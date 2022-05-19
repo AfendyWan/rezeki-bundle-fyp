@@ -24,7 +24,8 @@ class SaleItemController extends Controller{
         ->groupby('sale_item_images.sale_item_id')
         ->where('sale_items.itemCategory', '=', $id)
         ->get();
-        return response()->json($saleItemList);
+        
+        return response()->json($saleItemList, 200, ['Connection' => 'keep-alive']);
     }
 
     public function showSaleItemImages($id)
@@ -33,7 +34,8 @@ class SaleItemController extends Controller{
         ->select('sale_item_images.*',)
         ->where('sale_item_images.sale_item_id', '=', $id)
         ->get();
-        return response()->json($saleItemImages);
+  
+        return response()->json($saleItemImages, 200, ['Connection' => 'keep-alive']);
     }
 
     public function showFirstThreeSaleItemCategory()
@@ -43,7 +45,9 @@ class SaleItemController extends Controller{
         ->select('sale_item_categories.*', 'sale_item_images.*', 'sale_item_categories.id as saleItemCategoryID')
         ->groupby('sale_item_images.sale_item_category_id')
         ->take(3)->get();
-        return response()->json($saleItemCatalogue);
+
+        return response()->json($saleItemCatalogue, 200, ['Connection' => 'keep-alive']);
+    
     }
 
     
@@ -54,7 +58,9 @@ class SaleItemController extends Controller{
         ->select('sale_item_categories.*', 'sale_item_images.*', 'sale_item_categories.id as saleItemCategoryID')
         ->groupby('sale_item_images.sale_item_category_id')
         ->get();
-        return response()->json($saleItemCatalogue);
+
+        return response()->json($saleItemCatalogue, 200, ['Connection' => 'keep-alive']);
+        
     }
 
     public function store(Request $request){

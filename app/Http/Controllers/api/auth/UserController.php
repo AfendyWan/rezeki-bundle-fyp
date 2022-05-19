@@ -30,7 +30,7 @@ class UserController extends Controller
             $token = auth()->user()->createToken('RezekiBundleCustomerAuth')->accessToken;
             
 
-            return response()->json(['token' => $token, 'name'=>auth()->user()->first_name], 200);
+            return response()->json(['token' => $token,  'id'=>auth()->user()->id, 'first_name'=>auth()->user()->first_name, 'last_name'=>auth()->user()->last_name, 'email'=>auth()->user()->email, 'role'=>auth()->user()->role, 'gender'=>auth()->user()->gender, 'phone_number'=>auth()->user()->phone_number, 'postcode'=>auth()->user()->postcode], 200);
         } else {
       
             return response()->json([
