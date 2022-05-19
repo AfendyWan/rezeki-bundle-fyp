@@ -60,6 +60,6 @@ Route::group([
     //saleItem
     Route::get('isWishList', [WishListController::class, 'isWishList']);
     Route::get('toggleWishList', [WishListController::class, 'toggleWishList']);
- 
+    Route::get('getUserWishList/{id}', [WishListController::class, 'getUserWishList']);
 });
 

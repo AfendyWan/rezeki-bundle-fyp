@@ -83,4 +83,26 @@ class WishListController extends Controller{
 
         
     }
+
+    public function getUserWishList($id)
+    {     
+        $getWishList = WishList::where([
+            ['userID', '=', $id],
+        ])->first();
+
+        if(!$getWishList){
+            $getSaleItemInWishList = "";
+        }else{
+            $getSaleItemInWishList = DB::table('wish_list_items')
+            ->join('sale_items', 'wish_list_items.sale_item_id', '=', 'sale_items.id')
+            ->join('sale_item_images', 'wish_list_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
+            ->select('wish_list_items.*', 'sale_items.*', 'sale_item_images.*', 'sale_items.id as itemID')
+            ->where('wish_id', '=', $getWishList->id)
+            ->groupby('wish_list_items.sale_item_id')
+            ->get();
+        }
+        
+        return response()->json($getSaleItemInWishList, 200, ['Connection' => 'keep-alive']);
+
+    }  
 }
