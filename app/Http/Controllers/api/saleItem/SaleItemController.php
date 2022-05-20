@@ -63,6 +63,18 @@ class SaleItemController extends Controller{
         
     }
 
+    public function showSaleItemPromotionList()
+    {
+        $saleItemList = DB::table('sale_items')
+        ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
+        ->select('sale_items.*', 'sale_item_images.*', 'sale_items.id as itemID') 
+        ->groupby('sale_item_images.sale_item_id')
+        ->where('sale_items.itemPromotionStatus', '=', 1)
+        ->get();
+        
+        return response()->json($saleItemList, 200, ['Connection' => 'keep-alive']);
+    }
+
     public function store(Request $request){
 
         $saleItem = new SaleItem;
