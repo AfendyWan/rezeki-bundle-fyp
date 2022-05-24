@@ -74,7 +74,7 @@ Route::group([
     Route::get('getUserCartItem', [CartController::class, 'getUserCartItem']);
     Route::get('getUserCart', [CartController::class, 'getUserCart']);
     Route::get('deletCartItem', [CartController::class, 'deletCartItem']);
-    Route::get('addCartItem', [CartController::class, 'addCartItem']);
+    Route::post('addCartItem', [CartController::class, 'addCartItem']);
     
 });
 
