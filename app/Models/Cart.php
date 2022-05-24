@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\CartItem;
 class Cart extends Model
 {
     use HasFactory;
@@ -18,7 +18,7 @@ class Cart extends Model
 
     public function cartItem()
     {
-        return $this->hasMany('App\CartItem', 'cart_id');
+        return $this->hasMany('App\Models\CartItem', 'cart_id');
     }
 
     public function payment()

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\auth\UserController;
 use App\Http\Controllers\Api\settings\SettingsController;
 use App\Http\Controllers\Api\saleItem\SaleItemController;
 use App\Http\Controllers\Api\wishlist\WishListController;
+use App\Http\Controllers\Api\cart\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,5 +64,15 @@ Route::group([
     Route::get('isWishList', [WishListController::class, 'isWishList']);
     Route::get('toggleWishList', [WishListController::class, 'toggleWishList']);
     Route::get('getUserWishList/{id}', [WishListController::class, 'getUserWishList']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'cart'
+], function ($router) {
+    //saleItem
+    Route::get('getUserCartItem', [CartController::class, 'getUserCartItem']);
+    Route::get('getUserCart', [CartController::class, 'getUserCart']);
+    
 });
 

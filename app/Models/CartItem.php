@@ -18,6 +18,6 @@ class CartItem extends Model
 
     public function Cart()
     {
-        return $this->belongsTo('App\Cart', 'cart_id');
+        return $this->belongsTo('App\Models\Cart', 'cart_id');
     }
 }
