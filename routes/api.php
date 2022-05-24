@@ -73,6 +73,6 @@ Route::group([
     //saleItem
     Route::get('getUserCartItem', [CartController::class, 'getUserCartItem']);
     Route::get('getUserCart', [CartController::class, 'getUserCart']);
-    
+    Route::get('deletCartItem', [CartController::class, 'deletCartItem']);
 });
 
