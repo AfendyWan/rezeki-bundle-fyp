@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\settings\SettingsController;
 use App\Http\Controllers\Api\saleItem\SaleItemController;
 use App\Http\Controllers\Api\wishlist\WishListController;
 use App\Http\Controllers\Api\cart\CartController;
+use App\Http\Controllers\Api\feedback\FeedbackController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,7 +62,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'wishList'
 ], function ($router) {
-    //saleItem
+
     Route::get('isWishList', [WishListController::class, 'isWishList']);
     Route::get('toggleWishList', [WishListController::class, 'toggleWishList']);
     Route::get('getUserWishList/{id}', [WishListController::class, 'getUserWishList']);
@@ -70,11 +72,19 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'cart'
 ], function ($router) {
-    //saleItem
+ 
     Route::get('getUserCartItem', [CartController::class, 'getUserCartItem']);
     Route::get('getUserCart', [CartController::class, 'getUserCart']);
     Route::get('deletCartItem', [CartController::class, 'deletCartItem']);
     Route::post('addCartItem', [CartController::class, 'addCartItem']);
+    
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'feedback'
+], function ($router) {
+    Route::get('getUsersFeedback', [FeedbackController::class, 'getUsersFeedback']);
     
 });
 

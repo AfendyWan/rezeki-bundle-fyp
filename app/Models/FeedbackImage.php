@@ -15,6 +15,6 @@ class FeedbackImage extends Model
 
     public function feedback()
     {
-        return $this->belongsTo('App\Feedback', 'feedback_id');
+        return $this->belongsTo('App\Models\Feedback', 'feedback_id');
     }
 }
