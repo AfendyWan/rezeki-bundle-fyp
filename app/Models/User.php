@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Cart', 'userID');
     }
 
+    public function userProfilePhoto()
+    {
+        return $this->hasMany('App\UserProfilePhoto', 'userID');
+    }
+
     public function payment()
     {
         return $this->hasMany('App\Payment', 'userID');

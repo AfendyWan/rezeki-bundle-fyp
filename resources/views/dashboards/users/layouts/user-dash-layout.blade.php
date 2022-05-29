@@ -121,7 +121,7 @@
         </li>
     
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('manageFeedback.index') }}">My Profile</a>
+          <a class="nav-link" href="{{ route('user.profile') }}">My Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageFeedback.index') }}">Feedback</a>
