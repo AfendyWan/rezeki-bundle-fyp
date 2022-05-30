@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\UserShippingAddress;
+use App\Models\UserProfilePhoto;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
@@ -90,5 +91,36 @@ class UserController extends Controller
 
 
         return response()->json(['token' => $token, 'name'=>$newUser->first_name ], 200);
+    }
+
+    public function changeProfilePhoto(Request $request){
+
+        $user  = User::find($request->userID);  
+        $checkHasImages = UserProfilePhoto::where('userID', $user->id)->first();
+
+      
+        if ($request->hasFile('profileImage')) {
+            if($checkHasImages){
+                $checkHasImages->delete();
+            }
+            $images = $request->file('profileImage');
+           
+            $name = time() .'-'.$images->getClientOriginalName();
+              
+            //save to upload folder within the public
+            $path = $images->storeAs('user_profile', $name, 'public');
+            
+            //Save to public folder
+            //$path = $image->storeAs('public/', $name);
+           
+            UserProfilePhoto::create([
+                'userID' => $user->id,                    
+                'url' => '/storage/'.$path
+            ]);
+            // }
+        }else{
+            return response()->json(['fail' => __('Profile photo changes successfully')]);
+        }
+        return response()->json(['success' => __('Profile photo changes successfully')]);
     }
 }
