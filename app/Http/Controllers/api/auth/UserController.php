@@ -133,15 +133,56 @@ class UserController extends Controller
 
     
     public function getProfilePhoto(Request $request){
-
-       
+      
         $profilePhoto = UserProfilePhoto::where('userID', $request->userID)->first();
         if($profilePhoto){
             return response()->json($profilePhoto->url, 200, ['Connection' => 'keep-alive']);
         }else{
             return response()->json("failed", 200, ['Connection' => 'keep-alive']);
+        }       
+    }
+
+    public function updateUserData(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', ],
+            'gender' => 'required',
+            //'birthday' => 'required',
+            'postcode' => ['required', 'numeric','digits:5'],
+            'phone_number' => 'required|numeric|regex:/(01)[0-9]/|digits_between:10,11',
+          
+        
+        ], [
+            'first_name.required' => 'The first name field is required.',
+            'last_name.required' => 'The last name field is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 403);
         }
        
-       
+        User::where('id', $request->userID)
+        ->update([
+               'first_name' => $request->first_name,
+               'last_name' => $request->last_name, 
+               'email' => $request->email, 
+               'gender' =>  $request->gender, 
+               'phone_number' => $request->phone_number, 
+               'postcode' =>$request->postcode, 
+                   
+        ]);
+        
+        // UserShippingAddress::where([
+        //     ['userID', '=', $user->id],    
+        //     ['shipping_default_status', '=', 1],                 
+        // ])->update([
+        //     'shipping_address' => $request['shipping_address'],
+        //     'state' => $request['state'],
+        //     'city' => $request['city'],
+        // ]);
+
+        return response()->json(['success' => __('User profile saved successfully')]);
     }
 }
