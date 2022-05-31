@@ -100,9 +100,16 @@ class UserController extends Controller
 
       
         if ($request->hasFile('profileImage')) {
-            if($checkHasImages){
-                $checkHasImages->delete();
+
+            $previousProfilePhoto = UserProfilePhoto::where('userID', $user->id)->get();
+       
+            //delete file within laravel and database
+            foreach($previousProfilePhoto as $i){
+                $image = $i->url;
+                unlink(public_path($image));
+                $i->delete();
             }
+        
             $images = $request->file('profileImage');
            
             $name = time() .'-'.$images->getClientOriginalName();
@@ -119,8 +126,22 @@ class UserController extends Controller
             ]);
             // }
         }else{
-            return response()->json(['fail' => __('Profile photo changes successfully')]);
+            return response()->json(['fail' => __('Profile photo failed to changes')]);
         }
         return response()->json(['success' => __('Profile photo changes successfully')]);
+    }
+
+    
+    public function getProfilePhoto(Request $request){
+
+       
+        $profilePhoto = UserProfilePhoto::where('userID', $request->userID)->first();
+        if($profilePhoto){
+            return response()->json($profilePhoto->url, 200, ['Connection' => 'keep-alive']);
+        }else{
+            return response()->json("failed", 200, ['Connection' => 'keep-alive']);
+        }
+       
+       
     }
 }
