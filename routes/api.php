@@ -31,7 +31,7 @@ Route::group([
     Route::post('changeProfilePhoto', [UserController::class, 'changeProfilePhoto']);
     Route::get('getProfilePhoto', [UserController::class, 'getProfilePhoto']);
     Route::post('updateUserData', [UserController::class, 'updateUserData']);
-    
+    Route::post('changeUserPassword', [UserController::class, 'changeUserPassword']);
     
 });
 

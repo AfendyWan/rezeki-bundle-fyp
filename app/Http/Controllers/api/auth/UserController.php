@@ -185,4 +185,24 @@ class UserController extends Controller
 
         return response()->json(['success' => __('User profile saved successfully')]);
     }
+
+    public function changeUserPassword(Request $request){
+        $user  = User::find($request->userID);  
+        if (!Hash::check($request->oldPassword, $user->password)) {
+            return response()->json(['Errors' => __('Password not match')], 402);
+
+            
+         } 
+  
+       
+
+        
+        User::where('id', $request->userID)
+        ->update([
+            
+               'password' => Hash::make($request->newPassword)
+        ]);
+
+        return response()->json(['success' => __('User password saved successfully')]);
+    }
 }
