@@ -75,6 +75,26 @@ class SaleItemController extends Controller{
         return response()->json($saleItemList, 200, ['Connection' => 'keep-alive']);
     }
 
+    public function searchSaleItem(Request $request)
+    {
+        $saleItemImage = DB::table('sale_item_images')
+        ->join('sale_items', 'sale_item_images.sale_item_id', '=', 'sale_items.id')
+        ->where('sale_items.itemName', 'LIKE', '%'.$request->saleItemName.'%')
+        ->select('sale_item_images.*', 'sale_items.*')
+        ->groupby('sale_item_images.sale_item_id')
+        ->get();
+
+        $messageNoResult = false;
+        if($saleItemImage->isEmpty()){
+            $messageNoResult = true;
+           
+            return response()->json($saleItemImage, 200, ['Connection' => 'keep-alive']);
+        }
+        return response()->json($saleItemImage, 200, ['Connection' => 'keep-alive']);
+        
+     
+    }
+
     public function store(Request $request){
 
         $saleItem = new SaleItem;
