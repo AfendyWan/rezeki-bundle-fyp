@@ -119,6 +119,24 @@ class TransactionController extends Controller
         
         return view('dashboards.admins.manageTransactions.viewUserOrder', compact('getUserTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
+
+    public function verifyUserTransaction(Request $request){
+       
+        $getUnverifyTransaction = DB::table('orders')
+        ->join('users', 'orders.userID', '=', 'users.id')
+        ->join('payments', 'orders.paymentID', '=', 'payments.id')
+        ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
+        ->where('payments.paymentStatus', '=', "Processing")        
+        ->get();
+     
+        $isEmpty = 0;
+        if($getUnverifyTransaction->isEmpty()){
+            $isEmpty = 1;
+        }
+        
+        return view('dashboards.admins.manageTransactions.verifyTransaction', compact('getUnverifyTransaction', 'isEmpty')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
     
     /**
      * Show the form for creating a new resource.

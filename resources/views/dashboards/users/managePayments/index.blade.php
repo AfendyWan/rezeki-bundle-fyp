@@ -229,6 +229,17 @@
       </div>
       </form>
      
+    @if ($errors->any())
+    <br>
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with the payment receipt uploaded.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
       <div class="modal fade" id="openPaymentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
@@ -243,7 +254,7 @@
 						<div class="modal-body">
 							<div class="form-group">
 							<label class="col-form-label">Upload Payment Receipt: <small></small></label>
-              <input type="file" name="paymentReceipt"  class="form-control" accept="image/jpeg,image/application/pdf">
+              <input type="file" name="paymentReceipt"  class="form-control" accept="image/*,.pdf">
               
               <label class="col-form-label">Select Shipping Courier: <small></small></label>
 				      <input list="list-couriers" name="couriers" class="form-control" value="" placeholder="Delivery Courier"/>

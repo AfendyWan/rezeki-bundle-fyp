@@ -141,6 +141,11 @@ class PaymentController extends Controller
     public function updatePaymentResult(Request $request){
   
 
+        $request->validate([
+            'paymentReceipt' => 'required|mimes:png,jpg,jpeg,pdf|',
+          //  'images' => 'required|mimes:png,jpg,jpeg|max:5'
+        ]);
+      
         ////////////////////Get user cart
         $checkCart = Cart::where([
             ['userID', '=', auth()->user()->id],
@@ -178,7 +183,7 @@ class PaymentController extends Controller
                
                 PaymentReceipt::create([
                     'payment_id' => $newPayment->id, 
-                    'paymentReceiptStatus' => "processing",                      
+                    'paymentReceiptStatus' => $newPayment->id,                      
                     'url' => '/storage/'.$path
                 ]);
                 
@@ -229,7 +234,7 @@ class PaymentController extends Controller
         $newOrder->userID  = auth()->user()->id;
         $newOrder->paymentID  = $newPayment->id;
         $newOrder->shipmentID  = $newShipment->id;
-        $newOrder->orderStatus = "Order Placed";
+        $newOrder->orderStatus = "Order Processing";
         
         $newOrder->save();
         $orderID = $newOrder->id;

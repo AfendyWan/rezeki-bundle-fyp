@@ -166,6 +166,12 @@
                 </p>
             </a>
               <ul class="nav nav-treeview">
+              <li class="nav-item">
+                  <a href="{{route('manageTransactions.verifyUserTransaction')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Verify Transactions</p>
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a href="{{route('manageTransactions.viewUserDailyTransaction')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

@@ -10,6 +10,6 @@ class PaymentReceipt extends Model
     use HasFactory;
 
     protected $fillable = [
-        'url', 'payment_id ', 'paymentReceiptStatus'
+        'url', 'payment_id', 'paymentReceiptStatus'
        ];
 }

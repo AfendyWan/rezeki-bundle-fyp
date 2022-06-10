@@ -71,6 +71,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::resource('manageSaleItems', SaleItemController::class);
 
     Route::resource('manageTransactions', TransactionController::class);
+    Route::get('verifyUserTransaction/',[TransactionController::class,'verifyUserTransaction'])->name('manageTransactions.verifyUserTransaction');
     Route::get('viewUserDailyTransaction/',[TransactionController::class,'viewUserDailyTransaction'])->name('manageTransactions.viewUserDailyTransaction');
     Route::get('viewOrderItems/{id}',[TransactionController::class,'viewOrderItems'])->name('manageTransactions.viewOrderItems');
     Route::get('viewUserOrder/{id}',[TransactionController::class,'viewUserOrder'])->name('manageTransactions.viewUserOrder');
@@ -84,7 +85,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     ]);
     
     Route::get('adminIndex',[FeedbackController::class,'adminIndex'])->name('manageFeedback.adminIndex');
-
+    
     Route::get('adminShipmentIndex',[ShipmentController::class,'adminShipmentIndex'])->name('manageShipments.adminShipmentIndex');
     Route::get('adminUpdateShipment/{id}',[ShipmentController::class,'adminUpdateShipment'])->name('manageShipments.adminUpdateShipment');
     Route::post('adminSaveShipment/',[ShipmentController::class,'adminSaveShipment'])->name('manageShipments.adminSaveShipment');
