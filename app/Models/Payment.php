@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $fillable = ['totalPrice', 'paymentStatus', 'cart_id', 'userID', 'paymentDate'];
+    protected $fillable = ['totalPrice', 'subTotalPrice', 'shippingPrice', 'paymentStatus', 'cart_id', 'userID', 'paymentDate'];
 
  
 

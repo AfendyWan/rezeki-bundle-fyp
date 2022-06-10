@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Shipment;
 use App\Models\Adminsetting;
+use App\Models\PaymentReceipt;
 use App\Models\State;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -151,15 +152,38 @@ class PaymentController extends Controller
 
         ////////////////////Create new payment
         $newPayment = new Payment;
-        $newPayment->totalPrice = 10; //this total price will be get from payment gateway
-        $newPayment->paymentStatus = 1; //this payment status will be get from payment gateway
+        $newPayment->totalPrice = $request->totalPrice; //this total price will be get from payment gateway
+        $newPayment->subTotalPrice = $request->subTotalPrice;
+        $newPayment->shippingPrice = $request->shippingPrice;
+        $newPayment->paymentStatus = "Processing"; //this payment status will be get from payment gateway
         $newPayment->cart_id = $checkCart->id; 
         $newPayment->userID = auth()->user()->id;
         $newPayment->paymentDate = $todayDate;
             
         $newPayment->save();
         
-
+        if ($request->hasfile('paymentReceipt')) {
+           
+      
+            $images = $request->file('paymentReceipt');
+           
+                
+                $name = time() .'-'.$images->getClientOriginalName();
+               
+                //save to upload folder within the public
+                $path = $images->storeAs('payment_receipt', $name, 'public');
+                
+                //Save to public folder
+                //$path = $image->storeAs('public/', $name);
+               
+                PaymentReceipt::create([
+                    'payment_id' => $newPayment->id, 
+                    'paymentReceiptStatus' => "processing",                      
+                    'url' => '/storage/'.$path
+                ]);
+                
+            
+       }
         ////////////////////get user default shipping address
         $userShippingAddress = UserShippingAddress::where([           
             ['shipping_default_status', '=', 1], 
@@ -182,13 +206,13 @@ class PaymentController extends Controller
         }
 
         $newShipment->shippingAddress = $userFullShippingAddress; 
-        $newShipment->shippingStatus = "Preparing to Ship"; 
+        $newShipment->shippingStatus = "Processing"; 
         $newShipment->shippingCourier = ""; //this will be later updated by admin
         $newShipment->shippingTrackingNumber = ""; //this will be later updated by admin
         $newShipment->cart_id = $checkCart->id; 
         $newShipment->payment_id = $newPayment->id;
         $newShipment->userID = auth()->user()->id;
-
+        $newShipment->shippingCourier = $request->couriers; 
         if($request->filled('deliveryDateTime')) {
             $splitDateTime = explode('T', $request->deliveryDateTime, 2); 
             $dateLocalDelivery = $splitDateTime[0];

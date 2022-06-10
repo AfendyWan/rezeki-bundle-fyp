@@ -156,7 +156,7 @@
                  
                     @endif
                    
-                    <input type="hidden" id="deliveryOptionName" name="deliveryOptionName" value="">
+                    
                   </td>         
                     <!-- <td>RM 10.00</td> -->
                 </tr>
@@ -176,6 +176,9 @@
                           var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
                           var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
                           var selectedName = $('#deliveryOption :selected').text();
+                          $('input[name="totalPrice"]').val(decimalTotalPrice);
+                          $('input[name="subTotalPrice"]').val(<?php echo $getCart->totalPrice; ?>);
+                          $('input[name="shippingPrice"]').val(shippingFee);
                           console.log(selectedName.includes('Local')); 
                           if (selectedName.includes("Local")){
                             $("#chooseDate").show();
@@ -187,10 +190,12 @@
 							            $('#detailInfo').html('RM ' + decimalTotalPrice);
                           $('#deliveryOption').on("change", function () {
                               var shippingFee = $('#deliveryOption').val();
-                             
+
                               var totalPrice = parseInt(shippingFee) + <?php echo $getCart->totalPrice; ?>;
                               var decimalTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
                               var selectedName = $('#deliveryOption :selected').text();
+
+                            
                               if (selectedName.includes("Local")){
                                 $("#chooseDate").show();
                               }else{
@@ -211,11 +216,12 @@
          <div class="row no-print">
         <div class="col-12">
          
-          <a href="{{route('managePayments.updatePaymentResult')}}">
-            <button type="submit" class="btn btn-primary float-right">
+          <!-- <a href="{{route('managePayments.updatePaymentResult')}}"> -->
+        
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#openPaymentForm">
             Proceed to Payment
             </button>
-          </a>
+         
           <a href="{{route('manageShipments.create')}}"><button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
              Edit Shipping Address
           </button></a>
@@ -223,7 +229,51 @@
       </div>
       </form>
      
+      <div class="modal fade" id="openPaymentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Payment Form</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action="{{route('managePayments.updatePaymentResult')}}" method="POST"  enctype="multipart/form-data">
+							@csrf
+						<div class="modal-body">
+							<div class="form-group">
+							<label class="col-form-label">Upload Payment Receipt: <small></small></label>
+              <input type="file" name="paymentReceipt"  class="form-control" accept="image/jpeg,image/application/pdf">
+              
+              <label class="col-form-label">Select Shipping Courier: <small></small></label>
+				      <input list="list-couriers" name="couriers" class="form-control" value="" placeholder="Delivery Courier"/>
+                <datalist id="list-couriers">
+                    <option value="Pos Laju">
+                    <option value="GDex">
+                    <option value="ABX Express">
+                    <option value="J&T Express">
+                    <option value="Skynet Express">
+                    <option value="Citylink">
+                    <option value="DHL Express">
+                    <option value="FedEx">
+                    <option value="Easy Parcel">                  
+                </datalist>
 
+								<input type="hidden" name="totalPrice" id="totalPrice" value="">
+                <input type="hidden" name="subTotalPrice" id="subTotalPrice">
+                <input type="hidden" name="shippingPrice" id="shippingPrice">
+								<input type="hidden" name="userID" value="{{ auth()->user()->id }}">
+                <input type="hidden" id="deliveryOptionName" name="deliveryOptionName" value="">
+							</div>
+							</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</div>
+						</form>
+						</div>
+					</div>
+					</div>
 
       
   </div>
