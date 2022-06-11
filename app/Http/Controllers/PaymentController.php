@@ -320,4 +320,42 @@ class PaymentController extends Controller
        // dd($getCartItems);
         return view('dashboards.users.managePayments.result');
     }
+
+    public function updatePaymentVerificationStatus(Request $request){
+
+       
+        $getPayment = Payment::where([          
+            ['id', '=', $request->paymentID],
+        ])->update([
+            'paymentStatus' => $request->paymentVerificationStatus, 
+            'remark' => $request->paymentRemarks, 
+        ]);
+
+        $getPaymentReceipt = PaymentReceipt::where([          
+            ['payment_id', '=', $request->paymentID],
+        ])->update([
+            'paymentReceiptStatus' => $request->paymentVerificationStatus,            
+        ]);
+
+        if($request->paymentVerificationStatus == "Verified"){
+            $getOrder = Order::where([          
+                ['paymentID', '=', $request->paymentID],
+            ])->update([
+                'orderStatus' => "Order placed", 
+                
+            ]);
+        }else{
+            $getOrder = Order::where([          
+                ['paymentID', '=', $request->paymentID],
+            ])->update([
+                'orderStatus' => "Order unsuccessful", 
+                
+            ]);
+        }
+
+   
+
+        return redirect()->route('manageTransactions.verifyUserTransaction')
+        ->with('success','Payment status updated successfully.');
+    }
 }

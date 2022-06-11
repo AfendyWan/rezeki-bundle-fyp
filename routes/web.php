@@ -75,6 +75,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::get('viewUserDailyTransaction/',[TransactionController::class,'viewUserDailyTransaction'])->name('manageTransactions.viewUserDailyTransaction');
     Route::get('viewOrderItems/{id}',[TransactionController::class,'viewOrderItems'])->name('manageTransactions.viewOrderItems');
     Route::get('viewUserOrder/{id}',[TransactionController::class,'viewUserOrder'])->name('manageTransactions.viewUserOrder');
+    
     Route::get('redirect-with-date', [
         'as' => 'searchDateTransaction',
         'uses' => 'App\Http\Controllers\TransactionController@searchWithDate'
@@ -84,6 +85,8 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
         'uses' => 'App\Http\Controllers\TransactionController@adminSearchDateTransaction'
     ]);
     
+    Route::post('updatePaymentVerificationStatus/',[PaymentController::class,'updatePaymentVerificationStatus'])->name('managePayments.updatePaymentVerificationStatus');
+
     Route::get('adminIndex',[FeedbackController::class,'adminIndex'])->name('manageFeedback.adminIndex');
     
     Route::get('adminShipmentIndex',[ShipmentController::class,'adminShipmentIndex'])->name('manageShipments.adminShipmentIndex');

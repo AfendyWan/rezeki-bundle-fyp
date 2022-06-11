@@ -95,7 +95,7 @@
 <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Daily Customer Transaction</h2>
+                <h2>Verify Customer Transaction</h2>
             </div>
             <br>
             @if ($isEmpty==1)
@@ -116,6 +116,9 @@
             <th>Subtotal Price</th>
             <th>Shipping Fee</th>
             <th>Total Price</th>
+            <th>Order Status</th>
+            <th>Payment Status</th>
+            <th>Payment Remarks</th>
             <th>Order Date and Time</th>
             <th>Payment Receipt</th>
             <th width="280px">Action</th>
@@ -128,6 +131,13 @@
             <td>RM {{ $dt->subTotalPrice }}</td>
             <td>RM {{ $dt->shippingPrice }}</td>
             <td>RM {{ $dt->totalPrice }}</td>
+            <td>{{ $dt->orderStatus }}</td>
+            <td>{{ $dt->paymentStatus }}</td>
+            @if ($dt->remark == null)
+            <td>None</td>
+            @else
+            <td>{{ $dt->remark }}</td>
+            @endif
             <td>{{ $dt->orderDate }}</td>
             <td>
                 @if (str_ends_with($dt->url, 'pdf'))
@@ -194,7 +204,46 @@
             </script>
             <td>
             <a href="{{ route('manageTransactions.viewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-info">View order Items</a>
-            <a href="{{ route('manageTransactions.viewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-primary">Verify Payment</a>
+            <a href="{{ route('manageTransactions.viewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#verifyPaymentForm<?php echo $i;?>">Verify Payment</a>
+    
+      
+            <!-- Modal for verify payment -->
+             <div class="modal fade" id="verifyPaymentForm<?php echo $i;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Payment Verification</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action="{{route('managePayments.updatePaymentVerificationStatus')}}" method="POST"  enctype="multipart/form-data">
+							@csrf
+						<div class="modal-body">
+							<div class="form-group">
+							<label class="col-form-label">Verify Payment: <small></small></label>
+                            <select class="form-control" name="paymentVerificationStatus" id="paymentVerificationStatus">
+                                <option value="Verified" selected>Verified</option>
+                                <option value="Failed">Failed</option>                
+                            </select>
+              <label class="col-form-label">Remarks <small></small></label>
+              <input type="text" class="form-control" name="paymentRemarks" placeholder="Remarks" value="None">  
+			
+
+				<input type="hidden" name="paymentID" id="paymentID" value="{{ $dt->payment_id }}">
+           
+             
+							</div>
+							</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</div>
+						</form>
+						</div>
+					</div>
+					</div>
+                    <!-- End of modal for verify payment -->
             </td>
         </tr>  
         @endforeach

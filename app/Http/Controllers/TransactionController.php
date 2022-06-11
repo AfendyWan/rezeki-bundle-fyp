@@ -19,7 +19,8 @@ class TransactionController extends Controller
         $getAllTransaction = DB::table('orders')
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
-        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
         ->get();
 
         return view('dashboards.admins.manageTransactions.allHistoryTransaction', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
@@ -38,11 +39,13 @@ class TransactionController extends Controller
 
     public function viewUserDailyTransaction()
     {
+
         $todayDate = date('Y-m-d');
         $getDailyTransaction = DB::table('orders')
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
-        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID')
+        ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
         ->where('payments.paymentDate', '>=', $todayDate)        
         ->get();
        
@@ -127,16 +130,20 @@ class TransactionController extends Controller
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
         ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
-        ->where('payments.paymentStatus', '=', "Processing")        
+        ->where('payments.paymentStatus', '=', "Processing") 
+        ->orWhere('orders.orderStatus', '=', "Order placed")  
+        ->orWhere('orders.orderStatus', '=', "Order unsuccessful")      
         ->get();
      
         $isEmpty = 0;
         if($getUnverifyTransaction->isEmpty()){
             $isEmpty = 1;
         }
-        
+
         return view('dashboards.admins.manageTransactions.verifyTransaction', compact('getUnverifyTransaction', 'isEmpty')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
+
+
     
     /**
      * Show the form for creating a new resource.
