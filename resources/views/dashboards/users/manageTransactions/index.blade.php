@@ -58,9 +58,44 @@
             <td>{{ $dt->orderStatus }}</td>
             <td>RM {{ $dt->totalPrice }}</td>
             <td>
-            <a href="{{ route('manageTransactions.userViewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-info">View order Items</a>
+            <a href="{{ route('manageTransactions.userViewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-info">View Order Items</a>
+            <a href="{{ route('manageTransactions.userViewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-danger"  data-toggle="modal" data-target="#paymentInfo<?php echo $i;?>">View Payment </a>
+
             </td>
         </tr>  
+
+<!-- Payment view information modal here -->
+<div class="modal fade" id="paymentInfo<?php echo $i;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id=""><strong style="font-weight: 900; color: black; font-size: 20px" >Payment info for order {{ $dt->order_number }}</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <div class="modal-body">
+
+           
+            Payment Status: <b style="font-weight: 900; color: black">{{$dt->paymentStatus}}</b><br><hr>
+            Shipping Price: <b style="font-weight: 900; color: black">RM {{$dt->shippingPrice}}</b><br><hr>
+            Subtotal Price: <b style="font-weight: 900; color: black">RM {{$dt->subTotalPrice}}</b><br><hr>
+            Total Price: <b style="font-weight: 900; color: black">RM {{$dt->totalPrice}}</b><br><hr>
+            Payment Time: <b style="font-weight: 900; color: black">{{$dt->paymentDate}}</b><br><hr>
+            Remark: <b style="font-weight: 900; color: black">{{$dt->remark}}</b><br>
+
+
+
+        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a id="myLink" href="{{$dt->url}}" target="_blank"><button type="button" class="btn btn-primary" >View Payment Receipt</button></a>
+            <!-- <button type="button" class="btn btn-primary" onclick="window.open(this.href,'popUpWindow','height=400,width=600,left=10,top=10,,scrollbars=yes,menubar=no'); ">View Payment Receipt</button> -->
+        </div>
+        </div>
+    </div>
+</div>
         @endforeach
         </tbody>
     </table>
