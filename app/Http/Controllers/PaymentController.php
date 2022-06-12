@@ -60,6 +60,7 @@ class PaymentController extends Controller
             ['userID', '=', Auth::user()->id],
             ['cartStatus', '=', 1],
         ])->first();
+        
         $getSaleItemInCart = DB::table('cart_items')
         ->join('sale_items', 'cart_items.sale_item_id', '=', 'sale_items.id')
         ->join('sale_item_images', 'cart_items.sale_item_id', '=', 'sale_item_images.sale_item_id')
@@ -69,7 +70,22 @@ class PaymentController extends Controller
         ->get();
         $todayDate = date('Y-m-d');
         
-        return view('dashboards.users.managePayments.index', compact('adminDetails', 'userDetails','userShippingAddress', 'todayDate', 'getCart', 'getSaleItemInCart', 'userShippingAddressState', 'localDelivery', 'SabahShippingFee', 'SarawakShippingFee', 'PeninsularShippingFee'));
+        $getPaymentBankName = Adminsetting::where([
+            ['key', '=', 'Payment bank name'],                   
+         ])->first();
+       
+         $getPaymentAccountNumber = Adminsetting::where([
+            ['key', '=', 'Payment account number'],                   
+         ])->first();
+
+         $getPaymentAccountHolderName = Adminsetting::where([
+            ['key', '=', 'Payment account holder name'],                   
+         ])->first();
+
+        return view('dashboards.users.managePayments.index', compact('adminDetails', 'userDetails','userShippingAddress', 
+        'todayDate', 'getCart', 'getSaleItemInCart', 'userShippingAddressState', 
+        'localDelivery', 'SabahShippingFee', 'SarawakShippingFee', 'PeninsularShippingFee', 
+        'getPaymentBankName', 'getPaymentAccountNumber', 'getPaymentAccountHolderName'));
     }
 
     /**

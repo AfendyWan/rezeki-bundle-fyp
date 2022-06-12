@@ -252,6 +252,7 @@
 						<form action="{{route('managePayments.updatePaymentResult')}}" method="POST"  enctype="multipart/form-data">
 							@csrf
 						<div class="modal-body">
+            
 							<div class="form-group">
 							<label class="col-form-label">Upload Payment Receipt: <small></small></label>
               <input type="file" name="paymentReceipt"  class="form-control" accept="image/*,.pdf">
@@ -276,7 +277,14 @@
 								<input type="hidden" name="userID" value="{{ auth()->user()->id }}">
                 <input type="hidden" id="deliveryOptionName" name="deliveryOptionName" value="">
 							</div>
+              <p>Please transfer money payment to this account:<br>
+              Bank name: <b>{{$getPaymentBankName->value}}</b><br>
+              Account number: <b>{{$getPaymentAccountNumber->value}}</b><br>
+              Account holder name: <b>{{$getPaymentAccountHolderName->value}}</b><br>
+              </p>
+              
 							</div>
+              
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							<button type="submit" class="btn btn-primary">Add</button>
