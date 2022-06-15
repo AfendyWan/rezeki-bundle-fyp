@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\saleItem\SaleItemController;
 use App\Http\Controllers\Api\wishlist\WishListController;
 use App\Http\Controllers\Api\cart\CartController;
 use App\Http\Controllers\Api\feedback\FeedbackController;
+use App\Http\Controllers\Api\shipment\ShipmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::group([
    
     Route::get('showAllStates', [SettingsController::class, 'showAllStates']);
     Route::get('showAllCities', [SettingsController::class, 'showAllCities']);
+    Route::get('getAdminSettings', [SettingsController::class, 'getAdminSettings']);
 
 });
 
@@ -93,3 +95,13 @@ Route::group([
     
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'shipment'
+], function ($router) {
+   
+    Route::get('getDefaultShippingAddress', [ShipmentController::class, 'getDefaultShippingAddress']);
+    Route::get('getALlUserShippingAddress', [ShipmentController::class, 'getALlUserShippingAddress']);
+    
+
+});

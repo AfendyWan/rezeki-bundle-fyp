@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\settings;
 
 use App\Models\State;
 use App\Models\City;
-
+use App\Models\Adminsetting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -19,5 +19,11 @@ class SettingsController extends Controller{
     {
         $allCities = City::all();
         return response()->json($allCities);
+    }
+
+    public function getAdminSettings()
+    {       
+        $getAdminSettings = Adminsetting::all();
+        return response()->json($getAdminSettings);       
     }
 }

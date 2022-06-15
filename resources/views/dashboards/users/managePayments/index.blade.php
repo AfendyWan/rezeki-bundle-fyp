@@ -133,8 +133,8 @@
                 <tr>
                   <th>Flat Rate Shipping:</th>
                   <td>
-                    @if ($userShippingAddressState->states_name == "Johor")
-                      @if ($userShippingAddress->city == "Bandar Maharani")
+                    @if ($userShippingAddressState->states_name == "Sabah")
+                      @if ($userShippingAddress->city == "Sandakan")
                       <select class="form-control" name="deliveryOption" id="deliveryOption">
                         <option value="{{$localDelivery->value}}" selected>Local Delivery RM{{$localDelivery->value}}</option>
                         <option value="{{$SabahShippingFee->value}}">Courier Delivery RM{{$SabahShippingFee->value}}</option>                
