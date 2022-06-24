@@ -77,7 +77,15 @@ class CartController extends Controller
         if ($checkCart->isEmpty()) {
             $newCart = new Cart;
             $newCart->userID  = $request->userID;
-            $newCart->totalPrice =  $saleItem->itemPrice;
+            
+
+            if($saleItem->itemPromotionStatus=="1"){
+                $getTotalItemPrice = $saleItem->itemPromotionPrice * $request->quantity;
+                $newCart->totalPrice =  $getTotalItemPrice;
+            }else{
+                $getTotalItemPrice = $saleItem->itemPrice * $request->quantity;
+                $newCart->totalPrice =  $getTotalItemPrice;
+            }
             $newCart->cartItemQuantity =  $request->quantity;
             $newCart->cartStatus = 1; 
 

@@ -118,7 +118,7 @@
 						
 						</td>
 						<td>RM <script> 
-							if ( <?php echo $c->itemPromotionPrice?>==1){
+							if ( <?php echo $c->itemPromotionStatus?>==1){
 								var a = <?php echo $c->itemPromotionPrice * $c->quantity?> ; 
 							}else{
 								var a = <?php echo $c->itemPrice * $c->quantity?> ; 

@@ -20,11 +20,12 @@ class SaleItemController extends Controller
      */
     public function index()
     {
-        $saleItem = SaleItem::all();
+   
+        $saleItem = SaleItem::sortable()->paginate(10);
         //$saleItem = SaleItem::latest()->paginate(5);
         $saleItemCategory = SaleItemCategory::all();
         return view('dashboards.admins.manageSaleItems.index',compact('saleItem', 'saleItemCategory'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i');
     }
 
     /**
@@ -77,6 +78,7 @@ class SaleItemController extends Controller
         $saleItem->itemColor = $request->color;
         $saleItem->itemBrand = $request->brand;
         $saleItem->itemPromotionPrice =  0.00;
+        $saleItem->itemPromotionStatus =  0;
         $saleItem->itemActivationStatus = 1;
        
         $saleItem->save();

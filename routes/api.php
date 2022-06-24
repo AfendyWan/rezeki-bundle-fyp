@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\wishlist\WishListController;
 use App\Http\Controllers\Api\cart\CartController;
 use App\Http\Controllers\Api\feedback\FeedbackController;
 use App\Http\Controllers\Api\shipment\ShipmentController;
+use App\Http\Controllers\Api\transaction\TransactionController;
+use App\Http\Controllers\Api\payment\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +29,13 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     //Authentication
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
+    Route::post('logout', [UserController::class, 'logout']);
+ 
     Route::post('changeProfilePhoto', [UserController::class, 'changeProfilePhoto']);
     Route::get('getProfilePhoto', [UserController::class, 'getProfilePhoto']);
     Route::post('updateUserData', [UserController::class, 'updateUserData']);
@@ -102,6 +109,35 @@ Route::group([
    
     Route::get('getDefaultShippingAddress', [ShipmentController::class, 'getDefaultShippingAddress']);
     Route::get('getALlUserShippingAddress', [ShipmentController::class, 'getALlUserShippingAddress']);
+    Route::get('getUserShipment', [ShipmentController::class, 'getUserShipment']);
+    
+    Route::post('updateUserShipping', [ShipmentController::class, 'updateUserShipping']);
+    Route::post('addUserShippingAddress', [ShipmentController::class, 'addUserShippingAddress']);
+    Route::post('deleteUserShippingAddress', [ShipmentController::class, 'deleteUserShippingAddress']);
+    
+    
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'transaction'
+], function ($router) {
+   
+    Route::get('getUserOrderTransaction', [TransactionController::class, 'getUserOrderTransaction']); 
+    Route::get('viewUserOrderItems', [TransactionController::class, 'viewUserOrderItems']); 
+    
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'payment'
+], function ($router) {
+   
+    Route::post('submitPayment', [PaymentController::class, 'submitPayment']);
+ 
     
 
 });
+
+

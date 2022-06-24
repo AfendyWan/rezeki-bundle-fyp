@@ -103,7 +103,7 @@
         Sale Price: RM {{ $saleitem->itemPrice }}
     </h2>
     <h4 class="mt-0">
-        <small>Bale Price: RM 80.00 </small>
+        <!-- <small>Bale Price: RM 80.00 </small> -->
     </h4>
 </div>
 

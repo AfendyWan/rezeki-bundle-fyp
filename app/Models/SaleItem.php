@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Kyslik\ColumnSortable\Sortable;
 class SaleItem extends Model
 {
     use HasFactory;
+    use Sortable;
     protected $fillable = ['itemName', 'itemCategory','itemStock', 'itemColor', 'itemSize', 'itemBrand', 
                         'itemPrice', 'itemPromotionStatus','itemPromotionPrice',
                         'itemActivationStatus', 'itemDescription'];

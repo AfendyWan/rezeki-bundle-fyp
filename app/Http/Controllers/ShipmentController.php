@@ -33,7 +33,7 @@ class ShipmentController extends Controller
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
         ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
-        ->get();
+        ->paginate(5);
        
 
         $userShippingAddress = UserShippingAddress::where([
@@ -103,7 +103,7 @@ class ShipmentController extends Controller
         return view('dashboards.users.manageShipments.create', compact('getUserShippingAddress', 'state'));
     }
 
-    public function updateShippingDefault(Request $request)
+    public function updateShippingDefault(Request $request, $id)
     {
         $getUserShippingAddress = UserShippingAddress::where([
             ['userID', '=', Auth::user()->id],          
@@ -114,17 +114,78 @@ class ShipmentController extends Controller
                 'shipping_default_status' => 0,                
             ]);
         }
-        UserShippingAddress::where('id', $request->shipping_default)->update([
+        UserShippingAddress::where('id', $id)->update([
             'shipping_default_status' => 1,                
         ]);
 
         return Redirect::back()->with(['success' => 'Default shipping address had been updated']);
     }
 
+    // public function updateShippingDefault(Request $request)
+    // {
+    //     $getUserShippingAddress = UserShippingAddress::where([
+    //         ['userID', '=', Auth::user()->id],          
+    //     ])->get();
+        
+    //     foreach($getUserShippingAddress as $c){
+    //         UserShippingAddress::where('id', $c->id)->update([
+    //             'shipping_default_status' => 0,                
+    //         ]);
+    //     }
+    //     UserShippingAddress::where('id', $request->shipping_default)->update([
+    //         'shipping_default_status' => 1,                
+    //     ]);
+
+    //     return Redirect::back()->with(['success' => 'Default shipping address had been updated']);
+    // }
+    
+    public function deleteShippingAddress($id)
+    {
+        $getUserShippingAddress  = UserShippingAddress::find($id);
+
+        $getUserShippingAddress->delete();
+
+        return redirect()->route('manageShipments.create')->with('success','User shipping address has been deleted successfully.');
+       
+    }
+    public function updateShippingAddress(Request $request)
+    {
+        $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
+            'postcode' => ['required', 'numeric','digits:5'],
+            'phone_number' => 'required|numeric|regex:/(01)[0-9]/|digits_between:10,11',
+            'shipping_address' => ['required', 'string', 'max:255'],
+        ]);
+        
+        UserShippingAddress::where('id', $request->id)
+        ->update([
+               'shipping_address' => $request->shipping_address,
+               'full_name' => $request->full_name,
+               'phone_number' => $request->phone_number,
+               'state' => $request->state,
+               'city' => $request->city,
+               'postcode' => $request->postcode,
+        ]);
+
+        return redirect()->route('manageShipments.create')->with('success','User shipping address has updated successfully.');
+       
+    }
+
+    public function editShippingAddress($id)
+    {
+        $getUserShippingAddress  = UserShippingAddress::find($id);
+        $state = State::all();
+
+        return view('dashboards.users.manageShipments.edit', compact('getUserShippingAddress', 'state'));
+       
+    }
+
     public function addNewShippingAddress(Request $request)
     {
         $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
             'postcode' => ['required', 'numeric','digits:5'],
+            'phone_number' => 'required|numeric|regex:/(01)[0-9]/|digits_between:10,11',
             'shipping_address' => ['required', 'string', 'max:255'],
         ]);
         
@@ -139,6 +200,8 @@ class ShipmentController extends Controller
         }
 
         $newUserShipping = new UserShippingAddress;
+        $newUserShipping->full_name = $request->full_name;
+        $newUserShipping->phone_number = $request->phone_number;
         $newUserShipping->shipping_default_status = 1;
         $newUserShipping->shipping_address = $request->shipping_address;
         $newUserShipping->state = $request->state;

@@ -4,7 +4,11 @@
 @section('content')
 <section class="section-content">
 <div class="container">
-
+@if ($message = Session::get('danger'))
+    <div class="alert alert-danger">
+        {{ $message }}
+    </div>
+@endif
 
 <div class="content-wrapper">
 
@@ -91,7 +95,7 @@
                   <td>{{$c->itemDescription}}</td>
                   <td>RM 
                     <script> 
-                      if ( <?php echo $c->itemPromotionPrice?>==1){
+                      if ( <?php echo $c->itemPromotionStatus?>==1){
                         var a = <?php echo $c->itemPromotionPrice * $c->quantity?> ; 
                       }else{
                         var a = <?php echo $c->itemPrice * $c->quantity?> ; 
@@ -115,9 +119,7 @@
         <!-- <img src="../../dist/img/credit/american-express.png" alt="American Express">
         <img src="../../dist/img/credit/paypal2.png" alt="Paypal"> -->
         <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-        plugg
-        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+      
         </p>
       </div>
       <form method="POST" action="{{ route('managePayments.updatePaymentResult') }}" class="col-6">
@@ -160,12 +162,12 @@
                   </td>         
                     <!-- <td>RM 10.00</td> -->
                 </tr>
-                <tr id="chooseDate">
-                <th>Delivery date and time:</th>
+                <tr id="chooseDate1">
+                <!-- <th>Delivery date and time:</th>
                   <td id="">
-                    <input type="datetime-local" id="deliveryDateTime" name="deliveryDateTime">                   
+                                
                   </td> 
-                </tr>
+                </tr> -->
                 <tr>
                   <th>Total:</th>
                     <td id="detailInfo"> 
@@ -181,10 +183,12 @@
                           $('input[name="shippingPrice"]').val(shippingFee);
                           console.log(selectedName.includes('Local')); 
                           if (selectedName.includes("Local")){
-                            $("#chooseDate").show();
-                          }else{
-                            $("#chooseDate").hide();
-                          }
+                                $("#chooseDate").show();
+                                $("#chooseCourier").hide();
+                              }else{
+                                $("#chooseDate").hide();
+                                $("#chooseCourier").show();
+                              }
                           $('input[name="deliveryOptionName"]').val(selectedName);
                        
 							            $('#detailInfo').html('RM ' + decimalTotalPrice);
@@ -198,8 +202,10 @@
                             
                               if (selectedName.includes("Local")){
                                 $("#chooseDate").show();
+                                $("#chooseCourier").hide();
                               }else{
                                 $("#chooseDate").hide();
+                                $("#chooseCourier").show();
                               }
                               $('input[name="deliveryOptionName"]').val(selectedName);
                               $('#detailInfo').html('RM ' + decimalTotalPrice);
@@ -257,6 +263,14 @@
 							<label class="col-form-label">Upload Payment Receipt: <small></small></label>
               <input type="file" name="paymentReceipt"  class="form-control" accept="image/*,.pdf">
               
+              <div id = "chooseDate">
+                <br>
+                <label class="col-form-label">Delivery Date and Time: <small></small></label>
+                <input type="datetime-local" id="deliveryDateTime" name="deliveryDateTime">      
+              </div>
+              
+              
+              <div id="chooseCourier">
               <label class="col-form-label">Select Shipping Courier: <small></small></label>
 				      <input list="list-couriers" name="couriers" class="form-control" value="" placeholder="Delivery Courier"/>
                 <datalist id="list-couriers">
@@ -270,6 +284,8 @@
                     <option value="FedEx">
                     <option value="Easy Parcel">                  
                 </datalist>
+              </div>
+              
 
 								<input type="hidden" name="totalPrice" id="totalPrice" value="">
                 <input type="hidden" name="subTotalPrice" id="subTotalPrice">

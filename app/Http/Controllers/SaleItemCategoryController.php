@@ -15,10 +15,10 @@ class SaleItemCategoryController extends Controller
      */
     public function index()
     {
-        $saleItemCategory = SaleItemCategory::latest()->paginate(5);
-    
+        $saleItemCategory = SaleItemCategory::sortable()->paginate(10);
+    // dd($saleItemCategory);
         return view('dashboards.admins.manageCategories.index',compact('saleItemCategory'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i');
     }
 
     /**

@@ -128,9 +128,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageTransactions.userIndex') }}">Order History</a>
-        </li>
+        </li> 
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageShipments.userShipmentIndex') }}">View Shipping Status</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('manageShipments.create')}}">Manage Shipping Address</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('manageWishList.index') }}">Wish List</a>

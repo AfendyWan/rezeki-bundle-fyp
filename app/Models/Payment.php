@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $fillable = ['totalPrice', 'subTotalPrice', 'shippingPrice', 'paymentStatus', 'cart_id', 'userID', 'paymentDate', 'remark'];
+    protected $fillable = ['totalPrice', 'subTotalPrice', 'shippingPrice', 'paymentStatus', 'cart_id', 'order_id', 'userID', 'paymentDate', 'remark'];
 
  
 
@@ -27,9 +27,9 @@ class Payment extends Model
         return $this->hasMany('App\Shipment', 'payment_id');
     }
 
-    
     public function order()
     {
-        return $this->hasMany('App\Order', 'payment_id');
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
+
 }

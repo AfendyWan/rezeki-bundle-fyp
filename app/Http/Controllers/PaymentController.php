@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Carbon\Carbon;
 class PaymentController extends Controller
 {
     /**
@@ -161,15 +162,37 @@ class PaymentController extends Controller
             'paymentReceipt' => 'required|mimes:png,jpg,jpeg,pdf|',
           //  'images' => 'required|mimes:png,jpg,jpeg|max:5'
         ]);
-      
+        $todayDate = date('Y-m-d H:i:s');
+        $todayDateCompare = date('Y-m-d');
+        
+        if($request->filled('deliveryDateTime')) {
+            $splitDateTime = explode('T', $request->deliveryDateTime, 2); 
+            $dateLocalDelivery = $splitDateTime[0];
+            $timeLocalDelivery = $splitDateTime[1];
+          
+        }
+       
+       $carbonParseTodayDateCompare = Carbon::parse($todayDateCompare);
+       $carbonParseDateLocalDelivery = Carbon::parse($dateLocalDelivery);
+       $resultDate = $carbonParseDateLocalDelivery->lte($carbonParseTodayDateCompare);
+        if($timeLocalDelivery > 17 || $timeLocalDelivery <9){
+            return redirect()->route('managePayments.index')
+                ->with('danger','Delivery time must from 9am to 5pm');
+        }else{
+            if ($resultDate) {
+                return redirect()->route('managePayments.index')
+                ->with('danger','Delivery date must be after ' .$todayDateCompare);
+            }
+        }
+
+        
         ////////////////////Get user cart
         $checkCart = Cart::where([
             ['userID', '=', auth()->user()->id],
             ['cartStatus', '=', 1],
         ])->first();
 
-        ////////////////////Get today date
-        $todayDate = date('Y-m-d H:i:s');
+        
 
         ////////////////////Create new payment
         $newPayment = new Payment;
@@ -259,18 +282,32 @@ class PaymentController extends Controller
         ////////////////////Get user cart items
         $getCartItems = CartItem::where('cart_id', $checkCart->id)->get();
 
+
+        ////////////////////Get sale item
+        $getSaleItem = SaleItem::all();
+
+        
         ////////////////////Create new order item
         foreach($getCartItems as $c){
             $newOrderItem = new OrderItem;
             $newOrderItem->quantity = $c->quantity;
             $newOrderItem->order_id   = $newOrder->id;            
-            $newOrderItem->sale_item_id   = $c->sale_item_id;          
-
+            $newOrderItem->sale_item_id   = $c->sale_item_id;   
+            
+            foreach($getSaleItem as $s){
+                if($s->id == $c->sale_item_id){
+                    if($s->itemPromotionStatus == 1){
+                        $newOrder->orderPrice = $s->itemPromotionPrice;
+                    }else{
+                        $newOrder->orderPrice = $s->itemPrice;
+                    }
+                    
+                }
+            }
+            
+           
             $newOrderItem->save();
         }  
-
-        ////////////////////Get sale item
-        $getSaleItem = SaleItem::all();
 
         ////////////////////Update sale item quantity
         foreach($getCartItems as $c){

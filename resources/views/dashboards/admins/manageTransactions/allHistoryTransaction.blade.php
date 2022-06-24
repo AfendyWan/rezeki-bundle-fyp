@@ -120,7 +120,7 @@
     </div>
    <br>  <br>
     
-   
+   {!! $getAllTransaction->appends(\Request::except('page'))->render() !!}
     <table class="table table-bordered">
         <tr>
         <th>No</th>

@@ -7,7 +7,7 @@ use View;
 use App\Models\Cart;
 use App\Models\SaleItem;
 use App\Models\SaleItemCategory;
-
+use Illuminate\Pagination\Paginator;
 use Auth;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
         View::composer('dashboards.users.layouts.user-dash-layout', function( $view )
         {
             $cartQuantity= Cart::where([

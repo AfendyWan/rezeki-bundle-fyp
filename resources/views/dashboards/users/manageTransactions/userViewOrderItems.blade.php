@@ -38,19 +38,26 @@
             
             <td>{{ $ot->itemName }}</td>
             
-            @if ($ot->itemPromotionStatus==1)
+            <!-- @if ($ot->itemPromotionStatus==1)
             <td><strike>RM {{ $ot->itemPrice }}</strike> <br>
             RM {{ $ot->itemPromotionPrice }}</td>
             @else
-            <td>RM {{ $ot->itemPrice }}</td>
-            @endif 
+            <td>RM {{ $ot->orderPrice }}</td>
+            @endif  -->
+            <td>RM
+                <script> 
+				var a = <?php echo $ot->orderPrice / $ot->quantity?> ; 
+					var b = (Math.round(a * 100) / 100).toFixed(2);
+					document.write(b); 
+				</script> 
+            </td>
             <td>{{ $ot->quantity }}</td>
             <td>RM 
                 <script> 
-					if ( <?php echo $ot->itemPromotionPrice?>==1){
-						var a = <?php echo $ot->itemPromotionPrice * $ot->quantity?> ; 
+					if ( <?php echo $ot->itemPromotionStatus?>==1){
+						var a = <?php echo $ot->orderPrice * $ot->quantity?> ; 
 					}else{
-						var a = <?php echo $ot->itemPrice * $ot->quantity?> ; 
+						var a = <?php echo $ot->orderPrice * $ot->quantity?> ; 
 					}
 					var b = (Math.round(a * 100) / 100).toFixed(2);
 					document.write(b); 
@@ -96,5 +103,5 @@
         @endforeach
     </table>
 
-<br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 @endsection

@@ -21,9 +21,10 @@ class Order extends Model
         return $this->belongsTo('App\Shipment', 'shipmentID');
     }
 
+
     public function payment()
     {
-        return $this->belongsTo('App\Payment', 'paymentID');
+        return $this->hasMany('App\Models\Payment', 'order_id');
     }
 
     public function user()

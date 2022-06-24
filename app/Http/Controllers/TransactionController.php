@@ -21,9 +21,9 @@ class TransactionController extends Controller
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
         ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
-        ->get();
+        ->paginate(5);
 
-        return view('dashboards.admins.manageTransactions.allHistoryTransaction', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('dashboards.admins.manageTransactions.allHistoryTransaction', compact('getAllTransaction')) ->with('i',);;
     }
 
     public function userIndex()
@@ -35,6 +35,7 @@ class TransactionController extends Controller
         ->where('orders.userID', '=', auth()->user()->id)      
         ->get();
 
+ 
         return view('dashboards.users.manageTransactions.index', compact('getAllTransaction')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
@@ -131,11 +132,11 @@ class TransactionController extends Controller
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
         ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
-        ->where('payments.paymentStatus', '=', "Processing") 
-        ->orWhere('orders.orderStatus', '=', "Order placed")  
-        ->orWhere('orders.orderStatus', '=', "Order unsuccessful")      
-        ->get();
+        ->where('payments.paymentStatus', '=', "Processing")       
+        ->paginate(5);
      
+        
+    
         $isEmpty = 0;
         if($getUnverifyTransaction->isEmpty()){
             $isEmpty = 1;

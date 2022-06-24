@@ -20,14 +20,14 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-   
+    {!! $saleItemCategory->appends(\Request::except('page'))->render() !!}
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Total quantity</th>
-            <th width="280px">Action</th>
+            <th>@sortablelink('No')</th>
+            <th>@sortablelink('Name')</th>
+            <th>@sortablelink('Description')</th>
+            <th>@sortablelink('Total Quantity')</th>
+            <th width="280px">@sortablelink('Action')</th>
         </tr>
         @foreach ($saleItemCategory as $saleItemCategory)
         <tr>
@@ -50,9 +50,10 @@
             </td>
         </tr>
         @endforeach
+        
+   
     </table>
-  
-  
+   
 @endsection
 <!-- @section('content')
 <div class="container">

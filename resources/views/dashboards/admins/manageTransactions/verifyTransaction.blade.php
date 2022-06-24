@@ -68,7 +68,7 @@
 }
 
 /* The Close Button */
-.close {
+.close1 {
   position: absolute;
   top: 60px;
   right: 35px;
@@ -78,8 +78,8 @@
   transition: 0.3s;
 }
 
-.close:hover,
-.close:focus {
+.close1:hover,
+.close1:focus {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
@@ -106,18 +106,21 @@
         </div>
     </div>
 
-    
+    {!! $getUnverifyTransaction->appends(\Request::except('page'))->render() !!}
    @if ($isEmpty==0)
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Order Number</th>
+            <th>@sortablelink('Order Number')</th> 
+         
             <th>Customer Name</th>
-            <th>Subtotal Price</th>
+           
+            <th>@sortablelink('Subtotal Price')</th> 
             <th>Shipping Fee</th>
-            <th>Total Price</th>
-            <th>Order Status</th>
-            <th>Payment Status</th>
+            <th>@sortablelink('Total Price')</th> 
+            <th>@sortablelink('Order Status')</th> 
+            <th>@sortablelink('Payment Status')</th> 
+          
             <th>Payment Remarks</th>
             <th>Order Date and Time</th>
             <th>Payment Receipt</th>
@@ -173,14 +176,19 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+ 
       <!-- The modal for image -->
       <div id="myModal<?php echo $i;?>" class="modal1">
-            <span class="close" id="close<?php echo $i;?>">&times;</span>
+      <span class="close1" id="close1<?php echo $i;?>" onclick="document.getElementById('myModal<?php echo $i;?>').style.display='none'">&times;</span>
+
+           
             <img class="modal-content1" id="img01<?php echo $i;?>">
             <div id="caption<?php echo $i;?>"></div>
             </div>
             
             <script>
+
             // Get the modal
             var modal = document.getElementById("myModal<?php echo $i;?>");
 
@@ -194,19 +202,14 @@
             captionText.innerHTML = this.alt;
             }
 
-            // Get the <span> element that closes the modal
-            var span = document.getElementById("close<?php echo $i;?>");
 
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() { 
-            modal.style.display = "none";
-            }
             </script>
+               
+    </div>
             <td>
             <a href="{{ route('manageTransactions.viewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-info">View order Items</a>
             <a href="{{ route('manageTransactions.viewOrderItems', $dt->orderID) }}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#verifyPaymentForm<?php echo $i;?>">Verify Payment</a>
-    
-      
+
             <!-- Modal for verify payment -->
              <div class="modal fade" id="verifyPaymentForm<?php echo $i;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">

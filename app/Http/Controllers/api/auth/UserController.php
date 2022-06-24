@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\UserShippingAddress;
 use App\Models\UserProfilePhoto;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\RefreshToken;
+use Laravel\Passport\Token;
 class UserController extends Controller
 {
     public function login(Request $request)
@@ -93,6 +95,18 @@ class UserController extends Controller
         return response()->json(['token' => $token, 'name'=>$newUser->first_name ], 200);
     }
 
+
+    public function logout (Request $request) {
+       $user = User::find($request->userID);
+       $tokens =  $user->tokens->pluck('id');
+       Token::whereIn('id', $tokens)
+           ->update(['revoked'=> true]);
+       
+       RefreshToken::whereIn('access_token_id', $tokens)->update(['revoked' => true]);
+   
+        $response = ['message' => 'You have been successfully logged out!'];
+        return response($response, 200);
+    }
     public function changeProfilePhoto(Request $request){
 
         $user  = User::find($request->userID);  

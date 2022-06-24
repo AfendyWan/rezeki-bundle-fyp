@@ -20,7 +20,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
+    {!! $getAllShipmentOrders->appends(\Request::except('page'))->render() !!}
     <table class="table table-bordered">
         <tr>
             <th>No</th>
@@ -29,9 +29,10 @@
             <th>Shipping Fee</th>
             <th>Shipping Option</th>
             <th>Delivery Date Time</th>
-            <th>Shipping Courier Delivery</th>
+            <th>@sortablelink('Shipping Courier Delivery')</th>    
+     
             <th>Shipping Tracking Number</th>
-            <th>Shipping Status</th>
+            <th>@sortablelink('Shipping Status')</th>            
             <th width="200px">Action</th>
         </tr>
         @foreach ($getAllShipmentOrders as $a)

@@ -62,7 +62,8 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
     Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
     Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
-     
+    Route::post('updateProfile',[AdminController::class,'updateProfile'])->name('admin.updateProfile');
+    
     Route::resource('manageCategories', SaleItemCategoryController::class);
 
     Route::get('editPromotion/{id}',[SaleItemController::class,'editPromotion'])->name('manageSaleItems.editPromotion');
@@ -128,12 +129,16 @@ Route::group(['prefix'=> 'user', 'middleware'=>['isUser','auth', 'PreventBackHis
     Route::post('delete/',[WishListController::class,'delete'])->name('manageWishList.delete');
 
     Route::resource('managePayment', PaymentController::class);
+    Route::get('index/',[PaymentController::class,'index'])->name('managePayments.index');
     Route::post('updatePaymentResult/',[PaymentController::class,'updatePaymentResult'])->name('managePayments.updatePaymentResult');
 
     Route::resource('manageShipments', ShipmentController::class);
-    Route::post('updateShippingDefault/',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');
+    Route::get('updateShippingDefault/{id}',[ShipmentController::class,'updateShippingDefault'])->name('manageShipments.updateShippingDefault');    
     Route::post('addNewShippingAddress/',[ShipmentController::class,'addNewShippingAddress'])->name('manageShipments.addNewShippingAddress');
-
+    Route::get('editShippingAddress/{id}',[ShipmentController::class,'editShippingAddress'])->name('manageShipments.editShippingAddress');
+    Route::post('updateShippingAddress/',[ShipmentController::class,'updateShippingAddress'])->name('manageShipments.updateShippingAddress');
+    Route::get('deleteShippingAddress/{id}',[ShipmentController::class,'deleteShippingAddress'])->name('manageShipments.deleteShippingAddress');
+    
     Route::get('userIndex',[TransactionController::class,'userIndex'])->name('manageTransactions.userIndex');
     Route::get('userViewOrderItems/{id}',[TransactionController::class,'userViewOrderItems'])->name('manageTransactions.userViewOrderItems');
     
