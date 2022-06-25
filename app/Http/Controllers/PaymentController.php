@@ -394,14 +394,14 @@ class PaymentController extends Controller
             $getOrder = Order::where([          
                 ['paymentID', '=', $request->paymentID],
             ])->update([
-                'orderStatus' => "Order placed", 
+                'orderStatus' => "Order Placed", 
                 
             ]);
         }else{
             $getOrder = Order::where([          
                 ['paymentID', '=', $request->paymentID],
             ])->update([
-                'orderStatus' => "Order unsuccessful", 
+                'orderStatus' => "Order Unsuccessful", 
                 
             ]);
         }

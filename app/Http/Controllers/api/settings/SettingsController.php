@@ -26,4 +26,12 @@ class SettingsController extends Controller{
         $getAdminSettings = Adminsetting::all();
         return response()->json($getAdminSettings);       
     }
+
+    public function getAdminAnnouncement()
+    {       
+        $getAdminAnnouncement = Adminsetting::where([
+            ['key', '=', 'announcement'],                   
+         ])->first();
+        return response()->json($getAdminAnnouncement->value);       
+    }
 }

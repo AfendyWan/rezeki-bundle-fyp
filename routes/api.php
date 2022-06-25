@@ -51,7 +51,8 @@ Route::group([
     Route::get('showAllStates', [SettingsController::class, 'showAllStates']);
     Route::get('showAllCities', [SettingsController::class, 'showAllCities']);
     Route::get('getAdminSettings', [SettingsController::class, 'getAdminSettings']);
-
+    Route::get('getAdminAnnouncement', [SettingsController::class, 'getAdminAnnouncement']);
+    
 });
 
 Route::group([

@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ReportController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -59,7 +60,7 @@ Route::get('getCities/{id}', function ($id) {
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackHistory']], function(){
-    Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('dashboard',[ReportController::class,'index'])->name('admin.dashboard');
     Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
     Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
     Route::post('updateProfile',[AdminController::class,'updateProfile'])->name('admin.updateProfile');
