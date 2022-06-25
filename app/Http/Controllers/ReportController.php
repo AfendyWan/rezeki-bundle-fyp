@@ -65,10 +65,12 @@ class ReportController extends Controller
 
         $soldSaleItemData = array();
         $countSoldItem = 0;
-        
+        $priceSoldItem = 0;
+
         $soldSaleItemData[] = array(
             '0' => "Sold Sales Item", // we access the firstname at the current index
             '1' => "Numbers",
+            '2' => "Prices",
         );
         $isSoldItem = false;
        
@@ -78,10 +80,10 @@ class ReportController extends Controller
             {   
               
                 if($orderTag->sale_item_id  == $saleTag->id){
-                   
-                   
+                                      
                     $countSoldItem = $countSoldItem + 1; 
                     $isSoldItem = true;                   
+                    $priceSoldItem = $priceSoldItem + $orderTag->orderPrice; 
                 }   
                     // if($wishTag->sale_item_id  == $saleTag->id){
                     //     $data[$saleTag->itemName]  = $countWishItem;
@@ -94,10 +96,12 @@ class ReportController extends Controller
                 $soldSaleItemData[] = array(
                     '0' => $saleTag->itemName, // we access the firstname at the current index
                     '1' => $countSoldItem,
+                    '2' => "RM " . number_format((float)$priceSoldItem, 2, '.', ''),
                 );
             }
             $isSoldItem = false;
             $countSoldItem = 0;
+            $priceSoldItem = 0;
         }
 
         ///////////////////////////////////////////create sale reports

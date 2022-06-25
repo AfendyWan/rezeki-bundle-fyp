@@ -31,8 +31,12 @@ $(document).ready(function(){
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', {'packages':['bar']});
+
       google.charts.setOnLoadCallback(drawChart);
-      google.charts.setOnLoadCallback(drawChart1);
+   
+      google.charts.setOnLoadCallback(drawStuff1);
+      google.charts.setOnLoadCallback(drawStuff);
       function drawChart() {    
 
         // For wish list pie chart
@@ -48,28 +52,35 @@ $(document).ready(function(){
         wishListChart.draw(wishListDrawData, wishListOptions);
 
       }
-      function drawChart1() {        
 
-        //For sale item sold pie chart
-        var soldSaleItems = <?php echo json_encode($soldSaleItemData) ?>; 
-        var soldSaleItemDrawData = google.visualization.arrayToDataTable(soldSaleItems);
 
-        var soldSaleItemOptions = {
-          title: 'Number of Sale Item Sold in This Month'
-        };
+        function drawStuff1() {
 
-        var soldSaleItemChart = new google.visualization.PieChart(document.getElementById('soldSaleItemPieChart'));
+            var reportItems = <?php echo json_encode($soldSaleItemData) ?>; 
+            var data = new google.visualization.arrayToDataTable(reportItems);
 
-        soldSaleItemChart.draw(soldSaleItemDrawData, soldSaleItemOptions);
+            var options = {
+            width: 800,
+            chart: {
+                title: 'Number of Sale Item Sold in This Month',
+                // subtitle: 'distance on the left, brightness on the right'
+            },
+            bars: 'horizontal', // Required for Material Bar Charts.
+            series: {
+                0: { axis: 'number' }, // Bind series 0 to an axis named 'distance'.
+                1: { axis: 'price' } // Bind series 1 to an axis named 'brightness'.
+            },
+            axes: {
+                x: {
+                    number: {label: 'Numbers of Items'}, // Bottom x-axis.
+                    price: {side: 'top', label: 'Total Price (RM)'} // Top x-axis.
+                }
+            }
+            };
 
-        var soldSaleItemChart = new google.visualization.PieChart(document.getElementById('soldSaleItemPieChart'));
-
-        soldSaleItemChart.draw(soldSaleItemDrawData, soldSaleItemOptions);
-        }
-
-        google.charts.load('current', {'packages':['bar']});
-        google.charts.setOnLoadCallback(drawStuff);
-
+            var chart = new google.charts.Bar(document.getElementById('soldSaleItemPieChart'));
+            chart.draw(data, options);
+            };
       function drawStuff() {
 
         var reportItems = <?php echo json_encode($reportData) ?>; 
@@ -81,14 +92,14 @@ $(document).ready(function(){
             title: 'Monthly Sales Report',
             // subtitle: 'distance on the left, brightness on the right'
           },
-          bars: 'horizontal', // Required for Material Bar Charts.
+          bars: 'vertical', // Required for Material Bar Charts.
           series: {
             0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
             1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
           },
           axes: {
             x: {
-              distance: {label: 'Total Price'}, // Bottom x-axis.
+              distance: {label: 'Total Price (RM)'}, // Bottom x-axis.
               brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
             }
           }
