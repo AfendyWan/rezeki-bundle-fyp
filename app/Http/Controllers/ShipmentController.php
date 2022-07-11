@@ -54,6 +54,7 @@ class ShipmentController extends Controller
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
+        ->orderBy('orders.updated_at', 'DESC')
         ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
         ->where('users.id', '=', auth()->user()->id)
         ->get();
@@ -76,6 +77,7 @@ class ShipmentController extends Controller
             
         ]);
 
+       
         Shipment::where('id', $request->id)
         ->update([
                'shippingCourier' => $request->couriers,
@@ -83,6 +85,20 @@ class ShipmentController extends Controller
                'shippingStatus' => $request->status,              
         ]);
         
+
+        if($request->status == "Delivered"){
+            Order::where('shipmentID', $request->id)
+            ->update([
+                   'orderStatus' => "Order Delivered",
+                    
+            ]);
+        }else{
+            Order::where('shipmentID', $request->id)
+            ->update([
+                   'orderStatus' => "Order Placed",
+                    
+            ]);
+        }
         return redirect()->route('manageShipments.adminShipmentIndex')->with('success','Shipment updated successfully.');
        
     }

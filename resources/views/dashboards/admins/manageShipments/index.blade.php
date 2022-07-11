@@ -36,7 +36,8 @@
             <th width="200px">Action</th>
         </tr>
         @foreach ($getAllShipmentOrders as $a)
-        <tr>
+            @if($a->orderStatus == "Order Placed" || $a->orderStatus == "Order Delivered")
+            <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $a->first_name }} {{ $a->last_name }}</td>
             <td>
@@ -78,6 +79,7 @@
             </td>
            
         </tr>
+            @endif
         @endforeach
     </table>
 

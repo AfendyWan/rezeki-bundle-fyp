@@ -78,8 +78,11 @@ class TransactionController extends Controller
         ->where('order_id', '=', $id)        
         ->get();
 
+        $getOrderStatus = DB::table('orders')
+        ->where('id', '=', $id)        
+        ->first();
        
-        return view('dashboards.users.manageTransactions.userViewOrderItems', compact('getOrderItems')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('dashboards.users.manageTransactions.userViewOrderItems', compact('getOrderItems', 'getOrderStatus')) ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
     
     public function searchWithDate(Request $request){

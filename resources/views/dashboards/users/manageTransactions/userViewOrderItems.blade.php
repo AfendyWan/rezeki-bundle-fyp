@@ -46,7 +46,7 @@
             @endif  -->
             <td>RM
                 <script> 
-				var a = <?php echo $ot->orderPrice / $ot->quantity?> ; 
+				var a = <?php echo $ot->orderPrice * $ot->quantity?> ; 
 					var b = (Math.round(a * 100) / 100).toFixed(2);
 					document.write(b); 
 				</script> 
@@ -65,7 +65,10 @@
             </td>
             <td>
             <a href="{{ route('saleItems.show',$ot->sale_item_id) }}" class="btn btn-sm btn-info">Show Sale Item</a>
+            @if ($getOrderStatus->orderStatus == "Order Delivered" && $ot->feedback_status == 0)
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#submitFeedback<?php echo $ot->id;?>">Submit Feedback</button>
+            @endif
+           
             <div class="modal fade" id="submitFeedback<?php echo $ot->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">

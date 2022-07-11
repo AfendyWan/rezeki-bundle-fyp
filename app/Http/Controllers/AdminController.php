@@ -96,12 +96,12 @@ class AdminController extends Controller
 
         Adminsetting::where('key', 'Payment bank name')
         ->update([
-               'value' => $request->bank_acc_num,                             
+               'value' => $request->bank_name,                             
         ]);
-
+        
         Adminsetting::where('key', 'Payment account number')
         ->update([
-               'value' => $request->bank_name,                             
+               'value' => $request->bank_acc_num,                             
         ]);
 
         Adminsetting::where('key', 'Payment account holder name')

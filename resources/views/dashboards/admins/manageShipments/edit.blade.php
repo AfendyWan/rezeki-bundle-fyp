@@ -59,13 +59,14 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Shipping Status:</strong>
-                <input list="list-status" name="status" class="form-control" value="{{$shipment->shippingStatus}}" placeholder="Shipping Status"/>
-                <datalist id="list-status">
-                    <option value="Preparing to Ship">
-                    <option value="Shipped">
-                    <option value="Delivered">
-                               
-                </datalist>
+               
+             
+                <label for="status">Choose a car:</label>
+                <select name="status" id="status" class="form-control" value="{{$shipment->shippingStatus}}">
+                    <option value="Preparing to Ship">Preparing to Ship</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>                   
+                </select>
             </div>
         </div>
        

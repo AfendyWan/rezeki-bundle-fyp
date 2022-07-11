@@ -52,6 +52,7 @@ class PaymentController extends Controller{
         $newPayment->subTotalPrice = $request->subTotalPrice;
         $newPayment->shippingPrice = $request->shippingPrice;
         $newPayment->paymentStatus = "Processing"; //this payment status will be get from payment gateway
+        $newPayment->remark = "Processing";
         $newPayment->cart_id = $checkCart->id; 
         $newPayment->userID = $request->userID;
         $newPayment->paymentDate = $todayDate;
@@ -146,7 +147,8 @@ class PaymentController extends Controller{
             $newOrderItem = new OrderItem;
             $newOrderItem->quantity = $c->quantity;
             $newOrderItem->order_id   = $newOrder->id;            
-            $newOrderItem->sale_item_id   = $c->sale_item_id;          
+            $newOrderItem->sale_item_id   = $c->sale_item_id;  
+            $newOrderItem->feedback_status   = 0;             
             foreach($getSaleItem as $s){
                 if($s->id == $c->sale_item_id){
                     if($s->itemPromotionStatus == 1){

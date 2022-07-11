@@ -117,7 +117,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Payment Bank Account Number:</strong>
-                    <input type="text" name="bank_acc_num" value="{{ $paymentBankName->value }}" class="form-control" placeholder="Payment Bank Account Number">
+                    <input type="text" name="bank_acc_num" value="{{ $paymentAccountNumber->value }}" class="form-control" placeholder="Payment Bank Account Number">
                     @error('bank_acc_num')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
@@ -128,7 +128,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Payment Bank Name:</strong>
-                    <input type="text" name="bank_name" value="{{ $paymentAccountNumber->value }}" class="form-control" placeholder="Payment Bank Name">
+                    <input type="text" name="bank_name" value="{{ $paymentBankName->value }}" class="form-control" placeholder="Payment Bank Name">
                     @error('bank_name')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
