@@ -20,7 +20,7 @@ class CreateUserShippingAddressesTable extends Migration
             $table->string('phone_number');
             $table->string('state');
             $table->string('city');
-            $table->integer('postcode', 5);
+            $table->integer('postcode')->length(5);
             $table->integer('shipping_default_status')->nullable();
           
             $table->bigInteger('userID')->unsigned()->nullable();
