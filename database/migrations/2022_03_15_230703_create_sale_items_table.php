@@ -16,7 +16,7 @@ class CreateSaleItemsTable extends Migration
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
             $table->string('itemName')->nullable();
-            $table->bigInteger('itemCategory')->nullable();
+            $table->bigInteger('itemCategory')->unsigned()->nullable();
             $table->integer('itemStock')->nullable();
             $table->string('itemColor')->nullable();
             $table->string('itemSize')->nullable();
