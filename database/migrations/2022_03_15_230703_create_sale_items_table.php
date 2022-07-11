@@ -16,7 +16,7 @@ class CreateSaleItemsTable extends Migration
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
             $table->string('itemName')->nullable();
-            $table->string('itemCategory')->nullable();
+            $table->bigInteger('itemCategory')->nullable();
             $table->integer('itemStock')->nullable();
             $table->string('itemColor')->nullable();
             $table->string('itemSize')->nullable();
@@ -31,10 +31,6 @@ class CreateSaleItemsTable extends Migration
 
             $table->timestamps();
 
-           
-        });
-        Schema::table('sale_items', function(Blueprint $table)
-        {
             $table->foreign('itemCategory')->references('id')->on('sale_item_categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
