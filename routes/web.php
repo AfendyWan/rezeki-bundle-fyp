@@ -90,6 +90,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['isAdmin','auth', 'PreventBackH
     Route::post('updatePaymentVerificationStatus/',[PaymentController::class,'updatePaymentVerificationStatus'])->name('managePayments.updatePaymentVerificationStatus');
 
     Route::get('adminIndex',[FeedbackController::class,'adminIndex'])->name('manageFeedback.adminIndex');
+    Route::delete('deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback'])->name('manageFeedback.deleteFeedback');
     
     Route::get('adminShipmentIndex',[ShipmentController::class,'adminShipmentIndex'])->name('manageShipments.adminShipmentIndex');
     Route::get('adminUpdateShipment/{id}',[ShipmentController::class,'adminUpdateShipment'])->name('manageShipments.adminUpdateShipment');

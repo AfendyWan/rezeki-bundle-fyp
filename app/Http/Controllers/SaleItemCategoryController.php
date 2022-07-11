@@ -15,7 +15,7 @@ class SaleItemCategoryController extends Controller
      */
     public function index()
     {
-        $saleItemCategory = SaleItemCategory::sortable()->paginate(10);
+        $saleItemCategory = SaleItemCategory::orderBy('updated_at', 'DESC')->sortable()->paginate(10);
     // dd($saleItemCategory);
         return view('dashboards.admins.manageCategories.index',compact('saleItemCategory'))
             ->with('i');

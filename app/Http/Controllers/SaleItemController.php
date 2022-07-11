@@ -7,6 +7,8 @@ use App\Models\SaleItemCategory;
 use App\Models\SaleItemImage;
 use App\Models\WishList;
 use App\Models\WishListItem;
+use App\Models\Cart; 
+use App\Models\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
@@ -21,7 +23,7 @@ class SaleItemController extends Controller
     public function index()
     {
    
-        $saleItem = SaleItem::sortable()->paginate(10);
+        $saleItem = SaleItem::orderBy('updated_at', 'DESC')->sortable()->paginate(10);
         //$saleItem = SaleItem::latest()->paginate(5);
         $saleItemCategory = SaleItemCategory::all();
         return view('dashboards.admins.manageSaleItems.index',compact('saleItem', 'saleItemCategory'))
@@ -51,7 +53,6 @@ class SaleItemController extends Controller
     public function store(Request $request)
     {   
     
-
         $request->validate([
             'name' => 'required|string|max:255|unique:sale_items,itemName',
             'description' => ['required', 'string', 'max:255'],
@@ -237,7 +238,54 @@ class SaleItemController extends Controller
      */
     public function  destroy($id)
     {
+        $tempTotalPrice = 0.00;
+        $tempQuantity = 0;
         $findSaleItem = SaleItem::find($id);
+        
+        $checkCart = Cart::where([
+           ['cartStatus', '=', 1],
+        ])->get();
+
+        $checkCartItem = CartItem::where([
+            ['sale_item_id', '=', $id],
+        ])->get();
+
+        foreach($checkCart as $c){
+            foreach($checkCartItem as $s){
+                if($c->id == $s->cart_id){
+                    if($findSaleItem->itemPromotionStatus == 1){
+                        $tempTotalPrice = ($findSaleItem->itemPromotionPrice) * $s->quantity;
+                        $tempTotalPrice = $c->totalPrice - $tempTotalPrice;
+                        $tempQuantity = $c->cartItemQuantity - $s->quantity;
+                       
+                        Cart::where([
+                            ['id', '=', $c->id],
+                        ])->update([
+                            'totalPrice' => $tempTotalPrice,
+                            'cartItemQuantity' => $tempQuantity
+                        ]);
+                    }else{
+                        $tempTotalPrice = ($findSaleItem->itemPrice) * $s->quantity;
+                        $tempTotalPrice = $c->totalPrice - $tempTotalPrice;
+                        $tempQuantity = $c->cartItemQuantity - $s->quantity;
+                        Cart::where([
+                            ['id', '=',  $c->id],
+                        ])->update([
+                            'totalPrice' => $tempTotalPrice,
+                            'cartItemQuantity' => $tempQuantity
+                        ]);
+                    }
+                }   
+            }
+        }
+
+      
+        foreach($checkCart as $c){
+            if($c->totalPrice == 0.00){
+                $c->delete();
+            }
+        }
+     
         $findSaleItem->delete();
         
         $allSaleItemImages = SaleItemImage::where('sale_item_id', $id)->get();
@@ -249,6 +297,7 @@ class SaleItemController extends Controller
             $i->delete();
         }
 
+       
         return redirect()->route('manageSaleItems.index')
                         ->with('success','Sale item deleted successfully');
     }
@@ -285,9 +334,58 @@ class SaleItemController extends Controller
     //Toggle activation status
     public function toggleActivationStatus($id)
     {
+        $tempTotalPrice = 0.00;
+        $tempQuantity = 0;
+       
+   
         $saleItem = SaleItem::where('id', $id)->first();
+        
+        $checkCart = Cart::where([
+           ['cartStatus', '=', 1],
+        ])->get();
+
+        $checkCartItem = CartItem::where([
+            ['sale_item_id', '=', $id],
+        ])->get();
+
+      
  
         if ($saleItem->itemActivationStatus == 1) {
+            
+        foreach($checkCart as $c){
+            foreach($checkCartItem as $s){
+                if($c->id == $s->cart_id){
+                   
+                    if($saleItem->itemPromotionStatus == 1){
+                        $tempTotalPrice = ($saleItem->itemPromotionPrice) * $s->quantity;
+                        $tempTotalPrice = $c->totalPrice - $tempTotalPrice;
+                        $tempQuantity = $c->cartItemQuantity - $s->quantity;
+                      
+                        Cart::where([
+                            ['id', '=', $c->id],
+                        ])->update([
+                            'totalPrice' => $tempTotalPrice,
+                            'cartItemQuantity' => $tempQuantity
+                        ]);
+                        $s->delete();
+                    }else{
+                        $tempTotalPrice = ($saleItem->itemPrice) * $s->quantity;
+                       
+                        $tempTotalPrice = $c->totalPrice - $tempTotalPrice;
+                        $tempQuantity = $c->cartItemQuantity - $s->quantity;
+                        
+                        Cart::where([
+                            ['id', '=',  $c->id],
+                        ])->update([
+                            'totalPrice' => $tempTotalPrice,
+                            'cartItemQuantity' => $tempQuantity
+                        ]);
+                        $s->delete();
+                    }
+                }   
+            }
+        }
+
             SaleItem::where('id', $id)
             ->update([
                'itemActivationStatus' => 0,

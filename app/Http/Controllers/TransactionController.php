@@ -31,6 +31,7 @@ class TransactionController extends Controller
         $getAllTransaction = DB::table('orders')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->orderBy('orders.updated_at', 'DESC')
         ->select('orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
         ->where('orders.userID', '=', auth()->user()->id)      
         ->get();
@@ -47,6 +48,7 @@ class TransactionController extends Controller
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->orderBy('orders.updated_at', 'DESC')
         ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
         ->where('payments.paymentDate', '>=', $todayDate)        
         ->get();
@@ -131,6 +133,7 @@ class TransactionController extends Controller
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('payment_receipts', 'orders.paymentID', '=', 'payment_receipts.payment_id')
+        ->orderBy('orders.updated_at', 'DESC')
         ->select('users.*', 'orders.*', 'payments.*', 'orders.id as orderID', 'payment_receipts.*')
         ->where('payments.paymentStatus', '=', "Processing")       
         ->paginate(5);

@@ -20,6 +20,7 @@ class SaleItemController extends Controller{
     {
         $saleItemList = DB::table('sale_items')
         ->join('sale_item_images', 'sale_items.id', '=', 'sale_item_images.sale_item_id')
+        ->orderBy('sale_items.updated_at', 'DESC')
         ->select('sale_items.*', 'sale_item_images.*', 'sale_items.id as itemID') 
         ->groupby('sale_item_images.sale_item_id')
         ->where('sale_items.itemCategory', '=', $id)
@@ -55,6 +56,7 @@ class SaleItemController extends Controller{
     {
         $saleItemCatalogue = DB::table('sale_item_categories')
         ->join('sale_item_images', 'sale_item_categories.id', '=', 'sale_item_images.sale_item_category_id')
+        ->orderBy('sale_item_categories.updated_at', 'DESC')
         ->select('sale_item_categories.*', 'sale_item_images.*', 'sale_item_categories.id as saleItemCategoryID')
         ->groupby('sale_item_images.sale_item_category_id')
         ->get();

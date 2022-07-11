@@ -100,7 +100,8 @@ Route::group([
     'prefix' => 'feedback'
 ], function ($router) {
     Route::get('getUsersFeedback', [FeedbackController::class, 'getUsersFeedback']);
-    
+    Route::get('getFeedbackImages', [FeedbackController::class, 'getFeedbackImages']);
+    Route::post('addFeedback', [FeedbackController::class, 'addFeedback']);
 });
 
 Route::group([
@@ -136,7 +137,7 @@ Route::group([
 ], function ($router) {
    
     Route::post('submitPayment', [PaymentController::class, 'submitPayment']);
- 
+    Route::get('getPaymentReceipt/{id}', [PaymentController::class, 'getPaymentReceipt']);
     
 
 });

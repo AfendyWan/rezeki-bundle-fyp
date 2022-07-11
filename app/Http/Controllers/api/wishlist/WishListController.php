@@ -13,7 +13,7 @@ class WishListController extends Controller{
 
     public function isWishList(Request $request)
     {     
-        $getWishList = WishList::where('userID', 37)->first();
+        $getWishList = WishList::where('userID', $request->userID)->first();
         if(!$getWishList){
             $isWishList = false;
             return response()->json($isWishList, 200, ['Connection' => 'keep-alive']);

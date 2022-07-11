@@ -88,7 +88,10 @@ class RegisterController extends Controller
 
         $userID = $newUser->id;
         
+        $fullName = $data['first_name'] . " " . $data['last_name'];
         UserShippingAddress::create([
+            'full_name' => $fullName,
+            'phone_number' => $data['phone_number'],
             'userID' => $userID,
             'shipping_default_status' => 1,
             'shipping_address' => $data['shipping_address'],

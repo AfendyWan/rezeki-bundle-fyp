@@ -14,14 +14,12 @@ class TransactionController extends Controller{
 
     public function getUserOrderTransaction(Request $request)
     {
-
-
-        $getUserOrderTransaction = Order::with('payment')
+        $getUserOrderTransaction = Order::orderBy('updated_at', 'DESC')
+                                ->with('payment')
                                 ->where('orders.userID', '=', $request->userID)   
                                 ->get();
 
-        return response()->json($getUserOrderTransaction, 200, ['Connection' => 'keep-alive']);
-   
+        return response()->json($getUserOrderTransaction, 200, ['Connection' => 'keep-alive']);   
     }
 
     public function viewUserOrderItems(Request $request){

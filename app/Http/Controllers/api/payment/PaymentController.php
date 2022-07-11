@@ -150,9 +150,9 @@ class PaymentController extends Controller{
             foreach($getSaleItem as $s){
                 if($s->id == $c->sale_item_id){
                     if($s->itemPromotionStatus == 1){
-                        $newOrder->orderPrice = $s->itemPromotionPrice;
+                        $newOrderItem->orderPrice = $s->itemPromotionPrice;
                     }else{
-                        $newOrder->orderPrice = $s->itemPrice;
+                        $newOrderItem->orderPrice = $s->itemPrice;
                     }
                     
                 }
@@ -226,4 +226,13 @@ class PaymentController extends Controller{
     }
 
    
+    public function getPaymentReceipt($id)
+    {
+        $paymentReceiptImage = DB::table('payment_receipts')       
+        ->select('payment_receipts.*',)
+        ->where('payment_receipts.payment_id', '=', $id)
+        ->first();
+  
+        return response()->json($paymentReceiptImage->url, 200, ['Connection' => 'keep-alive']);
+    }
 }

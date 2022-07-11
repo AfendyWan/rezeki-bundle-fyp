@@ -90,6 +90,7 @@ class ShipmentController extends Controller{
     public function getUserShipment(Request $request)
     {
         $getUserShipment = DB::table('orders')
+        ->orderBy('updated_at', 'DESC')
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')

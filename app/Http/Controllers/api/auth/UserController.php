@@ -90,9 +90,10 @@ class UserController extends Controller
    
 
         $token = $newUser->createToken('RezekiBundleCustomerAuth')->accessToken;
+ 
+        $intPostCode =  (int) $newUser->postcode;
 
-
-        return response()->json(['token' => $token, 'name'=>$newUser->first_name ], 200);
+        return response()->json(['token' => $token,  'id'=>$newUser->id, 'first_name'=>$newUser->first_name, 'last_name'=>$newUser->last_name, 'email'=>$newUser->email, 'role'=>$newUser->role, 'gender'=>$newUser->gender, 'phone_number'=>$newUser->phone_number, 'postcode'=>$intPostCode], 200);
     }
 
 

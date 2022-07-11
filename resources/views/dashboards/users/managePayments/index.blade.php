@@ -58,11 +58,11 @@
           <div class="col-sm-4 invoice-col">
             To
             <address>
-            <strong>{{$userDetails->first_name}} {{$userDetails->last_name}}</strong><br>
+            <strong>{{$userShippingAddress->full_name}}</strong><br>
             {{$userShippingAddress->shipping_address}},  {{$userShippingAddress->city}}, {{$userShippingAddressState->states_name}},  {{$userShippingAddress->postcode}}<br>
   
             Phone: {{$userDetails->phone_number}}<br>
-            Email: [{{$userDetails->email}}]
+          
             </address>
           </div>
 

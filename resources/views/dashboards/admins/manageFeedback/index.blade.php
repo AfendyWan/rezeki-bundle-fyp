@@ -26,7 +26,11 @@
   transform: scale(2.0); 
 }
 </style>
-
+@if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
 
 <div class="col-sm-6">
     <h1>What our customers say</h1>
@@ -39,6 +43,7 @@
             <div class="card-header">
                 {{ $f->first_name}} {{ $f->last_name}} wrote:  
             </div>
+ 
             <!-- <a href="#" class="btn btn-danger" style="float: right;">Delete</a> -->
             <div class="card-body">
                 <h5 class="card-title"><b>{{ $f->feedbackTitle}}</b></h5>
@@ -52,10 +57,16 @@
                             @endif
                         @endforeach
                     </div>
-                       
+                    <br>
+            <form action="{{ route('manageFeedback.deleteFeedback',$f->feedbackID) }}" method="POST">
+                @csrf
+                @method('DELETE')
+               <button type="submit" class="btn btn-danger">Delete</button>
+            </form>   
             </div>
         </div>
     <br>
+
     @endforeach
 </div>
 

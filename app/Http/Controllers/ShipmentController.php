@@ -32,6 +32,7 @@ class ShipmentController extends Controller
         ->join('users', 'orders.userID', '=', 'users.id')
         ->join('payments', 'orders.paymentID', '=', 'payments.id')
         ->join('shipments', 'orders.shipmentID', '=', 'shipments.id')
+        ->orderBy('orders.updated_at', 'DESC')
         ->select('users.*', 'orders.*', 'payments.*', 'shipments.*','orders.id as orderID')
         ->paginate(5);
        

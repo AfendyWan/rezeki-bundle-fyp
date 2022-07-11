@@ -9,6 +9,6 @@ class SaleItemCategory extends Model
 {
     use HasFactory;
     use Sortable;
-    protected $fillable = ['name', 'description','quantity'];
+    protected $fillable = ['name', 'description','quantity', 'updated_at'];
     // public $sortable = ['id', 'name', 'description', 'quantity'];
 }

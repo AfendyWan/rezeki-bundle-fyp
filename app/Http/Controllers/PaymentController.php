@@ -169,21 +169,23 @@ class PaymentController extends Controller
             $splitDateTime = explode('T', $request->deliveryDateTime, 2); 
             $dateLocalDelivery = $splitDateTime[0];
             $timeLocalDelivery = $splitDateTime[1];
+
+            $carbonParseTodayDateCompare = Carbon::parse($todayDateCompare);
+            $carbonParseDateLocalDelivery = Carbon::parse($dateLocalDelivery);
+            $resultDate = $carbonParseDateLocalDelivery->lte($carbonParseTodayDateCompare);
+             if($timeLocalDelivery > 17 || $timeLocalDelivery <9){
+                 return redirect()->route('managePayments.index')
+                     ->with('danger','Delivery time must from 9am to 5pm');
+             }else{
+                 if ($resultDate) {
+                     return redirect()->route('managePayments.index')
+                     ->with('danger','Delivery date must be after ' .$todayDateCompare);
+                 }
+             }
           
         }
        
-       $carbonParseTodayDateCompare = Carbon::parse($todayDateCompare);
-       $carbonParseDateLocalDelivery = Carbon::parse($dateLocalDelivery);
-       $resultDate = $carbonParseDateLocalDelivery->lte($carbonParseTodayDateCompare);
-        if($timeLocalDelivery > 17 || $timeLocalDelivery <9){
-            return redirect()->route('managePayments.index')
-                ->with('danger','Delivery time must from 9am to 5pm');
-        }else{
-            if ($resultDate) {
-                return redirect()->route('managePayments.index')
-                ->with('danger','Delivery date must be after ' .$todayDateCompare);
-            }
-        }
+ 
 
         
         ////////////////////Get user cart

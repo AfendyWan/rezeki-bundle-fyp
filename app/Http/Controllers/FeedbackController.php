@@ -157,8 +157,22 @@ class FeedbackController extends Controller
      * @param  \App\Models\Feedback  $feedback
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Feedback $feedback)
+    public function deleteFeedback($id)
     {
-        //
+       
+        $findFeedback = Feedback::find($id);
+       
+        
+        $allFeedbackImage = FeedbackImage::where('feedback_id', $id)->get();
+        
+        //delete file within laravel and database
+        foreach($allFeedbackImage as $i){
+            $image = $i->url;
+            unlink(public_path($image));
+            $i->delete();
+        }
+        $findFeedback->delete();
+        return redirect()->route('manageFeedback.adminIndex')
+                        ->with('success','Feedback deleted successfully');
     }
 }
