@@ -17,9 +17,11 @@ class CreateOrderItemsTable extends Migration
             $table->id();
            
             $table->integer('quantity')->nullable();
+            $table->decimal('orderPrice',12,2)->nullable(); 
             $table->bigInteger('order_id')->unsigned()->nullable();
             $table->bigInteger('sale_item_id')->unsigned()->nullable();
-           
+            $table->integer('feedback_status')->nullable();   
+
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('sale_item_id')->references('id')->on('sale_items')->onUpdate('cascade');
             $table->timestamps();

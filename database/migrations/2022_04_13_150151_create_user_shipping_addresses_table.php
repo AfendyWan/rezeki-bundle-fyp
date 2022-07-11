@@ -16,7 +16,13 @@ class CreateUserShippingAddressesTable extends Migration
         Schema::create('user_shipping_addresses', function (Blueprint $table) {
             $table->id();
             $table->string('shipping_address');
+            $table->string('full_name');
+            $table->string('phone_number');
+            $table->string('state');
+            $table->string('city');
+            $table->integer('postcode', 5);
             $table->integer('shipping_default_status')->nullable();
+          
             $table->bigInteger('userID')->unsigned()->nullable();
             $table->foreign('userID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

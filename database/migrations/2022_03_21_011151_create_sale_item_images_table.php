@@ -17,6 +17,7 @@ class CreateSaleItemImagesTable extends Migration
             $table->id();
             $table->string('url');
             $table->unsignedBigInteger('sale_item_id');
+            $table->unsignedBigInteger('sale_item_category_id');
             $table->timestamps();
         });
     }

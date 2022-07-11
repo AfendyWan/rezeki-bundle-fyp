@@ -18,6 +18,9 @@ class CreateSaleItemsTable extends Migration
             $table->string('itemName')->nullable();
             $table->string('itemCategory')->nullable();
             $table->integer('itemStock')->nullable();
+            $table->string('itemColor')->nullable();
+            $table->string('itemSize')->nullable();
+            $table->string('itemBrand')->nullable();
             $table->decimal('itemPrice',12,2)->nullable();
             $table->boolean('itemPromotionStatus')->nullable();
             $table->decimal('itemPromotionPrice',7,2)->nullable();

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('role')->nullable();
             $table->string('gender');
             $table->string('phone_number');
-            $table->integer('postcode');
+            $table->integer('postcode', 5);
             $table->string('shipping_address');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -16,10 +16,11 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->dateTime('orderDate')->nullable();
+            $table->string('order_number', 20)->nullable();
             $table->bigInteger('userID')->unsigned()->nullable();
             $table->bigInteger('paymentID')->unsigned()->nullable();
             $table->bigInteger('shipmentID')->unsigned()->nullable();
-            $table->integer('orderStatus')->nullable();
+            $table->string('orderStatus', 255)->nullable();
             
             $table->foreign('userID')->references('id')->on('users')->onUpdate('cascade');
             $table->foreign('paymentID')->references('id')->on('payments')->onUpdate('cascade');
