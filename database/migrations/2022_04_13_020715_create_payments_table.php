@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->string('remark')->nullable();
             $table->bigInteger('cart_id')->unsigned()->nullable();           
             $table->bigInteger('userID')->unsigned()->nullable();
-            $table->bigInteger('order_id ')->unsigned()->nullable();
+            $table->bigInteger('order_id')->unsigned()->nullable();
            
             $table->dateTime('paymentDate')->nullable();
             
