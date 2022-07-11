@@ -27,7 +27,7 @@ class CreatePaymentsTable extends Migration
             $table->dateTime('paymentDate')->nullable();
             
             $table->foreign('cart_id')->references('id')->on('carts')->onUpdate('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
+            // $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
             $table->foreign('userID')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();
         });
