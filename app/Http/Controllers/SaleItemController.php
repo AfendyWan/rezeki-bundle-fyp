@@ -81,7 +81,8 @@ class SaleItemController extends Controller
         $saleItem->itemPromotionPrice =  0.00;
         $saleItem->itemPromotionStatus =  0;
         $saleItem->itemActivationStatus = 1;
-       
+        $saleItem->itemPromotionStartDate =  "2022-07-08";
+        $saleItem->itemPromotionEndDate =  "2022-07-10";
         $saleItem->save();
         //Save file within laravel
        if ($request->hasfile('images')) {
